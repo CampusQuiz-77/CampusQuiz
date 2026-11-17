@@ -668,13 +668,24 @@ function lettersToIndices(v) {
   });
   return out.sort((a,b) => a-b);
 }
+/* Checkbox selections can arrive as [0,2] (in-memory), "0,2" (saved to
+   Firestore) or "A,C" (manual/older data). Normalise all three. */
+function indicesFromValue(v) {
+  let raw;
+  if (Array.isArray(v)) raw = v.map(Number);
+  else {
+    const s = String(v ?? '').trim();
+    if (!s) return [];
+    raw = /[A-Ea-e]/.test(s) ? lettersToIndices(s) : s.split(/[,\s]+/).map(Number);
+  }
+  return [...new Set(raw.filter(n => Number.isInteger(n) && n >= 0))].sort((a,b) => a-b);
+}
+/* Firestore rejects nested arrays, so flatten a checkbox selection to text. */
+function storeAnswer(v) { return Array.isArray(v) ? v.join(',') : v; }
 /* The correct answer in a form that is easy to compare. */
 function answerKey(q) {
   const t = qType(q);
-  if (t === 'checkbox') {
-    const raw = Array.isArray(q.a) ? q.a : (typeof q.a === 'string' ? lettersToIndices(q.a) : []);
-    return raw.map(Number).filter(n => Number.isInteger(n) && n >= 0).sort((a,b) => a-b);
-  }
+  if (t === 'checkbox') return indicesFromValue(q.a);
   if (t === 'short' || t === 'paragraph' || typeof q.a === 'string') return normText(q.a);
   return q.a;
 }
@@ -682,7 +693,7 @@ function answerKey(q) {
 function isCorrectAnswer(q, given) {
   const t = qType(q), key = answerKey(q);
   if (t === 'checkbox') {
-    const g = Array.isArray(given) ? given.map(Number).filter(n => Number.isInteger(n) && n >= 0).sort((a,b)=>a-b) : [];
+    const g = indicesFromValue(given);
     return g.length > 0 && g.length === key.length && g.every((v,i) => v === key[i]);
   }
   if (t === 'short' || t === 'paragraph' || typeof key === 'string') {
@@ -706,7 +717,10 @@ function answerReady(q) {
 function displayAnswer(q, v) {
   if (!isAnswered(v)) return 'No answer';
   const t = qType(q);
-  if (Array.isArray(v)) return v.map(i => q.o?.[i] ?? '—').join(', ');
+  if (t === 'checkbox' || Array.isArray(v)) {
+    const picked = indicesFromValue(v);
+    return picked.length ? picked.map(i => q.o?.[i] ?? '—').join(', ') : 'No answer';
+  }
   if (t === 'short' || t === 'paragraph') return String(v);
   if (typeof v === 'number') return q.o?.[v] ?? '—';
   return String(v);
@@ -2298,7 +2312,7 @@ async function pagePublicQuiz(slug) {
       const tot = qs.length;
       toast(auto ? 'Time up — submitting your answers…' : 'Submitting your answers…', 'info');
       try {
-        await api.add('responses', { quizId:quiz.id, name, a:answers, sc, tot, at:Date.now() });
+        await api.add('responses', { quizId:quiz.id, name, a:answers.map(storeAnswer), sc, tot, at:Date.now() });
         const pct = Math.round(sc / Math.max(1,tot) * 100);
         const creator = String(quiz.name || 'the creator').trim();
         const directWA = waLink(quiz.phone, `Hi ${creator}, I just completed your "${quiz.title}" quiz.`);
