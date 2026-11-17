@@ -17,6 +17,8 @@
 
   <!-- pdf.js for reading past-question PDFs in the browser -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- QRCode.js generates permanent, downloadable QR PNGs entirely in the browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     /* ============================================================
@@ -214,6 +216,8 @@
     .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem}
     footer .brand b{color:#fff}
     footer p{font-size:.9rem;color:#B9D5E4;max-width:38ch}
+    #footContact a{color:#D7E9F2;text-decoration:underline;text-underline-offset:2px}
+    #footContact a:hover{color:var(--gold)}
     .foot-col h3{color:#fff;font-size:1rem;margin-bottom:.8rem}
     .foot-col a{display:block;color:#B9D5E4;font-size:.9rem;padding:.25rem 0}
     .foot-col a:hover{color:var(--gold)}
@@ -302,6 +306,17 @@
     .aspirant-card h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:.4rem 0}
     .tel{display:inline-flex;align-items:center;gap:.5rem;background:var(--ok-soft);color:var(--ok);
       font-weight:800;padding:.55rem .9rem;border-radius:10px;font-size:.95rem}
+    .created-by{font-weight:800;color:var(--blue-deep);margin:.4rem 0}
+    .contact-chips{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin:1rem 0 0}
+    .contact-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1rem;border-radius:999px;
+      font-weight:800;font-size:.9rem;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--ink)}
+    .contact-chip:hover{text-decoration:none;background:var(--mint)}
+    .contact-chip.whatsapp{background:#E7F8EE;border-color:#B7E7C8;color:#12805C}
+    .contact-chip.call{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+    .contact-chip.mail{background:var(--mint);border-color:var(--mint-2);color:var(--blue-deep)}
+    .join-channel{display:inline-flex;align-items:center;gap:.6rem;background:#25D366;color:#053B22;
+      font-weight:900;padding:.85rem 1.25rem;border-radius:12px;text-decoration:none;margin:.3rem 0}
+    .join-channel:hover{background:#1EBE56;color:#053B22;text-decoration:none}
     .quiz-meta{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}
     .quiz-meta span{background:var(--mint);color:var(--blue-deep);font-size:.8rem;font-weight:800;padding:.35rem .7rem;border-radius:999px}
     .take-bar{position:sticky;top:72px;z-index:40;background:#fff;border:1px solid var(--line);
@@ -338,6 +353,45 @@
     .bartrack{height:22px;background:var(--paper);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
     .barfill{height:100%;background:linear-gradient(90deg,var(--blue-2),var(--blue));border-radius:999px;min-width:2px;transition:width .5s ease}
     .barfill.alt{background:linear-gradient(90deg,var(--gold),var(--gold-deep))}
+    .trend-chart{width:100%;height:auto;display:block;overflow:visible}
+    .trend-chart .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:4 5}
+    .trend-chart .line{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    .trend-chart .area{fill:rgba(40,122,180,.10)}
+    .trend-chart circle{fill:var(--gold);stroke:var(--blue-deep);stroke-width:2}
+    .trend-chart text{font-family:Manrope,sans-serif;font-size:11px;fill:var(--muted);font-weight:700}
+
+    /* ---------- Passwords, bios, QR, messages, prose ---------- */
+    .pass-wrap{position:relative}
+    .pass-wrap input{padding-right:5.4rem}
+    .pass-toggle{position:absolute;right:.45rem;top:50%;transform:translateY(-50%);
+      border:0;background:none;color:var(--blue-deep);font-weight:800;font-size:.82rem;
+      cursor:pointer;padding:.35rem .5rem;border-radius:8px}
+    .pass-toggle:hover{background:var(--mint)}
+    .bio-box{background:var(--gold-soft);border:1px solid #F2DFA0;border-left:5px solid var(--gold-deep);
+      border-radius:14px;padding:1rem 1.1rem;margin:1rem 0}
+    .bio-box strong{display:block;color:#6B5200;margin-bottom:.35rem;font-size:.88rem}
+    .bio-box p{margin:0;white-space:pre-line;color:#4A3B05;font-size:.94rem}
+    .qr-img{width:100%;max-width:280px;margin:0 auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+    .msg-item{border:1px solid var(--line);border-left:5px solid var(--blue-2);border-radius:12px;
+      padding:.9rem 1rem;background:#fff;margin-bottom:.7rem}
+    .msg-item.support{border-left-color:var(--gold-deep)}
+    .msg-item .msg-top{display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;margin-bottom:.3rem}
+    .msg-item .msg-text{white-space:pre-line;font-size:.92rem;margin:0}
+    .prose{max-width:820px;margin:0 auto}
+    .prose h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:.4rem}
+    .prose h2{margin:2.2rem 0 .7rem;font-size:clamp(1.4rem,3vw,1.9rem)}
+    .prose p,.prose li{font-size:1.02rem;color:#23455C;line-height:1.75}
+    .prose .lead{font-size:1.15rem;color:var(--blue-deep);font-weight:700}
+    .prose ul{list-style:none;padding:0;display:grid;gap:.6rem;margin:.6rem 0}
+    .prose li{position:relative;padding-left:1.6rem}
+    .prose li::before{content:"✦";position:absolute;left:0;color:var(--gold-deep)}
+    .prose .rule{height:1px;background:var(--line);margin:2rem 0}
+    .verify-box{text-align:center}
+    .verify-box .shield{width:64px;height:64px;border-radius:18px;background:var(--ok-soft);color:var(--ok);
+      display:grid;place-items:center;font-size:1.9rem;margin:0 auto 1rem}
+    .verify-row{display:flex;align-items:center;gap:.8rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+    .verify-row input[type=checkbox]{width:24px;height:24px}
+    .verify-row input[type=text]{width:90px;text-align:center;font-size:1.1rem}
 
     /* ---------- Modal / toast ---------- */
     .modal-back{position:fixed;inset:0;background:rgba(7,32,48,.68);z-index:100;display:grid;place-items:center;padding:1rem}
@@ -402,9 +456,9 @@
       <a href="#/" data-home>Home</a>
       <a href="#/" data-scroll="how">How it works</a>
       <a href="#/" data-scroll="pricing">Pricing</a>
+      <a href="#/about">About</a>
       <a href="#/plans" id="navPlans" class="hide">Plans</a>
       <a href="#/dashboard" id="navDash" class="hide">Dashboard</a>
-      <a href="#/admin" id="navAdmin" class="hide">Admin</a>
       <a href="#/login" id="navLogin" class="btn nav-cta">Log in</a>
       <button id="navOut" class="hide">Log out</button>
     </nav>
@@ -427,13 +481,15 @@
         <a href="#/" data-scroll="how">How it works</a>
         <a href="#/" data-scroll="pricing">Pricing</a>
         <a href="#/plans">Plans &amp; payment</a>
+        <a href="#/about">About</a>
+        <a href="#/privacy">Privacy policy</a>
       </div>
       <div class="foot-col">
         <h3>Get started</h3>
         <a href="#/signup">Create free account</a>
         <a href="#/login">Log in</a>
         <a href="#/dashboard">My dashboard</a>
-        <a href="#/admin">Admin</a>
+        <a href="#/privacy">How we protect your data</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -455,14 +511,16 @@
    2. SET THE ADMIN EMAIL BELOW (must match the email you sign in with).
    ================================================================== */
 const FIREBASE_CONFIG = {
-  apiKey:            'AIzaSyAQZC3JhilzX71B7oN-i0g8reFekFlnVR0',
-  authDomain:        'campusquiz-3564e.firebaseapp.com',
-  projectId:         'campusquiz-3564e',
-  appId:             '1:654591758114:web:11c1610afa8c5a50e09f7b',
-  messagingSenderId: '654591758114',
-  measurementId:     'G-S9N5Z2RFPD'
+  apiKey:            'PASTE_API_KEY',
+  authDomain:        'PASTE_PROJECT.firebaseapp.com',
+  projectId:         'PASTE_PROJECT',
+  appId:             'PASTE_APP_ID',
+  messagingSenderId: 'PASTE_SENDER_ID',
+  measurementId:     'PASTE_MEASUREMENT_ID'
 };
-const ADMIN_EMAIL = 'mollyeen77@gmail.com'; // <-- replace with your own admin email
+const ADMIN_EMAIL = 'muhadeenmohammed7@gmail.com'; // <-- the ONLY account that can open #/admin
+const CONTACT_EMAIL = 'muhadeenmohammed7@gmail.com';
+const FLYER_LIMIT = 800000; // base64 characters (~600 KB image) — safely inside Firestore's 1 MiB document limit
 
 /* Logo reused on auth pages (same embedded asset as navbar/footer/favicon). */
 const LOGO = 'data:image/jpeg;base64,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';
@@ -476,7 +534,8 @@ const DEFAULT_SETTINGS = {
     { n: '90 Day Reach',  p: 150, d: 90 }
   ],
   cur: 'GH₵',
-  phone: '0240000000',
+  phone: '0547779727',
+  email: CONTACT_EMAIL,
   note: 'Send the payment by Mobile Money to the number above, then paste the transaction ID and upload a clear screenshot of the confirmation here. Call the number for faster confirmation.',
   free: 2,
   max: 50
@@ -539,6 +598,30 @@ function copyText(text) {
   }
 }
 function shareLink(q) { return `${location.origin}${location.pathname}#/q/${encodeURIComponent(q.slug)}`; }
+/* Contact helpers — phone, WhatsApp and email are always clickable links. */
+function contactDigits(v) { return String(v || '').replace(/[^\d+]/g, ''); }
+function waNumber(phone) {
+  let d = String(phone || '').replace(/\D/g, '');
+  if (d.startsWith('0')) d = '233' + d.slice(1); // Ghana local numbers → international format
+  return d;
+}
+function waLink(phone, text) {
+  const d = waNumber(phone);
+  return d ? `https://wa.me/${d}${text ? '?text=' + encodeURIComponent(text) : ''}` : '';
+}
+function safeUrl(v) {
+  const s = String(v || '').trim();
+  return s ? (/^https?:\/\//i.test(s) ? s : `https://${s}`) : '';
+}
+function contactLinks(phone, email, short) {
+  const p = String(phone || ''), e = String(email || CONTACT_EMAIL);
+  const parts = [];
+  const wa = waLink(p);
+  if (wa) parts.push(`<a href="${esc(wa)}" target="_blank" rel="noopener noreferrer">${short ? 'WhatsApp' : '💬 Chat on WhatsApp'}</a>`);
+  if (p) parts.push(`<a href="tel:${esc(contactDigits(p))}">${short ? 'Call ' : '☎ Call '}${esc(p)}</a>`);
+  if (e) parts.push(`<a href="mailto:${esc(e)}">${short ? esc(e) : '✉ Email ' + esc(e)}</a>`);
+  return parts.join(' · ');
+}
 function svgIcon(name) {
   const p = {
     timer:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
@@ -557,6 +640,7 @@ function svgIcon(name) {
    ================================================================== */
 let fb = null;
 let demoAuthCb = null;
+let suppressAuthRoute = false; // prevents auth-state changes from wiping the signup/verification screen
 const state = { user:null, profile:null, settings:null, draft:[], quizTimer:null, adminTab:'payments', pendingScroll:null };
 function notifyDemoAuth() {
   const u = dcurrent();
@@ -626,6 +710,11 @@ const api = {
   async signOut() {
     if (fb) return fb.authM.signOut(fb.auth);
     dsession(null); notifyDemoAuth();
+  },
+  async sendReset(email) {
+    if (!fb) return { demo:true };
+    await fb.authM.sendPasswordResetEmail(fb.auth, email);
+    return { demo:false };
   },
   async get(coll, id) {
     if (!fb) return dget(coll)[id] ? { id, ...dget(coll)[id] } : null;
@@ -702,6 +791,81 @@ async function resizeImage(file, maxSide = 900, startQuality = .78) {
   } finally { URL.revokeObjectURL(url); }
 }
 
+/* Keep the flyer exactly as uploaded — no canvas, no resizing, no re-encoding. */
+function readOriginalImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!file || !String(file.type || '').startsWith('image/')) return reject(new Error('Please choose an image file.'));
+    const reader = new FileReader();
+    reader.onload = () => {
+      const out = String(reader.result || '');
+      if (out.length > FLYER_LIMIT) {
+        const kb = Math.round(out.length / 1024);
+        reject(new Error(`Firestore allows about 1 MB per record and this flyer is ${kb} KB. Please choose a smaller image (roughly 600 KB or less) so it can also be saved on each of your quiz links.`));
+        return;
+      }
+      resolve(out);
+    };
+    reader.onerror = () => reject(new Error('That image could not be opened. Please try another file.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+/* Permanent QR codes — generated locally, downloadable as a PNG. */
+async function makeQRCode(url) {
+  if (typeof window.QRCode !== 'function') {
+    throw new Error('The QR generator is still loading. Check your connection and try again.');
+  }
+  return new Promise((resolve, reject) => {
+    try {
+      // qrcodejs draws straight into a canvas synchronously (HTML + canvas browser).
+      const holder = document.createElement('div');
+      new window.QRCode(holder, {
+        text: url, width: 880, height: 880,
+        colorDark: '#0E4F7C', colorLight: '#FFFFFF',
+        correctLevel: window.QRCode.CorrectLevel.H
+      });
+      const canvas = holder.querySelector('canvas');
+      if (!canvas) return reject(new Error('Your browser could not draw the QR code.'));
+      resolve(canvas.toDataURL('image/png'));
+    } catch (err) { reject(err); }
+  });
+}
+function downloadDataURL(dataUrl, filename) {
+  const a = document.createElement('a');
+  a.href = dataUrl; a.download = filename;
+  document.body.append(a); a.click(); a.remove();
+}
+async function showQR(q) {
+  const url = shareLink(q);
+  const close = modal(`<h3>QR code for “${esc(q.title)}”</h3>
+    <p class="muted tiny">Scan to open the quiz. Download the PNG and print it on your flyer — the link keeps working while the quiz is live.</p>
+    <div id="qrHolder" class="center" style="min-height:290px;display:grid;place-items:center">
+      <div class="spinner"></div></div>
+    <p class="tiny muted center" style="margin:.8rem 0 0;word-break:break-all">${esc(url)}</p>
+    <div class="modal-foot"><button class="btn btn-outline" data-close>Close</button>
+      <button class="btn btn-gold hide" id="downloadQR">Download PNG</button></div>`);
+  try {
+    const data = await makeQRCode(url);
+    const holder = $('#qrHolder');
+    if (!holder) return; // user closed the modal before it finished
+    holder.innerHTML = `<img class="qr-img" src="${data}" alt="QR code linking to ${esc(q.title)}">`;
+    const dl = $('#downloadQR');
+    dl.classList.remove('hide');
+    dl.addEventListener('click', () => downloadDataURL(data, `campusquiz-${q.slug || 'quiz'}.png`));
+  } catch (err) {
+    const holder = $('#qrHolder');
+    if (holder) holder.textContent = err.message;
+    toast(err.message, 'err');
+  }
+  return close;
+}
+
+/* One profile update, reflected on every quiz the aspirant has created. */
+async function syncProfileToQuizzes(uid, patch) {
+  const qs = await api.where('quizzes', 'owner', uid);
+  await Promise.all(qs.map(q => api.set('quizzes', q.id, patch, true)));
+}
+
 async function pdfToText(file) {
   if (!window.pdfjsLib) throw new Error('The PDF reader did not load. Check your connection and try again.');
   window.pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VER}/pdf.worker.min.js`;
@@ -766,6 +930,45 @@ Rules:
 5. Keep the exact wording, spelling and numbers from the scan. Do not solve or rewrite anything.
 6. Preserve the order of the questions.`;
 
+/* ---------- Performance trend charts ---------- */
+function trendPoints(responses, pctOf) {
+  return [...responses].sort((a,b) => (a.at||0)-(b.at||0)).map(r => ({
+    at:r.at || 0, name:r.name || 'Student', pct:pctOf(r)
+  }));
+}
+function lineTrendSVG(points) {
+  if (!points.length) return '<p class="muted">Attempts will appear here as a line chart once students start answering.</p>';
+  const W = 640, H = 210, L = 38, R = 12, T = 14, B = 34;
+  const x = i => points.length === 1 ? (L + (W-L-R)/2) : L + i * (W-L-R) / (points.length-1);
+  const y = p => T + (100 - p) * (H-T-B) / 100;
+  const pts = points.map((p,i) => `${x(i).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
+  const area = `M ${x(0).toFixed(1)} ${H-B} L ${pts.split(' ').join(' L ')} L ${x(points.length-1).toFixed(1)} ${H-B} Z`;
+  const grid = [0,25,50,75,100].map(v => `<line class="grid" x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}"></line>
+    <text x="4" y="${y(v)+4}">${v}%</text>`).join('');
+  const dots = points.map((p,i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="5">
+    <title>${esc(p.name)} — ${p.pct}% on ${fmtDate(p.at)}</title></circle>`).join('');
+  const first = fmtDate(points[0].at), last = fmtDate(points[points.length-1].at);
+  return `<svg class="trend-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of each student's score over time">
+    ${grid}<path class="area" d="${area}"></path><polyline class="line" points="${pts}"></polyline>${dots}
+    <text x="${L}" y="${H-8}">${esc(first)}</text>
+    <text x="${W-R}" y="${H-8}" text-anchor="end">${esc(last)}</text></svg>`;
+}
+function barTrendHTML(points) {
+  if (!points.length) return '<p class="muted">Daily averages will appear here once students start answering.</p>';
+  const days = new Map();
+  points.forEach(p => {
+    const key = new Date(p.at).toDateString();
+    if (!days.has(key)) days.set(key, []);
+    days.get(key).push(p.pct);
+  });
+  return `<div class="chart">${[...days.entries()].map(([key, vals]) => {
+    const avg = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+    const label = new Date(key).toLocaleDateString(undefined,{day:'numeric',month:'short'});
+    return `<div class="barrow"><span title="${esc(key)}">${esc(label)}</span>
+      <div class="bartrack"><div class="barfill alt" style="width:${avg}%"></div></div><span>${avg}%</span></div>`;
+  }).join('')}</div><p class="tiny muted" style="margin:.9rem 0 0">Each bar is the average score for that day — watch it rise as students practise.</p>`;
+}
+
 /* ==================================================================
    NAVIGATION + SHELL
    ================================================================== */
@@ -775,8 +978,8 @@ function renderNav() {
   $('#navDash').classList.toggle('hide', !loggedIn);
   $('#navPlans').classList.toggle('hide', !loggedIn);
   $('#navOut').classList.toggle('hide', !loggedIn);
-  $('#navAdmin').classList.toggle('hide', !isAdmin());
-  $('#footContact').textContent = state.settings?.phone ? `Questions? Call or WhatsApp ${state.settings.phone}` : '';
+  const s = state.settings || DEFAULT_SETTINGS;
+  $('#footContact').innerHTML = `Questions? ${contactLinks(s.phone, s.email, true)}`;
 }
 
 function goSection(id) {
@@ -803,6 +1006,9 @@ async function route() {
     switch (r.name) {
       case 'signup': pageAuth('signup'); break;
       case 'login': pageAuth('login'); break;
+      case 'forgot': pageForgot(); break;
+      case 'about': pageAbout(); break;
+      case 'privacy': pagePrivacy(); break;
       case 'dashboard': await pageDashboard(); break;
       case 'new': await pageNewQuiz(); break;
       case 'results': await pageResults(r.arg); break;
@@ -959,8 +1165,99 @@ function pageHome() {
   }
 }
 /* ==================================================================
+   ABOUT + PRIVACY
+   ================================================================== */
+function pageAbout() {
+  const lines = [
+    ['h1', 'Campaign smarter. Help students win.'],
+    ['lead', 'CampusQuiz began with a simple idea that worked.'],
+    ['p', 'As a student on campus, I started creating Google Quiz forms from past questions and sharing them with my course mates and the levels above me. Students answered them, sent feedback and said they enjoyed them. Many told me the quizzes helped them do better in their exams. That goodwill was one of the main reasons I won the election to become President of the University of Ghana Economics Students’ Society (UGESS) for the 2025/2026 academic year.'],
+    ['p', 'I also noticed that most aspirants hand out past questions as watermarked PDFs, which students simply save and forget. A quiz is different. Students actually use it, and they remember who made it possible.'],
+    ['p', 'So I built CampusQuiz to let every aspirant do the same thing, without spending hours in Google Forms.'],
+    ['h2', 'What you can do on CampusQuiz'],
+    ['li', 'Turn past questions into a quiz. Upload a PDF or paste your questions, and CampusQuiz builds the quiz for you. For scanned papers, use our ready-made AI prompt.'],
+    ['li', 'Put your campaign front and centre. Your flyer, name and contact number appear on every quiz you share.'],
+    ['li', 'Set the timer. Choose how many minutes students get, and the quiz submits automatically when time is up.'],
+    ['li', 'Share one link. Your link carries your name and the course title, so students recognise it straight away.'],
+    ['li', 'Help students learn. After submitting, students see their score and review every answer against the correct one.'],
+    ['li', 'Know how students are doing. Your dashboard shows every response, score trends and the questions students find hardest.'],
+    ['h2', 'Free to start'],
+    ['p', 'Every new aspirant gets a free trial: two quizzes with up to 50 questions each. When you’re ready for more, choose a simple, affordable plan and pay by Mobile Money. We confirm quickly, and you can call us for faster help.'],
+    ['h2', 'Who it’s for'],
+    ['p', 'CampusQuiz is for SRC, JCR and departmental aspirants, course reps, and any student leader who wants to give real value to their campus.'],
+    ['p', 'Ready to start? Create your first quiz free.']
+  ];
+  let body = '', inList = false;
+  for (const [tag, text] of lines) {
+    if (tag === 'li') {
+      if (!inList) { body += '<ul>'; inList = true; }
+      body += `<li>${esc(text)}</li>`;
+    } else {
+      if (inList) { body += '</ul>'; inList = false; }
+      body += `<${tag}>${esc(text)}</${tag}>`;
+    }
+  }
+  if (inList) body += '</ul>';
+  const s = state.settings || DEFAULT_SETTINGS;
+  $('#app').innerHTML = `<div class="page wrap prose">
+    ${body}
+    <div class="rule"></div>
+    <div class="row"><a href="#/signup" class="btn btn-gold btn-lg">Get started free →</a>
+      <a href="#/privacy" class="btn btn-outline">Read our privacy policy</a></div>
+    <p class="tiny muted" style="margin-top:1.2rem">Questions? Reach us on ${contactLinks(s.phone, s.email, true)}.</p>
+  </div>`;
+}
+
+function pagePrivacy() {
+  const s = state.settings || DEFAULT_SETTINGS;
+  $('#app').innerHTML = `<div class="page wrap prose">
+    <span class="eyebrow"><span class="dot"></span> Your data</span>
+    <h1>Privacy policy</h1>
+    <p class="lead">CampusQuiz is built by a student leader for student leaders. We collect only what is needed to run your quizzes and keep your campaign honest.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>When you create an account:</strong> your name, phone number, email address and a password (stored securely by Firebase Authentication — we never see your raw password).</li>
+      <li><strong>When you build a quiz:</strong> your campaign flyer (stored exactly as you upload it), your introduction, the questions and answers you write, and the quiz title and time limit.</li>
+      <li><strong>When students take a quiz:</strong> the name they enter, their answers, score and the time they submitted. Students do not need an account.</li>
+      <li><strong>Messages:</strong> feedback students send to an aspirant, and messages aspirants send to us.</li>
+      <li><strong>Payments:</strong> the plan you choose, your Mobile Money transaction ID and a screenshot of the confirmation.</li>
+    </ul>
+
+    <h2>How we use it</h2>
+    <p>We use this information to display your campaign on quiz links, show you results and trends, answer your questions, confirm payments and improve the platform. We do not sell your data, and we do not use it for advertising.</p>
+
+    <h2>Who can see it</h2>
+    <p>Your flyer, name, phone number, introduction and live quizzes are public — that is how students recognise your campaign. Your responses, messages and payment history are visible only to you and the site admin. Security rules on our database enforce this separation.</p>
+
+    <h2>Passwords and account recovery</h2>
+    <p>Password changes and reset links are handled by Firebase Authentication. If you forget your password, use “Forgot password?” on the login page and we will email a secure reset link. The admin can also send a reset link to your email from the admin dashboard.</p>
+
+    <h2>QR codes</h2>
+    <p>QR codes are generated in your own browser and downloaded as images. They simply point to your quiz link; they do not contain personal data beyond that public link.</p>
+
+    <h2>Storage and limits</h2>
+    <p>Data is stored in Google Cloud Firestore. To keep documents safe and fast, each record is limited to about 1 MB — this is why very large flyer images are rejected with a message asking for a smaller file.</p>
+
+    <h2>Your choices</h2>
+    <p>You can update your name, phone number, introduction and flyer at any time from your dashboard; every quiz updates with them. You may ask us to delete your account and its content. Hiding a quiz takes its public link offline immediately.</p>
+
+    <h2>Contact</h2>
+    <p>For privacy requests or questions, reach us on ${contactLinks(s.phone, s.email, false)}.</p>
+    <p class="tiny muted">Last updated: ${new Date().getFullYear()}</p>
+    <div class="rule"></div>
+    <a href="#/" class="btn btn-outline">← Back to home</a>
+  </div>`;
+}
+
+/* ==================================================================
    AUTH PAGES
    ================================================================== */
+function passwordField(id, label, autocomplete, placeholder) {
+  return `<div class="field"><label for="${id}">${label}</label>
+    <div class="pass-wrap"><input id="${id}" type="password" autocomplete="${autocomplete}" required placeholder="${placeholder}">
+      <button type="button" class="pass-toggle" data-toggle-pass="${id}" aria-label="Show password">Show</button></div></div>`;
+}
 function pageAuth(mode) {
   const signup = mode === 'signup';
   $('#app').innerHTML = `<div class="page wrap auth-card card">
@@ -971,9 +1268,10 @@ function pageAuth(mode) {
     <form id="authForm" novalidate>
       ${signup ? `
       <div class="field"><label for="fname">Full name</label><input id="fname" autocomplete="name" required placeholder="Kofi Mensah"></div>
-      <div class="field"><label for="fphone">Phone number</label><input id="fphone" type="tel" autocomplete="tel" required placeholder="024 000 0000"></div>` : ''}
+      <div class="field"><label for="fphone">Phone number</label><input id="fphone" type="tel" autocomplete="tel" required placeholder="054 000 0000"></div>` : ''}
       <div class="field"><label for="femail">Email address</label><input id="femail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
-      <div class="field"><label for="fpass">Password</label><input id="fpass" type="password" autocomplete="${signup?'new-password':'current-password'}" required placeholder="At least 6 characters"></div>
+      ${passwordField('fpass', 'Password', signup ? 'new-password' : 'current-password', 'At least 6 characters')}
+      ${signup ? '' : '<p class="tiny" style="margin:-.4rem 0 1rem;text-align:right"><a href="#/forgot">Forgot password?</a></p>'}
       <button class="btn btn-gold btn-lg" style="width:100%" type="submit">${signup?'Create account':'Log in'}</button>
     </form>
     <div class="divider">or</div>
@@ -988,27 +1286,112 @@ function pageAuth(mode) {
     const pass = $('#fpass').value;
     const btn = $('button[type=submit]', e.target);
     btn.disabled = true; btn.textContent = 'Please wait…';
-    try {
-      if (signup) {
-        const name = $('#fname').value.trim(), phone = $('#fphone').value.trim();
-        if (!name || !phone || !email || !pass) throw new Error('Please fill in every field.');
-        const u = await api.signUp(email, pass, {});
-        const profile = { name, phone, email:u.email.toLowerCase(), flyer:'', until:0, used:0, at:Date.now() };
-        await api.set('users', u.uid, profile);
-        state.user = u; state.profile = { id:u.uid, ...profile };
-        toast('Account created — welcome to CampusQuiz!', 'ok');
-      } else {
-        if (!email || !pass) throw new Error('Please enter your email and password.');
-        await api.signIn(email, pass);
-        toast('Logged in successfully', 'ok');
-      }
-      location.hash = '#/dashboard';
-    } catch (err) {
-      // Show the real Firebase error message exactly as received.
+    const fail = err => {
       errBox.textContent = err?.message || 'Something went wrong. Please try again.';
       errBox.classList.remove('hide');
       toast(err?.message || 'Could not continue', 'err');
       btn.disabled = false; btn.textContent = signup ? 'Create account' : 'Log in';
+    };
+    if (signup) {
+      const name = $('#fname').value.trim(), phone = $('#fphone').value.trim();
+      if (!name || !phone || !email || !pass) return fail(new Error('Please fill in every field.'));
+      // Firebase signs a new user in automatically. Suppress that, then sign out
+      // so signup NEVER lands in the dashboard — the user must log in afterwards.
+      suppressAuthRoute = true;
+      let created = false, err = null;
+      try {
+        const u = await api.signUp(email, pass, {});
+        const profile = { name, phone, email:u.email.toLowerCase(), flyer:'', bio:'', until:0, used:0, at:Date.now() };
+        await api.set('users', u.uid, profile);
+        created = true;
+      } catch (e2) { err = e2; }
+      try { await api.signOut(); } catch (_) {}
+      suppressAuthRoute = false;
+      state.user = null; state.profile = null; renderNav();
+      if (!created) return fail(err);
+      showHumanCheck(name);
+      return;
+    }
+    if (!email || !pass) return fail(new Error('Please enter your email and password.'));
+    suppressAuthRoute = true;
+    try {
+      await api.signIn(email, pass);
+      suppressAuthRoute = false;
+      toast('Logged in successfully', 'ok');
+      location.hash = '#/dashboard';
+    } catch (err) {
+      suppressAuthRoute = false;
+      fail(err);
+    }
+  });
+}
+
+function showHumanCheck(name) {
+  $('#app').innerHTML = `<div class="page wrap auth-card card verify-box">
+    <div class="shield">✦</div>
+    <h1>One quick check</h1>
+    <p class="sub">Thanks, ${esc((name||'there').split(' ')[0])}! Your account is ready. Confirm you are human before going to the login page.</p>
+    <div class="verify-row"><label style="display:flex;align-items:center;gap:.6rem;margin:0">
+      <input type="checkbox" id="humanTick"> I am not a robot</label></div>
+    <div class="verify-row"><label for="humanAnswer" style="margin:0">What is 4 + 3?</label>
+      <input id="humanAnswer" type="text" inputmode="numeric" maxlength="3" placeholder="?" autocomplete="off"></div>
+    <div id="verifyErr" class="error-box hide" role="alert"></div>
+    <button class="btn btn-gold btn-lg" id="verifyBtn" style="width:100%">Verify &amp; continue</button>
+    <p class="center tiny" style="margin-top:1rem"><a href="#/">← Back to home</a></p>
+  </div>`;
+  $('#verifyBtn').addEventListener('click', () => {
+    const errBox = $('#verifyErr');
+    if (!$('#humanTick').checked || $('#humanAnswer').value.trim() !== '7') {
+      errBox.textContent = 'Please tick the box and answer the question to continue.';
+      errBox.classList.remove('hide');
+      return;
+    }
+    errBox.classList.add('hide');
+    $('#app').innerHTML = `<div class="page wrap auth-card card verify-box">
+      <div class="shield">✓</div>
+      <h1>You are all set</h1>
+      <p class="sub">Your account was created and verified. Log in to start building your first quiz.</p>
+      <a href="#/login" class="btn btn-gold btn-lg" style="width:100%">Log in now →</a>
+      <p class="center tiny" style="margin-top:1rem"><a href="#/">← Back to home</a></p>
+    </div>`;
+  });
+}
+
+function pageForgot() {
+  $('#app').innerHTML = `<div class="page wrap auth-card card">
+    <img class="auth-logo" src="${LOGO}" alt="CampusQuiz logo">
+    <h1>Reset your password</h1>
+    <p class="sub">Enter your email and we will send you a secure link to choose a new password.</p>
+    <div id="resetErr" class="error-box hide" role="alert"></div>
+    <div id="resetDone" class="notice info hide" role="status"></div>
+    <form id="resetForm" novalidate>
+      <div class="field"><label for="rEmail">Email address</label>
+        <input id="rEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+      <button class="btn btn-gold btn-lg" style="width:100%" type="submit">Send reset link</button>
+    </form>
+    <p class="center tiny" style="margin-top:1.2rem"><a href="#/login">← Back to login</a></p>
+  </div>`;
+  $('#resetForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('#rEmail').value.trim();
+    const errBox = $('#resetErr'), done = $('#resetDone');
+    errBox.classList.add('hide'); done.classList.add('hide');
+    if (!email) { errBox.textContent = 'Please enter your email address.'; errBox.classList.remove('hide'); return; }
+    const btn = $('button[type=submit]', e.target);
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const res = await api.sendReset(email);
+      done.textContent = res?.demo
+        ? `Demo mode: no real email was sent. In the live app, a reset link would go to ${email}. Ask the admin to send one from the dashboard if you are stuck.`
+        : `If an account exists for ${email}, a password reset link is on its way. Check your inbox and spam folder.`;
+      done.classList.remove('hide');
+      $('#resetForm').classList.add('hide');
+      toast('Reset link request received', 'ok');
+    } catch (err) {
+      errBox.textContent = err?.message || 'Could not send the reset link. Please try again.';
+      errBox.classList.remove('hide');
+      toast(err?.message || 'Could not send reset link', 'err');
+      btn.disabled = false; btn.textContent = 'Send reset link';
     }
   });
 }
@@ -1020,9 +1403,12 @@ async function pageDashboard() {
   if (!requireUser()) return;
   loading('Loading your dashboard…');
   const uid = state.user.uid;
-  const [profile, quizzes] = await Promise.all([api.get('users', uid), api.where('quizzes','owner',uid)]);
+  const [profile, quizzes, messages] = await Promise.all([
+    api.get('users', uid), api.where('quizzes','owner',uid), api.where('messages','owner',uid)
+  ]);
   state.profile = profile;
   quizzes.sort((a,b) => (b.at||0)-(a.at||0));
+  messages.sort((a,b) => (b.at||0)-(a.at||0));
   const s = state.settings || DEFAULT_SETTINGS;
   const used = profile?.used || 0;
   const limit = s.free ?? 2;
@@ -1034,22 +1420,31 @@ async function pageDashboard() {
   $('#app').innerHTML = `<div class="page wrap">
     <div class="page-head">
       <div><span class="eyebrow"><span class="dot"></span> Your campaign hub</span><h1>Hi ${esc((profile?.name||state.user.email||'there').split(' ')[0])}, ready to reach more students?</h1></div>
-      <a href="#/new" class="btn btn-gold btn-lg">+ Create a quiz</a>
+      <div class="row"><a href="#/new" class="btn btn-gold btn-lg">+ Create a quiz</a>
+        ${isAdmin() ? '<a href="#/admin" class="btn btn-outline">Admin</a>' : ''}</div>
     </div>
 
     <div class="grid-2" style="align-items:start;margin-bottom:1.4rem">
       <div class="card">
         <h3>Your profile card</h3>
-        <p class="muted tiny">This flyer appears on every quiz link you share.</p>
+        <p class="muted tiny">Your flyer, name, phone, WhatsApp link and introduction appear on every quiz link you share. Change them here once and every quiz updates automatically.</p>
         ${profile?.flyer
           ? `<img class="profile-flyer" src="${profile.flyer}" alt="Campaign flyer for ${esc(profile.name)}">`
           : `<div class="profile-flyer" style="display:grid;place-items:center;text-align:center;padding:1rem;color:var(--muted);font-weight:700">No flyer yet — upload one below</div>`}
         <div class="field" style="margin-top:1rem"><label for="flyerInput">${profile?.flyer?'Replace campaign flyer':'Upload campaign flyer'}</label>
-          <input id="flyerInput" type="file" accept="image/*"></div>
+          <input id="flyerInput" type="file" accept="image/*">
+          <span class="hint">Uploaded exactly as-is — we never resize or compress your flyer. Firestore allows about 1 MB per record, so very large images are rejected with a friendly message.</span></div>
+        <div class="field"><label for="nameEdit">Your name</label>
+          <input id="nameEdit" value="${esc(profile?.name||'')}" placeholder="e.g. Kofi Mensah"></div>
         <div class="field"><label for="phoneEdit">Phone number students can call</label>
-          <div class="row"><input id="phoneEdit" value="${esc(profile?.phone||'')}" style="flex:1;min-width:180px">
-          <button class="btn btn-outline" id="savePhone">Save</button></div></div>
-        <p class="tiny muted" style="margin:0">Name: <strong>${esc(profile?.name||'—')}</strong></p>
+          <input id="phoneEdit" value="${esc(profile?.phone||'')}" placeholder="054 000 0000"></div>
+        <div class="field"><label for="whatsappEdit">WhatsApp channel or group link</label>
+          <input id="whatsappEdit" value="${esc(profile?.whatsapp||'')}" placeholder="https://chat.whatsapp.com/...">
+          <span class="hint">Paste the invite link to your WhatsApp group or channel. It appears after students finish the quiz so they can join you.</span></div>
+        <div class="field"><label for="bioEdit">Your introduction (read by students before they start)</label>
+          <textarea id="bioEdit" rows="4" placeholder="Tell students who you are, what you want to change and why you are asking for their vote…">${esc(profile?.bio||'')}</textarea>
+          <span class="hint">This appears alongside your flyer on every quiz, before the first question.</span></div>
+        <button class="btn btn-outline" id="saveProfile">Save profile &amp; contact links</button>
       </div>
 
       <div class="stack">
@@ -1068,8 +1463,27 @@ async function pageDashboard() {
     </div>
 
     <div class="page-head" style="margin-bottom:1rem"><h2 style="font-size:1.5rem;margin:0">Your quizzes</h2>
-      <span class="muted tiny">Copy a link and share it anywhere.</span></div>
+      <span class="muted tiny">Copy a link, download a QR code and share it anywhere.</span></div>
     <div class="stack" id="quizList"></div>
+
+    <div class="card" style="margin-top:1.6rem">
+      <h3>Messages</h3>
+      <p class="muted tiny">Feedback from students who took your quizzes, plus any notes you sent to the CampusQuiz team.</p>
+      <div id="msgList">${messages.length ? messages.map(m => `
+        <div class="msg-item ${m.kind==='support'?'support':''}">
+          <div class="msg-top"><strong>${esc(m.kind==='support'?'To CampusQuiz team':`From ${m.from||'a student'}`)}</strong>
+            <span class="tiny muted">${fmtDT(m.at)}</span></div>
+          <p class="msg-text">${esc(m.text||'')}</p>
+          ${m.email?`<p class="tiny muted" style="margin:.4rem 0 0">${esc(m.email)}</p>`:''}
+        </div>`).join('') : empty('No messages yet', 'Student feedback and your support messages will appear here.')}</div>
+      <div class="rule" style="border-top:1px solid var(--line);margin:1.2rem 0"></div>
+      <h4>Message the CampusQuiz team</h4>
+      <form id="supportForm">
+        <div class="field"><label for="supportText">Your message</label>
+          <textarea id="supportText" rows="3" placeholder="Ask a question, report a problem or request a password reset…" required></textarea></div>
+        <button class="btn btn-gold" type="submit">Send to admin</button>
+      </form>
+    </div>
   </div>`;
 
   $('#quizList').innerHTML = quizzes.length ? quizzes.map(q => `
@@ -1084,6 +1498,7 @@ async function pageDashboard() {
       </div>
       <div class="quiz-actions">
         <button class="btn btn-sm btn-outline" data-copy="${q.id}">Copy link</button>
+        <button class="btn btn-sm btn-outline" data-qr="${q.id}">QR code</button>
         <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
         <button class="btn btn-sm btn-outline" data-toggle="${q.id}">${q.live?'Hide':'Publish'}</button>
         <button class="btn btn-sm btn-danger" data-del="${q.id}">Delete</button>
@@ -1092,26 +1507,48 @@ async function pageDashboard() {
       'Add your past questions, tick the correct answers and share your first link.',
       '<a href="#/new" class="btn btn-gold">Create your first quiz</a>');
 
-  $('#savePhone').addEventListener('click', async () => {
-    const phone = $('#phoneEdit').value.trim();
-    if (!phone) return toast('Please enter a phone number', 'err');
-    try { await api.set('users', uid, { phone }, true); state.profile.phone = phone; toast('Phone number updated', 'ok'); }
-    catch (err) { toast(err.message, 'err'); }
+  $('#saveProfile').addEventListener('click', async () => {
+    const name = $('#nameEdit').value.trim(), phone = $('#phoneEdit').value.trim(),
+          bio = $('#bioEdit').value.trim(), whatsapp = $('#whatsappEdit').value.trim();
+    if (!name || !phone) return toast('Please enter your name and phone number', 'err');
+    const btn = $('#saveProfile'); btn.disabled = true;
+    try {
+      const patch = { name, phone, bio, whatsapp };
+      await api.set('users', uid, patch, true);
+      // Also carry the signup email onto older quizzes so their contact link appears.
+      await syncProfileToQuizzes(uid, { ...patch, email: state.profile?.email || '' });
+      Object.assign(state.profile, patch);
+      toast('Profile updated on all your quizzes', 'ok');
+      pageDashboard();
+    } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
   });
   $('#flyerInput').addEventListener('change', async e => {
     const file = e.target.files?.[0]; if (!file) return;
-    toast('Resizing your flyer…', 'info');
+    toast('Reading your flyer…', 'info');
     try {
-      const data = await resizeImage(file, 900, .8);
+      const data = await readOriginalImage(file);
       await api.set('users', uid, { flyer:data }, true);
+      await syncProfileToQuizzes(uid, { flyer:data });
       state.profile.flyer = data;
-      toast('Flyer updated on all your quizzes', 'ok');
+      toast('Flyer updated on all your quizzes — original quality kept', 'ok');
       pageDashboard();
     } catch (err) { toast(err.message, 'err'); }
   });
+  $('#supportForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const text = $('#supportText').value.trim();
+    if (!text) return toast('Please type a message', 'err');
+    const btn = $('button[type=submit]', e.target); btn.disabled = true;
+    try {
+      await api.add('messages', { quizId:'', owner:uid, from:state.profile?.name||'', email:String(state.user.email||'').toLowerCase(), text, kind:'support', at:Date.now() });
+      toast('Message sent to the admin', 'ok'); pageDashboard();
+    } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
+  });
   $('#quizList').addEventListener('click', async e => {
-    const copy = e.target.closest('[data-copy]'), toggle = e.target.closest('[data-toggle]'), del = e.target.closest('[data-del]');
+    const copy = e.target.closest('[data-copy]'), qr = e.target.closest('[data-qr]'),
+          toggle = e.target.closest('[data-toggle]'), del = e.target.closest('[data-del]');
     if (copy) { const q = quizzes.find(x=>x.id===copy.dataset.copy); if (q) copyText(shareLink(q)); }
+    if (qr) { const q = quizzes.find(x=>x.id===qr.dataset.qr); if (q) showQR(q); }
     if (toggle) {
       const q = quizzes.find(x=>x.id===toggle.dataset.toggle);
       try { await api.set('quizzes', q.id, { live:!q.live }, true); toast(q.live?'Quiz hidden':'Quiz published', 'ok'); pageDashboard(); }
@@ -1207,8 +1644,10 @@ Answer: B</pre>
 
       <div class="row" style="margin-top:1.2rem">
         <button class="btn btn-gold" id="parseBtn">Parse questions →</button>
+        <button class="btn btn-outline" id="appendBtn">+ Add more questions from text</button>
         <span id="qcount" class="muted" style="font-weight:800"></span>
       </div>
+      <p class="tiny muted" style="margin:.6rem 0 0">Paste a new batch of AI-converted questions above and press <strong>Add more questions</strong> to append them without losing the questions you already edited.</p>
     </div>
 
     <div class="card" style="margin-bottom:1.2rem">
@@ -1235,6 +1674,21 @@ Answer: B</pre>
     state.draft = parsed;
     renderEditor();
     toast(`${parsed.length} question${parsed.length===1?'':'s'} parsed. Tick the correct answers.`, 'ok');
+    $('#editor').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+  $('#appendBtn').addEventListener('click', () => {
+    const text = $('#pasteBox').value;
+    if (!text.trim()) return toast('Paste the next batch of questions above first', 'err');
+    const parsed = parseQuestions(text);
+    if (!parsed.length) return toast('No questions found — check the required format above', 'err');
+    const cap = paidNow() ? 200 : (s.max ?? 50);
+    if (state.draft.length + parsed.length > cap) {
+      return toast(`Your plan allows ${cap} questions per quiz. Remove some before adding more.`, 'err');
+    }
+    state.draft = state.draft.concat(parsed);
+    $('#pasteBox').value = '';
+    renderEditor();
+    toast(`${parsed.length} question${parsed.length===1?'':'s'} added — ${state.draft.length} in total.`, 'ok');
     $('#editor').scrollIntoView({ behavior:'smooth', block:'start' });
   });
   $('#pdfInput').addEventListener('change', async e => {
@@ -1311,7 +1765,9 @@ Answer: B</pre>
       const slug = `${slugify(first)}-${slugify(title)}-${rand(4)}`;
       const qs = state.draft.map(q => ({ q:q.q.trim(), o:q.o.map(o=>o.trim()), a:q.a }));
       await api.add('quizzes', {
-        owner:state.user.uid, name:profile?.name||'', phone:profile?.phone||'', flyer:profile?.flyer||'',
+        owner:state.user.uid, name:profile?.name||'', phone:profile?.phone||'',
+        email:profile?.email||'', whatsapp:profile?.whatsapp||'',
+        flyer:profile?.flyer||'', bio:profile?.bio||'',
         title, min, slug, qs, live, at:Date.now()
       });
       if (!paidNow()) await api.set('users', state.user.uid, { used:(profile?.used||0)+1 }, true);
@@ -1349,12 +1805,14 @@ async function pageResults(id) {
   const qStats = qs.map((q, i) => ({
     i, q:q.q, correct:responses.filter(r => (r.a||[])[i] === q.a).length
   }));
+  const points = trendPoints(responses, pctOf);
 
   $('#app').innerHTML = `<div class="page wrap" id="resultsRoot">
     <div class="page-head">
       <div><span class="eyebrow"><span class="dot"></span> Quiz results</span><h1>${esc(quiz.title)}</h1>
         <p class="muted tiny" style="margin:0">${qs.length} questions · ${esc(quiz.min)} minutes · ${responses.length} attempt${responses.length===1?'':'s'}</p></div>
       <div class="row"><button class="btn btn-outline" data-copy> Copy link</button>
+        <button class="btn btn-outline" data-qr> QR code</button>
         <a href="#/dashboard" class="btn btn-outline">← Dashboard</a></div>
     </div>
 
@@ -1362,6 +1820,17 @@ async function pageResults(id) {
       <div class="stat"><b>${responses.length}</b><span>Total attempts</span></div>
       <div class="stat"><b>${avg}%</b><span>Average score</span></div>
       <div class="stat"><b>${best}%</b><span>Highest score</span></div>
+    </div>
+
+    <div class="grid-2" style="align-items:start;margin-bottom:1.2rem">
+      <div class="card"><h3>Performance trend</h3>
+        <p class="muted tiny">Every attempt in order — see how students improve over time.</p>
+        ${lineTrendSVG(points)}
+      </div>
+      <div class="card"><h3>Average score by day</h3>
+        <p class="muted tiny">A bar chart of the daily average, so the trend is easy to read.</p>
+        ${barTrendHTML(points)}
+      </div>
     </div>
 
     <div class="grid-2" style="align-items:start;margin-bottom:1.2rem">
@@ -1393,6 +1862,7 @@ async function pageResults(id) {
   </div>`;
 
   $('[data-copy]').addEventListener('click', () => copyText(shareLink(quiz)));
+  $('[data-qr]').addEventListener('click', () => showQR(quiz));
   $('#resultsRoot').addEventListener('click', e => {
     const b = e.target.closest('[data-review]'); if (!b) return;
     const r = responses.find(x => x.id === b.dataset.review); if (!r) return;
@@ -1436,7 +1906,8 @@ async function pagePublicQuiz(slug) {
         <div>
           <span class="eyebrow"><span class="dot"></span> You are invited to take a quiz</span>
           <h1>${esc(quiz.title)}</h1>
-          <p class="muted" style="margin-bottom:.7rem">Presented by <strong>${esc(quiz.name)}</strong></p>
+          <p class="muted" style="margin-bottom:.7rem">Created by <strong>${esc(quiz.name)}</strong></p>
+          ${quiz.bio ? `<div class="bio-box"><strong>A word from ${esc(quiz.name)}</strong><p>${esc(quiz.bio)}</p></div>` : ''}
           ${quiz.phone ? `<a class="tel" href="tel:${esc(String(quiz.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(quiz.phone)}</a>` : ''}
           <div class="quiz-meta"><span>${qs.length} questions</span><span>${esc(quiz.min)} minutes</span><span>Multiple choice</span></div>
           <p class="tiny muted">Your answers and name are shared with the aspirant so they can review results.</p>
@@ -1497,15 +1968,37 @@ async function pagePublicQuiz(slug) {
       try {
         await api.add('responses', { quizId:quiz.id, name, a:answers, sc, tot, at:Date.now() });
         const pct = Math.round(sc / Math.max(1,tot) * 100);
+        const creator = String(quiz.name || 'the creator').trim();
+        const directWA = waLink(quiz.phone, `Hi ${creator}, I just completed your "${quiz.title}" quiz.`);
+        const groupURL = safeUrl(quiz.whatsapp);
+        const groupLabel = /channel/i.test(String(quiz.whatsapp || '')) ? 'channel' : 'group';
+        const supportEmail = String(state.settings?.email || CONTACT_EMAIL).trim();
         $('#app').innerHTML = `<div class="page wrap quiz-shell">
           <div class="card center">
             <div class="score-ring" style="--p:${pct}%"><b>${pct}%</b></div>
             <h1 style="font-size:1.9rem">Well done, ${esc(name.split(' ')[0])}!</h1>
             <p class="muted">You scored <strong>${sc} out of ${tot}</strong> on ${esc(quiz.title)}.</p>
             <div class="row" style="justify-content:center">
-              ${quiz.phone?`<a class="tel" href="tel:${esc(String(quiz.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(quiz.name)}</a>`:''}
               <button class="btn btn-outline" id="againBtn">Take it again</button>
             </div>
+          </div>
+
+          <div class="card" style="margin-top:1.2rem">
+            <div class="notice info" style="margin-bottom:.9rem">
+              <strong>Thank you — your answers are in!</strong><br>
+              Your result has been sent to the creator. Keep practising; every attempt helps you do better in the real exam.
+            </div>
+            <p class="created-by">Created by <strong>${esc(creator)}</strong></p>
+            <p class="muted tiny" style="margin:.2rem 0 0">Stay connected — ask a question, or join the community:</p>
+            ${groupURL ? `<div class="center" style="margin:.9rem 0">
+              <a class="join-channel" href="${esc(groupURL)}" target="_blank" rel="noopener noreferrer">💬 Join our WhatsApp ${groupLabel} →</a>
+            </div>` : ''}
+            <div class="contact-chips">
+              ${directWA ? `<a class="contact-chip whatsapp" href="${esc(directWA)}" target="_blank" rel="noopener noreferrer">💬 WhatsApp ${esc(creator)}</a>` : ''}
+              ${quiz.phone ? `<a class="contact-chip call" href="tel:${esc(contactDigits(quiz.phone))}">☎ Call ${esc(quiz.phone)}</a>` : ''}
+              ${quiz.email ? `<a class="contact-chip mail" href="mailto:${esc(quiz.email)}">✉ Email ${esc(creator)}</a>` : ''}
+            </div>
+            ${supportEmail ? `<p class="center tiny muted" style="margin:1.1rem 0 0">Having trouble with the quiz? <a href="mailto:${esc(supportEmail)}">Email CampusQuiz support</a></p>` : ''}
           </div>
           <h2 style="font-size:1.4rem;margin:1.6rem 0 .8rem">Your answer review</h2>
           ${qs.map((q, i) => {
@@ -1515,9 +2008,38 @@ async function pagePublicQuiz(slug) {
               <div class="ans"><span class="${good?'good-txt':'bad-txt'}">You: ${answers[i]==null?'No answer':esc(q.o[answers[i]]||'—')}</span>
               <span class="good-txt">Correct: ${esc(q.o[q.a]||'—')}</span></div></div>`;
           }).join('')}
+          <div class="card" style="margin-top:1.6rem">
+            <h3>Send ${esc(quiz.name)} your feedback</h3>
+            <p class="muted tiny">Tell them what you enjoyed or what they can improve. Your message goes straight to their dashboard.</p>
+            <div id="fbErr" class="error-box hide" role="alert"></div>
+            <form id="feedbackForm">
+              <div class="field"><label for="fbFrom">Your name</label>
+                <input id="fbFrom" value="${esc(name)}" maxlength="90" required></div>
+              <div class="field"><label for="fbText">Your feedback</label>
+                <textarea id="fbText" rows="3" maxlength="2000" placeholder="I loved the quiz because…" required></textarea></div>
+              <button class="btn btn-gold" type="submit">Send feedback</button>
+            </form>
+          </div>
           <p class="center tiny muted" style="margin-top:1.4rem"><a href="#/">Back to CampusQuiz</a></p>
         </div>`;
         $('#againBtn').addEventListener('click', intro);
+        $('#feedbackForm').addEventListener('submit', async ev => {
+          ev.preventDefault();
+          const from = $('#fbFrom').value.trim(), text = $('#fbText').value.trim();
+          const errBox = $('#fbErr'); errBox.classList.add('hide');
+          if (!from || !text) { errBox.textContent = 'Please enter your name and feedback.'; errBox.classList.remove('hide'); return; }
+          const btn = $('button[type=submit]', ev.target); btn.disabled = true; btn.textContent = 'Sending…';
+          try {
+            await api.add('messages', { quizId:quiz.id, owner:quiz.owner, from, email:'', text, kind:'feedback', at:Date.now() });
+            toast('Thank you — your feedback was sent', 'ok');
+            $('#fbText').value = ''; btn.textContent = 'Send feedback'; btn.disabled = false;
+          } catch (err) {
+            errBox.textContent = err?.message || 'Could not send your feedback. Please try again.';
+            errBox.classList.remove('hide');
+            toast(err?.message || 'Could not send feedback', 'err');
+            btn.disabled = false; btn.textContent = 'Send feedback';
+          }
+        });
         window.scrollTo({ top:0, behavior:'smooth' });
       } catch (err) {
         done = false;
@@ -1546,18 +2068,21 @@ async function pageAdmin() {
     return;
   }
   loading('Opening admin controls…');
-  const [payments, users, quizzes] = await Promise.all([api.all('payments'), api.all('users'), api.all('quizzes')]);
+  const [payments, users, quizzes, messages] = await Promise.all([
+    api.all('payments'), api.all('users'), api.all('quizzes'), api.all('messages')
+  ]);
   const s = state.settings || DEFAULT_SETTINGS;
   const sortedPayments = payments.sort((a,b) =>
     (a.status==='pending'?0:1)-(b.status==='pending'?0:1) || (b.at||0)-(a.at||0));
   users.sort((a,b)=>(b.at||0)-(a.at||0));
   quizzes.sort((a,b)=>(b.at||0)-(a.at||0));
+  messages.sort((a,b)=>(b.at||0)-(a.at||0));
 
-  const tabs = [['payments','Payments'],['prices','Prices & contact'],['users','Users'],['quizzes','Quizzes']];
+  const tabs = [['payments','Payments'],['prices','Prices & contact'],['users','Users'],['quizzes','Quizzes'],['messages','Messages']];
   $('#app').innerHTML = `<div class="page wrap" id="adminRoot">
     <div class="page-head">
-      <div><span class="eyebrow"><span class="dot"></span> Site owner</span><h1>Admin</h1></div>
-      <span class="plan-pill live">${esc(state.user.email)}</span>
+      <div><span class="eyebrow"><span class="dot"></span> Site owner</span><h1>${esc(state.profile?.name || 'Admin')}</h1></div>
+      <a class="plan-pill live" href="mailto:${esc(state.user.email)}" title="Email the site owner">${esc(state.user.email)}</a>
     </div>
     <div class="row" style="border-bottom:2px solid var(--line);padding-bottom:.5rem;margin-bottom:1.4rem">
       ${tabs.map(([k,label]) => `<button class="btn btn-sm ${state.adminTab===k?'':'btn-outline'}" data-tab="${k}">${label}</button>`).join('')}
@@ -1628,7 +2153,8 @@ async function pageAdmin() {
       <p class="muted tiny">Changes here update the home page pricing cards and the payment page immediately.</p>
       <div class="grid-3">
         <div class="field"><label for="curSet">Currency symbol</label><input id="curSet" value="${esc(s.cur||'')}" placeholder="GH₵"></div>
-        <div class="field"><label for="phoneSet">Admin phone number</label><input id="phoneSet" value="${esc(s.phone||'')}" placeholder="0240000000"></div>
+        <div class="field"><label for="phoneSet">Admin phone number</label><input id="phoneSet" value="${esc(s.phone||'')}" placeholder="0547779727"></div>
+        <div class="field"><label for="emailSet">Admin email address</label><input id="emailSet" type="email" value="${esc(s.email||CONTACT_EMAIL)}" placeholder="muhadeenmohammed7@gmail.com"></div>
         <div class="field"><label for="freeSet">Free-trial quiz limit</label><input id="freeSet" type="number" min="0" value="${esc(s.free??2)}"></div>
       </div>
       <div class="grid-2">
@@ -1648,6 +2174,7 @@ async function pageAdmin() {
       }
       const next = {
         plans, cur:$('#curSet').value.trim()||'GH₵', phone:$('#phoneSet').value.trim(),
+        email:$('#emailSet').value.trim()||CONTACT_EMAIL,
         note:$('#noteSet').value.trim(), free:Math.max(0,Number($('#freeSet').value)||0),
         max:Math.max(1,Number($('#maxSet').value)||50)
       };
@@ -1668,12 +2195,25 @@ async function pageAdmin() {
           <td><strong>${esc(u.name||'—')}</strong></td><td>${esc(u.email||'—')}</td><td>${esc(u.phone||'—')}</td>
           <td>${(u.until||0)>Date.now()?`<span class="plan-pill live">Active to ${fmtDate(u.until)}</span>`:'<span class="plan-pill off">Free trial</span>'}</td>
           <td>${fmtDate(u.at)}</td>
-          <td><button class="btn btn-sm btn-danger" data-deluser="${u.id}">Delete</button></td>
+          <td><div class="row" style="flex-wrap:nowrap">
+            <button class="btn btn-sm btn-outline" data-reset="${u.id}">Send reset link</button>
+            <button class="btn btn-sm btn-danger" data-deluser="${u.id}">Delete</button></div></td>
         </tr>`).join('')}</tbody></table></div>`
       : empty('No users yet', 'Sign-ups will appear here.')}
       <p class="tiny muted" style="margin-top:.9rem">Deleting removes the user's profile, quizzes, responses and payment history. To block their login too, disable the account in the Firebase Console (Authentication → Users).</p>
     </div>`;
     body.onclick = async e => {
+      const rb = e.target.closest('[data-reset]');
+      if (rb) {
+        const u = users.find(x=>x.id===rb.dataset.reset);
+        if (!u?.email) return toast('This user has no email address', 'err');
+        if (!await ask('Send password reset link?', `Firebase will email a secure password-change link to ${u.email}.`)) return;
+        try {
+          const res = await api.sendReset(u.email);
+          toast(res?.demo ? 'Demo mode: no real email was sent. In the live app the link goes to ' + u.email : `Reset link sent to ${u.email}`, 'ok');
+        } catch (err) { toast(err.message, 'err'); }
+        return;
+      }
       const b = e.target.closest('[data-deluser]'); if (!b) return;
       const u = users.find(x=>x.id===b.dataset.deluser);
       if (!await ask('Delete this user?', `This removes ${u.name||u.email}, their quizzes and all responses. This cannot be undone.`)) return;
@@ -1703,7 +2243,9 @@ async function pageAdmin() {
           <td><span class="plan-pill ${q.live?'live':'off'}">${q.live?'Live':'Hidden'}</span></td>
           <td>${fmtDate(q.at)}</td>
           <td><div class="row" style="flex-wrap:nowrap">
+            <button class="btn btn-sm btn-outline" data-viewq="${q.id}">View questions</button>
             <button class="btn btn-sm btn-outline" data-copyq="${q.id}">Copy link</button>
+            <button class="btn btn-sm btn-outline" data-qrq="${q.id}">QR</button>
             <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
             <button class="btn btn-sm btn-outline" data-toggleq="${q.id}">${q.live?'Hide':'Show'}</button>
             <button class="btn btn-sm btn-danger" data-delq="${q.id}">Delete</button>
@@ -1712,7 +2254,20 @@ async function pageAdmin() {
       : empty('No quizzes yet', 'Quizzes created by aspirants will appear here.')}
     </div>`;
     body.onclick = async e => {
-      const c = e.target.closest('[data-copyq]'), t = e.target.closest('[data-toggleq]'), d = e.target.closest('[data-delq]');
+      const v = e.target.closest('[data-viewq]'), qrq = e.target.closest('[data-qrq]'),
+            c = e.target.closest('[data-copyq]'), t = e.target.closest('[data-toggleq]'), d = e.target.closest('[data-delq]');
+      if (v) {
+        const q = quizzes.find(x=>x.id===v.dataset.viewq); if (!q) return;
+        const rows = (q.qs||[]).map((item,i) => `<div class="review-row good">
+          <strong>Q${i+1}. ${esc(item.q)}</strong>
+          <div class="tiny muted" style="margin-top:.4rem">${(item.o||[]).map((o,j) =>
+            `<div>${'ABCDE'[j]}) ${esc(o)}${item.a===j?' <b style="color:var(--ok)">✓ correct</b>':''}</div>`).join('')}</div></div>`).join('');
+        modal(`<h3>“${esc(q.title)}” — ${(q.qs||[]).length} questions</h3>
+          <p class="muted tiny">Set by ${esc(q.name||'—')}. Review for policy violations.</p>
+          <div style="max-height:55vh;overflow:auto">${rows || '<p class="muted">No questions.</p>'}</div>
+          <div class="modal-foot"><button class="btn btn-outline" data-close>Close</button></div>`);
+      }
+      if (qrq) { const q = quizzes.find(x=>x.id===qrq.dataset.qrq); if (q) showQR(q); }
       if (c) { const q = quizzes.find(x=>x.id===c.dataset.copyq); if (q) copyText(shareLink(q)); }
       if (t) { const q = quizzes.find(x=>x.id===t.dataset.toggleq);
         try { await api.set('quizzes',q.id,{live:!q.live},true); toast(q.live?'Quiz hidden':'Quiz shown', 'ok'); pageAdmin(); }
@@ -1728,7 +2283,29 @@ async function pageAdmin() {
     };
   }
 
-  ({ payments:payView, prices:priceView, users:usersView, quizzes:quizzesView }[state.adminTab] || payView)();
+  function messagesView() {
+    body.innerHTML = `<div class="card"><h3>All messages</h3>
+      <p class="muted tiny">Feedback from students and notes sent by aspirants.</p>
+      ${messages.length ? messages.map(m => `
+        <div class="msg-item ${m.kind==='support'?'support':''}">
+          <div class="msg-top"><strong>${esc(m.kind==='support'?'Support message':'Feedback')} · ${esc(m.from||'Unknown')}</strong>
+            <span class="tiny muted">${fmtDT(m.at)}</span></div>
+          <p class="msg-text">${esc(m.text||'')}</p>
+          <p class="tiny muted" style="margin:.5rem 0 0">
+            ${m.email?`${esc(m.email)} · `:''}${m.quizId?`Quiz: ${esc(quizzes.find(q=>q.id===m.quizId)?.title||m.quizId)}`:''}
+            <button class="btn btn-sm btn-danger" style="margin-left:.5rem" data-delmsg="${m.id}">Delete</button>
+          </p>
+        </div>`).join('') : empty('No messages yet', 'Student feedback and support notes will appear here.')}
+    </div>`;
+    body.onclick = async e => {
+      const b = e.target.closest('[data-delmsg]'); if (!b) return;
+      if (!await ask('Delete this message?', 'It will be removed everywhere.')) return;
+      try { await api.del('messages', b.dataset.delmsg); toast('Message deleted', 'ok'); pageAdmin(); }
+      catch (err) { toast(err.message, 'err'); }
+    };
+  }
+
+  ({ payments:payView, prices:priceView, users:usersView, quizzes:quizzesView, messages:messagesView }[state.adminTab] || payView)();
   $('#adminRoot').addEventListener('click', e => {
     const t = e.target.closest('[data-tab]'); if (!t) return;
     state.adminTab = t.dataset.tab; pageAdmin();
@@ -1750,6 +2327,21 @@ async function pageAdmin() {
     if (e.target.closest('[data-home]')) state.pendingScroll = null;
   });
   window.addEventListener('hashchange', route);
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-toggle-pass]'); if (!b) return;
+    const input = document.getElementById(b.dataset.togglePass); if (!input) return;
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    b.textContent = show ? 'Hide' : 'Show';
+    b.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  });
+  $('#navOut').addEventListener('click', async () => {
+    try { await api.signOut(); } catch (err) { console.warn(err); }
+    state.user = null; state.profile = null; state.draft = [];
+    renderNav();
+    if (parseRoute().name === 'home') route(); else location.hash = '#/';
+    toast('You have been logged out', 'ok');
+  });
 
   await initFirebase();
   const saved = await api.get('settings','app');
@@ -1759,12 +2351,11 @@ async function pageAdmin() {
     if (['home','plans'].includes(parseRoute().name)) route();
   });
   api.onAuth(async u => {
-    const previous = state.user?.uid;
     state.user = u;
     state.profile = u ? await api.get('users', u.uid) : null;
     renderNav();
-    if (u && !previous && ['login','signup'].includes(parseRoute().name)) location.hash = '#/dashboard';
-    else route();
+    // Signup deliberately suppresses this so the human-check screen is not wiped.
+    if (!suppressAuthRoute) route();
   });
   route();
 })();
@@ -1811,6 +2402,7 @@ async function pagePlans() {
         <h3>Submit your payment</h3>
         <p class="muted" style="font-size:.92rem">${esc(s.note||'')}</p>
         ${s.phone ? `<a class="tel" href="tel:${esc(String(s.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(s.phone)} for faster confirmation</a>` : ''}
+        ${s.email ? `<p class="tiny muted" style="margin-top:.6rem">Or email <a href="mailto:${esc(s.email)}">${esc(s.email)}</a></p>` : ''}
         <div id="payErr" class="error-box hide" role="alert" style="margin-top:1rem"></div>
         <form id="payForm" style="margin-top:1rem">
           <div class="field"><label for="planSel">Plan</label><select id="planSel" required>
