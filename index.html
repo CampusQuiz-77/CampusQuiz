@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1B6FA8">
+  <meta name="description" content="CampusQuiz — turn past questions into a timed quiz every student shares. Built for student election aspirants in Ghana and across Africa.">
+  <title>CampusQuiz — Turn past questions into a quiz every student shares</title>
+
+  <!-- Favicon uses the attached brand logo (embedded so this stays a single file) -->
+  <link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,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">
+
+  <!-- Distinctive fonts: Bricolage Grotesque (display) + Manrope (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- pdf.js for reading past-question PDFs in the browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <style>
+    /* ============================================================
+       BRAND TOKENS — extracted from the attached logo:
+       azure #287AB4, gold #FAD934, cool mint/white backgrounds.
+       ============================================================ */
+    :root{
+      --blue:#1B6FA8; --blue-2:#287AB4; --blue-deep:#0E4F7C; --ink:#0C3049;
+      --gold:#FAD934; --gold-deep:#C89B0C; --gold-soft:#FFF6D4;
+      --mint:#E6F3F2; --mint-2:#D4EBE9; --paper:#F6FAFA; --white:#fff;
+      --muted:#577186; --line:#DCE8ED; --ok:#0F7B50; --ok-soft:#E3F6ED;
+      --bad:#BC3E36; --bad-soft:#FDECEA; --warn:#956100;
+      --shadow:0 18px 45px rgba(14,79,124,.10);
+      --shadow-sm:0 6px 18px rgba(14,79,124,.08);
+      --r:18px; --r-sm:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);
+      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4{font-family:'Bricolage Grotesque',Manrope,sans-serif;
+      line-height:1.12;font-weight:800;letter-spacing:-.025em;margin:0 0 .5em}
+    h1{font-size:clamp(2.35rem,6.2vw,4.4rem)}
+    h2{font-size:clamp(1.8rem,4.3vw,2.9rem)}
+    h3{font-size:clamp(1.2rem,2.4vw,1.55rem)}
+    p{margin:0 0 1rem}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%;display:block}
+    button,input,select,textarea{font:inherit;color:inherit}
+    label{display:block;font-weight:700;font-size:.9rem;margin-bottom:.4rem}
+    :focus-visible{outline:3px solid var(--gold-deep);outline-offset:3px;border-radius:6px}
+    ::selection{background:var(--gold);color:var(--ink)}
+    .wrap{width:min(1140px,92vw);margin:0 auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;text-transform:uppercase;
+      letter-spacing:.14em;font-size:.74rem;font-weight:800;color:var(--blue-deep);
+      background:var(--mint);border:1px solid var(--mint-2);padding:.45rem .8rem;border-radius:999px}
+    .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-deep)}
+    .lead{font-size:1.08rem;color:var(--muted);max-width:42ch}
+    .muted{color:var(--muted)}
+    .tiny{font-size:.8rem}
+    .center{text-align:center}
+    .stack{display:grid;gap:1rem}
+    .row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+    .spread{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .hide{display:none !important}
+
+    /* ---------- Buttons ---------- */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+      min-height:48px;padding:.72rem 1.25rem;border:2px solid transparent;border-radius:12px;
+      background:var(--blue);color:#fff;font-weight:800;cursor:pointer;text-decoration:none;
+      transition:transform .16s ease,box-shadow .16s ease,background .16s ease;line-height:1.2}
+    .btn:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 10px 22px rgba(27,111,168,.24)}
+    .btn:active{transform:translateY(0)}
+    .btn-gold{background:var(--gold);color:#3A2E00;border-color:var(--gold)}
+    .btn-gold:hover{box-shadow:0 10px 24px rgba(201,155,12,.28);background:#FFE05C}
+    .btn-outline{background:#fff;color:var(--blue-deep);border-color:var(--line)}
+    .btn-outline:hover{border-color:var(--blue);box-shadow:var(--shadow-sm);background:#fff}
+    .btn-ghost{background:transparent;color:var(--blue-deep);border-color:transparent}
+    .btn-ghost:hover{background:var(--mint);box-shadow:none}
+    .btn-danger{background:var(--bad-soft);color:var(--bad);border-color:#F4CBC7}
+    .btn-danger:hover{background:#FBDAD7;box-shadow:none}
+    .btn-sm{min-height:38px;padding:.45rem .8rem;font-size:.84rem;border-radius:9px}
+    .btn-lg{min-height:58px;padding:.9rem 1.6rem;font-size:1.05rem;border-radius:14px}
+    .btn[disabled]{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+    .linklike{background:none;border:0;color:var(--blue);font-weight:800;cursor:pointer;padding:.3rem;text-decoration:underline}
+    .linklike.danger{color:var(--bad)}
+
+    /* ---------- Navbar ---------- */
+    .demo-banner{background:#3A2E00;color:#FFE98A;text-align:center;font-size:.82rem;
+      font-weight:700;padding:.45rem 1rem}
+    .navbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
+      backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      min-height:72px;width:min(1140px,92vw);margin:0 auto}
+    .brand{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
+    .brand img{height:44px;width:auto;border-radius:8px;background:#fff}
+    .brand b{font-family:'Bricolage Grotesque',sans-serif;font-size:1.16rem;letter-spacing:-.03em}
+    .nav-links{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+    .nav-links a,.nav-links button{font-weight:700;font-size:.9rem;color:var(--ink);
+      padding:.55rem .75rem;border-radius:9px;border:0;background:none;cursor:pointer}
+    .nav-links a:hover,.nav-links button:hover{background:var(--mint);text-decoration:none;color:var(--blue-deep)}
+    .nav-links .nav-cta{background:var(--gold);color:#3A2E00;padding:.6rem 1rem;border-radius:10px}
+    .nav-links .nav-cta:hover{background:#FFE05C;color:#3A2E00}
+    .burger{display:none;border:2px solid var(--line);background:#fff;border-radius:10px;
+      width:46px;height:44px;align-items:center;justify-content:center;cursor:pointer}
+    .burger span{display:block;width:20px;height:2px;background:var(--ink);position:relative}
+    .burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--ink)}
+    .burger span::before{top:-6px}.burger span::after{top:6px}
+
+    /* ---------- Hero ---------- */
+    .hero{position:relative;overflow:hidden;padding:clamp(3rem,7vw,6.5rem) 0 clamp(3rem,6vw,5rem);
+      background:radial-gradient(900px 420px at 88% -5%,#D9F0EE 0%,transparent 62%),
+                 linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
+    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;
+      background-image:radial-gradient(var(--blue-2) 1px,transparent 1px);
+      background-size:26px 26px;mask-image:linear-gradient(90deg,transparent 35%,#000 100%)}
+    .hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(2rem,5vw,4rem);align-items:center;position:relative}
+    .hero h1{margin:.9rem 0 1.1rem;max-width:14ch}
+    .hero h1 em{font-style:normal;color:var(--blue);position:relative}
+    .hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:.16em;
+      background:var(--gold);border-radius:99px;z-index:-1;transform:rotate(-1.2deg)}
+    .hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.6rem}
+    .hero-proof{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:2rem;font-size:.86rem;color:var(--muted);font-weight:600}
+    .hero-proof b{color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;display:block}
+
+    /* animated quiz card */
+    .stage{position:relative;padding:1.2rem}
+    .stage::before{content:"";position:absolute;inset:4% 2% 6% 6%;border:2px dashed var(--mint-2);border-radius:28px;transform:rotate(-3deg)}
+    .qcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;
+      box-shadow:var(--shadow);padding:1.5rem;transform:rotate(1.5deg);animation:float 6s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(-9px) rotate(.5deg)}}
+    .qcard-top{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:1rem}
+    .chip{background:var(--mint);color:var(--blue-deep);font-weight:800;font-size:.76rem;
+      padding:.35rem .7rem;border-radius:999px;white-space:nowrap}
+    .timer-pill{display:inline-flex;align-items:center;gap:.4rem;background:#3A2E00;color:var(--gold);
+      font-weight:800;font-variant-numeric:tabular-nums;padding:.35rem .7rem;border-radius:999px;font-size:.82rem}
+    .timer-pill .blink{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1s steps(2) infinite}
+    @keyframes blink{50%{opacity:.25}}
+    .qcard-q{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.16rem;line-height:1.3;margin:.2rem 0 1rem}
+    .qcard-opts{display:grid;gap:.6rem}
+    .qcard-opt{display:flex;align-items:center;gap:.7rem;border:2px solid var(--line);border-radius:12px;
+      padding:.7rem .8rem;font-weight:700;font-size:.9rem;background:#fff}
+    .qcard-opt .letter{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;
+      background:var(--paper);color:var(--blue-deep);font-size:.8rem;flex-shrink:0}
+    .qcard-opt.picked{border-color:var(--ok);background:var(--ok-soft);color:#07583A;
+      animation:pop .55s cubic-bezier(.2,1.5,.4,1) .9s both}
+    .qcard-opt.picked .letter{background:var(--ok);color:#fff}
+    @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.045)}100%{transform:scale(1)}}
+    .qcard-foot{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;
+      padding-top:.9rem;border-top:1px dashed var(--line);font-size:.8rem;color:var(--muted);font-weight:600}
+    .stamp{display:inline-flex;align-items:center;gap:.35rem;color:var(--ok);font-weight:800;
+      border:2px solid var(--ok);border-radius:8px;padding:.2rem .5rem;transform:rotate(-7deg);
+      animation:stamp .5s cubic-bezier(.2,1.6,.4,1) 1.5s both}
+    @keyframes stamp{0%{opacity:0;transform:scale(1.8) rotate(-16deg)}100%{opacity:1;transform:scale(1) rotate(-7deg)}}
+    .float-badge{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;
+      box-shadow:var(--shadow-sm);padding:.55rem .75rem;font-size:.8rem;font-weight:800;display:flex;align-items:center;gap:.45rem}
+    .float-badge.a{top:0;left:-2%;animation:float 5s ease-in-out .4s infinite}
+    .float-badge.b{bottom:-2%;right:0;animation:float 5.5s ease-in-out .9s infinite}
+    .float-badge .ic{width:26px;height:26px;border-radius:8px;background:var(--gold-soft);display:grid;place-items:center;color:var(--gold-deep)}
+
+    /* ---------- Sections ---------- */
+    section{padding:clamp(3.2rem,6vw,5.5rem) 0}
+    .section-head{max-width:640px;margin-bottom:2.2rem}
+    .section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+    .section-head h2{margin:.7rem 0 .7rem}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+    .step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.4rem;
+      box-shadow:var(--shadow-sm);position:relative;transition:transform .18s ease,box-shadow .18s ease}
+    .step:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .step-n{font-family:'Bricolage Grotesque',sans-serif;font-size:2.4rem;font-weight:800;
+      color:#5C8AA3;line-height:1}
+    .step h3{font-size:1.08rem;margin:.5rem 0}
+    .step p{font-size:.9rem;color:var(--muted);margin:0}
+    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+    .feature{background:var(--blue-deep);color:#fff;border-radius:var(--r);padding:1.5rem;
+      position:relative;overflow:hidden;transition:transform .18s ease}
+    .feature:nth-child(2){background:var(--blue)}
+    .feature:nth-child(3){background:#116B86}
+    .feature:nth-child(4){background:#0C5C73}
+    .feature:hover{transform:translateY(-5px)}
+    .feature::after{content:"";position:absolute;width:140px;height:140px;border:22px solid rgba(255,255,255,.06);
+      border-radius:50%;right:-50px;bottom:-60px}
+    .feature .ic{width:44px;height:44px;border-radius:12px;background:var(--gold);color:#3A2E00;
+      display:grid;place-items:center;margin-bottom:1rem}
+    .feature h3{font-size:1.08rem;color:#fff;margin:.2rem 0 .5rem}
+    .feature p{font-size:.88rem;color:#E6F4FA;margin:0}
+    .feature.wide{grid-column:span 2}
+    .feature.wide p{max-width:46ch}
+    .pricing-wrap{background:linear-gradient(180deg,#fff,var(--mint));border-block:1px solid var(--line)}
+    .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem;align-items:stretch}
+    .price{background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:1.5rem;
+      display:flex;flex-direction:column;position:relative;box-shadow:var(--shadow-sm)}
+    .price.featured{border-color:var(--gold-deep);box-shadow:0 20px 44px rgba(201,155,12,.18)}
+    .price .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+      background:var(--gold);color:#3A2E00;font-size:.72rem;font-weight:800;padding:.25rem .8rem;border-radius:999px;white-space:nowrap}
+    .price h3{margin:0 0 .4rem}
+    .price .amount{font-family:'Bricolage Grotesque',sans-serif;font-size:2.2rem;font-weight:800;color:var(--blue-deep);line-height:1.1}
+    .price .amount small{font-size:.85rem;font-family:Manrope,sans-serif;color:var(--muted);font-weight:700}
+    .price ul{list-style:none;padding:0;margin:1rem 0 1.4rem;display:grid;gap:.55rem;font-size:.9rem}
+    .price li{display:flex;gap:.5rem;align-items:flex-start}
+    .price li svg{flex-shrink:0;margin-top:3px;color:var(--ok)}
+    .price .btn{margin-top:auto;width:100%}
+    .faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:2rem}
+    .faq details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin-bottom:.7rem}
+    .faq summary{cursor:pointer;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"+";font-size:1.4rem;color:var(--blue);line-height:1}
+    .faq details[open] summary::after{content:"–"}
+    .faq details p{margin:.8rem 0 0;color:var(--muted);font-size:.93rem}
+
+    /* ---------- Footer ---------- */
+    footer{background:#0B3D5C;color:#D7E9F2;padding:3rem 0 1.5rem}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem}
+    footer .brand b{color:#fff}
+    footer p{font-size:.9rem;color:#B9D5E4;max-width:38ch}
+    .foot-col h3{color:#fff;font-size:1rem;margin-bottom:.8rem}
+    .foot-col a{display:block;color:#B9D5E4;font-size:.9rem;padding:.25rem 0}
+    .foot-col a:hover{color:var(--gold)}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:2rem;padding-top:1.2rem;
+      display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:#9EC4D8}
+    .foot-logo{height:52px;border-radius:10px;background:#fff;padding:3px}
+
+    /* ---------- App / forms / cards ---------- */
+    #app{min-height:62vh}
+    .page{padding:clamp(2rem,4vw,3.4rem) 0}
+    .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+    .page-head h1{font-size:clamp(1.9rem,4vw,2.7rem);margin:.3rem 0 0}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.5rem;box-shadow:var(--shadow-sm)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+    .field{display:grid;gap:.35rem;margin-bottom:1rem}
+    .field .hint{font-size:.8rem;color:var(--muted)}
+    input,select,textarea{width:100%;min-height:48px;border:2px solid var(--line);border-radius:11px;
+      background:#fff;padding:.65rem .8rem;font-weight:600}
+    textarea{min-height:110px;resize:vertical;line-height:1.5}
+    input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 4px rgba(40,122,180,.13)}
+    input[type=radio],input[type=checkbox]{width:auto;min-height:0;accent-color:var(--blue)}
+    .error-box{background:var(--bad-soft);border:1px solid #F4CBC7;color:#8E2C25;border-radius:10px;
+      padding:.7rem .9rem;font-size:.88rem;font-weight:700;margin-bottom:1rem}
+    .notice{background:var(--gold-soft);border:1px solid #F2DFA0;color:#6B5200;border-radius:12px;padding:1rem 1.2rem}
+    .notice.info{background:var(--mint);border-color:var(--mint-2);color:var(--blue-deep)}
+    .auth-card{max-width:470px;margin:0 auto}
+    .auth-logo{height:66px;margin:0 auto 1.1rem;border-radius:12px}
+    .auth-card h1{font-size:1.9rem;text-align:center}
+    .auth-card .sub{text-align:center;color:var(--muted);margin-bottom:1.5rem}
+    .divider{display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.82rem;margin:1.2rem 0}
+    .divider::before,.divider::after{content:"";height:1px;background:var(--line);flex:1}
+    .stat{background:var(--mint);border-radius:14px;padding:1rem;text-align:center}
+    .stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;color:var(--blue-deep);line-height:1.1}
+    .stat span{font-size:.78rem;color:var(--muted);font-weight:700}
+    .profile-flyer{width:100%;aspect-ratio:8/5;object-fit:cover;border-radius:14px;background:var(--mint)}
+    .plan-pill{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.3rem .75rem;
+      font-size:.78rem;font-weight:800;background:var(--gold-soft);color:#6B5200}
+    .plan-pill.live{background:var(--ok-soft);color:var(--ok)}
+    .plan-pill.off{background:#EEF2F4;color:var(--muted)}
+    .quiz-item{border:1px solid var(--line);border-radius:14px;padding:1.1rem;background:#fff;display:grid;
+      grid-template-columns:1fr auto;gap:1rem;align-items:center;transition:box-shadow .18s ease}
+    .quiz-item:hover{box-shadow:var(--shadow-sm)}
+    .quiz-item h3{font-size:1.08rem;margin:0 0 .35rem}
+    .quiz-item .meta{display:flex;gap:.65rem;flex-wrap:wrap;font-size:.82rem;color:var(--muted);font-weight:600}
+    .quiz-actions{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
+    .empty{text-align:center;padding:3rem 1.2rem;background:#fff;border:1px dashed var(--line);border-radius:var(--r)}
+    .empty .big{font-size:2.6rem;margin-bottom:.4rem}
+    .empty h3{margin-bottom:.4rem}
+    .empty p{color:var(--muted);max-width:42ch;margin:0 auto 1rem}
+    .loading{display:grid;place-items:center;min-height:260px;gap:.8rem;color:var(--muted);font-weight:700}
+    .spinner{width:38px;height:38px;border:4px solid var(--mint-2);border-top-color:var(--blue);
+      border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ---------- Editor ---------- */
+    .format-box{background:#0B3D5C;color:#DCEFF7;border-radius:14px;padding:1rem 1.2rem;font-size:.86rem;overflow:auto}
+    .format-box pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#FFE98A;margin:.6rem 0 0;line-height:1.6}
+    .scan-box{border:2px dashed var(--gold-deep);background:var(--gold-soft);border-radius:14px;padding:1.1rem}
+    .scan-box pre{white-space:pre-wrap;background:#fff;border:1px solid #F0DFA9;border-radius:10px;padding:.9rem;
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.78rem;line-height:1.55;max-height:230px;overflow:auto}
+    .qedit{background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue-2);
+      border-radius:14px;padding:1.2rem;margin-bottom:1rem}
+    .qedit-head{display:flex;justify-content:space-between;align-items:center;gap:.7rem;margin-bottom:.7rem}
+    .qedit h4{font-family:'Bricolage Grotesque',sans-serif;margin:0;font-size:1.05rem}
+    .optrow{display:flex;align-items:center;gap:.6rem;margin:.45rem 0;border:1px solid var(--line);
+      border-radius:10px;padding:.35rem .6rem;background:var(--paper);font-weight:700}
+    .optrow.correct{border-color:var(--ok);background:var(--ok-soft)}
+    .optrow .olt{font-family:'Bricolage Grotesque',sans-serif;width:24px;color:var(--blue-deep)}
+    .optrow input[type=text]{border:0;background:transparent;box-shadow:none;min-height:40px;padding:.3rem;font-weight:600}
+    .optrow input[type=radio]{width:22px;height:22px;flex-shrink:0}
+
+    /* ---------- Tables ---------- */
+    .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+    table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem}
+    th,td{text-align:left;padding:.8rem .9rem;border-bottom:1px solid var(--line);vertical-align:middle}
+    th{background:var(--mint);color:var(--blue-deep);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+    tbody tr:last-child td{border-bottom:0}
+    tbody tr:hover{background:#FAFDFD}
+    td img.thumb{width:56px;height:42px;object-fit:cover;border-radius:7px;border:1px solid var(--line);cursor:zoom-in}
+
+    /* ---------- Quiz taking ---------- */
+    .quiz-shell{max-width:760px;margin:0 auto}
+    .aspirant-card{display:grid;grid-template-columns:190px 1fr;gap:1.4rem;align-items:center}
+    .aspirant-card img.flyer{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+    .aspirant-card h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:.4rem 0}
+    .tel{display:inline-flex;align-items:center;gap:.5rem;background:var(--ok-soft);color:var(--ok);
+      font-weight:800;padding:.55rem .9rem;border-radius:10px;font-size:.95rem}
+    .quiz-meta{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}
+    .quiz-meta span{background:var(--mint);color:var(--blue-deep);font-size:.8rem;font-weight:800;padding:.35rem .7rem;border-radius:999px}
+    .take-bar{position:sticky;top:72px;z-index:40;background:#fff;border:1px solid var(--line);
+      border-radius:14px;padding:.7rem 1rem;display:flex;justify-content:space-between;align-items:center;
+      gap:1rem;box-shadow:var(--shadow-sm);margin-bottom:1.1rem}
+    .take-bar .prog{font-weight:800;color:var(--muted);font-size:.9rem}
+    .take-bar .timer-pill{font-size:1.05rem;padding:.5rem .9rem}
+    .take-bar .timer-pill.low{background:var(--bad);color:#fff}
+    .take-bar .timer-pill.low .blink{background:#fff}
+    .qbox{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,3vw,2rem);box-shadow:var(--shadow-sm)}
+    .qbox legend{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(1.15rem,2.7vw,1.5rem);line-height:1.35;margin-bottom:1rem}
+    .qbox fieldset{border:0;padding:0;margin:0}
+    .opt-big{display:flex;align-items:center;gap:.8rem;border:2px solid var(--line);border-radius:13px;
+      padding:.9rem 1rem;margin:.6rem 0;cursor:pointer;font-weight:700;transition:background .15s,border-color .15s;min-height:58px}
+    .opt-big:hover{border-color:var(--blue-2);background:#F4FAFC}
+    .opt-big.sel{border-color:var(--blue);background:var(--mint);box-shadow:0 0 0 3px rgba(40,122,180,.1)}
+    .opt-big .olt{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;
+      background:var(--paper);border:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;flex-shrink:0}
+    .opt-big.sel .olt{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .take-nav{display:flex;justify-content:space-between;gap:.8rem;margin-top:1.3rem;flex-wrap:wrap}
+    .review-row{border:1px solid var(--line);border-radius:12px;padding:1rem;margin:.7rem 0;background:#fff}
+    .review-row.good{border-left:5px solid var(--ok)}
+    .review-row.bad{border-left:5px solid var(--bad)}
+    .review-row .ans{display:flex;gap:1rem;flex-wrap:wrap;font-size:.88rem;font-weight:800;margin-top:.5rem}
+    .good-txt{color:var(--ok)}.bad-txt{color:var(--bad)}
+    .score-ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin:0 auto 1rem;
+      background:conic-gradient(var(--gold) var(--p,0%),var(--mint) 0);position:relative}
+    .score-ring::before{content:"";position:absolute;inset:14px;background:#fff;border-radius:50%}
+    .score-ring b{position:relative;font-family:'Bricolage Grotesque',sans-serif;font-size:2.3rem}
+
+    /* ---------- Charts ---------- */
+    .chart{display:grid;gap:.65rem}
+    .barrow{display:grid;grid-template-columns:70px 1fr 46px;gap:.7rem;align-items:center;font-size:.82rem;font-weight:700}
+    .bartrack{height:22px;background:var(--paper);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+    .barfill{height:100%;background:linear-gradient(90deg,var(--blue-2),var(--blue));border-radius:999px;min-width:2px;transition:width .5s ease}
+    .barfill.alt{background:linear-gradient(90deg,var(--gold),var(--gold-deep))}
+
+    /* ---------- Modal / toast ---------- */
+    .modal-back{position:fixed;inset:0;background:rgba(7,32,48,.68);z-index:100;display:grid;place-items:center;padding:1rem}
+    .modal{background:#fff;border-radius:18px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:1.4rem;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+    .modal h3{margin-bottom:.6rem}
+    .modal .modal-img{width:100%;border-radius:12px;background:var(--paper)}
+    .modal-foot{display:flex;justify-content:flex-end;gap:.6rem;margin-top:1rem}
+    .toasts{position:fixed;top:1rem;right:1rem;z-index:200;display:grid;gap:.6rem;width:min(360px,90vw)}
+    .toast{background:#0B3D5C;color:#fff;border-radius:12px;padding:.8rem 1rem;font-size:.9rem;font-weight:700;
+      box-shadow:0 14px 34px rgba(0,0,0,.25);border-left:5px solid var(--gold);animation:slidein .25s ease}
+    .toast.ok{border-left-color:#3ED598}.toast.err{border-left-color:#FF7A70}.toast.info{border-left-color:#7CC4F0}
+    @keyframes slidein{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+
+    /* ---------- Responsive ---------- */
+    @media(max-width:960px){
+      .hero-grid{grid-template-columns:1fr}.hero-copy{max-width:640px}.stage{max-width:560px;margin:0 auto}
+      .steps,.features{grid-template-columns:repeat(2,1fr)}
+      .grid-3{grid-template-columns:1fr 1fr}
+      .faq-grid{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:720px){
+      .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;
+        border-bottom:1px solid var(--line);padding:.6rem 4vw 1rem;flex-direction:column;align-items:stretch;
+        box-shadow:var(--shadow);max-height:75vh;overflow:auto}
+      .nav-links.open{display:flex}
+      .nav-links a,.nav-links button{padding:.8rem;text-align:left;font-size:1rem}
+      .burger{display:flex}
+      .grid-2,.grid-3,.aspirant-card{grid-template-columns:1fr}
+      .aspirant-card img.flyer{max-height:240px}
+      .steps,.features{grid-template-columns:1fr}
+      .feature.wide{grid-column:span 1}
+      .foot-grid{grid-template-columns:1fr}
+      .quiz-item{grid-template-columns:1fr}
+      .quiz-actions{justify-content:flex-start}
+      .take-bar{top:66px}
+      section{padding:3rem 0}
+    }
+    @media(max-width:400px){
+      .btn{padding:.65rem .9rem;font-size:.9rem}
+      .brand img{height:38px}
+      .qcard{padding:1.1rem}
+      h1{font-size:2.15rem}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+  </style>
+</head>
+<body>
+<div id="demoBanner" class="demo-banner hide">Demo mode — paste your Firebase config near the top of the script to go live. Data is saved in this browser only.</div>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="#/" class="brand" aria-label="CampusQuiz home">
+      <img src="data:image/jpeg;base64,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" alt="CampusQuiz logo">
+      <b>CampusQuiz</b>
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#/" data-home>Home</a>
+      <a href="#/" data-scroll="how">How it works</a>
+      <a href="#/" data-scroll="pricing">Pricing</a>
+      <a href="#/plans" id="navPlans" class="hide">Plans</a>
+      <a href="#/dashboard" id="navDash" class="hide">Dashboard</a>
+      <a href="#/admin" id="navAdmin" class="hide">Admin</a>
+      <a href="#/login" id="navLogin" class="btn nav-cta">Log in</a>
+      <button id="navOut" class="hide">Log out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand"><img class="foot-logo" src="data:image/jpeg;base64,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" alt="CampusQuiz logo"><b>CampusQuiz</b></div>
+        <p>Turn your past questions into a timed quiz every student wants to share. Built for student leaders across Ghana and Africa.</p>
+        <p id="footContact" class="tiny"></p>
+      </div>
+      <div class="foot-col">
+        <h3>Explore</h3>
+        <a href="#/" data-home>Home</a>
+        <a href="#/" data-scroll="how">How it works</a>
+        <a href="#/" data-scroll="pricing">Pricing</a>
+        <a href="#/plans">Plans &amp; payment</a>
+      </div>
+      <div class="foot-col">
+        <h3>Get started</h3>
+        <a href="#/signup">Create free account</a>
+        <a href="#/login">Log in</a>
+        <a href="#/dashboard">My dashboard</a>
+        <a href="#/admin">Admin</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> CampusQuiz. All rights reserved.</span>
+      <span>Made for campus campaigns, big and small.</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+<div id="modalRoot"></div>
+
+<script type="module">
+/* ==================================================================
+   CAMPUSQUIZ — single-file static app.
+
+   1. PASTE YOUR FIREBASE CONFIG BELOW.
+      Firebase Console → Project settings → Your apps → Web app → config.
+   2. SET THE ADMIN EMAIL BELOW (must match the email you sign in with).
+   ================================================================== */
+const FIREBASE_CONFIG = {
+  apiKey:            'PASTE_API_KEY',
+  authDomain:        'PASTE_PROJECT.firebaseapp.com',
+  projectId:         'PASTE_PROJECT',
+  appId:             'PASTE_APP_ID',
+  messagingSenderId: 'PASTE_SENDER_ID',
+  measurementId:     'PASTE_MEASUREMENT_ID'
+};
+const ADMIN_EMAIL = 'admin@campusquiz.app'; // <-- replace with your own admin email
+
+/* Logo reused on auth pages (same embedded asset as navbar/footer/favicon). */
+const LOGO = 'data:image/jpeg;base64,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';
+const FB_VER = '10.14.1';
+const PDFJS_VER = '3.11.174';
+const DAY = 86400000;
+const DEFAULT_SETTINGS = {
+  plans: [
+    { n: '7 Day Sprint',  p: 20,  d: 7 },
+    { n: '30 Day Campaign', p: 60, d: 30 },
+    { n: '90 Day Reach',  p: 150, d: 90 }
+  ],
+  cur: 'GH₵',
+  phone: '0240000000',
+  note: 'Send the payment by Mobile Money to the number above, then paste the transaction ID and upload a clear screenshot of the confirmation here. Call the number for faster confirmation.',
+  free: 2,
+  max: 50
+};
+
+/* ==================================================================
+   SMALL HELPERS
+   ================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const slugify = s => String(s).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,42) || 'quiz';
+const rand = n => { let o=''; const c='abcdefghijklmnopqrstuvwxyz0123456789'; for(let i=0;i<n;i++) o+=c[Math.floor(Math.random()*c.length)]; return o; };
+const fmtDate = ts => ts ? new Date(ts).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}) : '—';
+const fmtDT = ts => ts ? new Date(ts).toLocaleString(undefined,{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+const isDemo = () => !FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.startsWith('PASTE');
+const isAdmin = () => !!state.user && String(state.user.email||'').toLowerCase() === ADMIN_EMAIL.toLowerCase();
+const paidNow = () => (state.profile?.until || 0) > Date.now();
+const mmss = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+
+function toast(msg, type = 'info') {
+  const box = document.createElement('div');
+  box.className = `toast ${type}`;
+  box.textContent = msg;
+  $('#toasts').append(box);
+  setTimeout(() => { box.style.opacity = '0'; box.style.transform = 'translateX(18px)'; setTimeout(() => box.remove(), 250); }, 4200);
+}
+function modal(html) {
+  const root = $('#modalRoot');
+  root.innerHTML = `<div class="modal-back" role="dialog" aria-modal="true"><div class="modal">${html}</div></div>`;
+  const close = () => { root.innerHTML = ''; };
+  $('.modal-back', root).addEventListener('click', e => { if (e.target.classList.contains('modal-back')) close(); });
+  $$('[data-close]', root).forEach(b => b.addEventListener('click', close));
+  return close;
+}
+function ask(title, message) {
+  return new Promise(resolve => {
+    const close = modal(`<h3>${esc(title)}</h3><p class="muted">${esc(message)}</p>
+      <div class="modal-foot"><button class="btn btn-outline" data-close>Cancel</button>
+      <button class="btn btn-danger" id="yesBtn">Yes, continue</button></div>`);
+    $('#yesBtn').addEventListener('click', () => { close(); resolve(true); });
+    $('.modal-back').addEventListener('click', e => { if (e.target.classList.contains('modal-back')) resolve(false); });
+    const obs = new MutationObserver(() => { if (!$('#modalRoot').firstChild) { resolve(false); obs.disconnect(); } });
+    obs.observe($('#modalRoot'), { childList: true });
+  });
+}
+function loading(text = 'Loading…') { $('#app').innerHTML = `<div class="wrap loading"><div class="spinner"></div><div>${esc(text)}</div></div>`; }
+function empty(title, text, cta = '') {
+  return `<div class="empty"><div class="big">✦</div><h3>${esc(title)}</h3><p>${esc(text)}</p>${cta}</div>`;
+}
+function copyText(text) {
+  const done = () => toast('Link copied to clipboard', 'ok');
+  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text).then(done).catch(fallback);
+  fallback();
+  function fallback() {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.append(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (_) { toast('Could not copy — copy it manually', 'err'); }
+    ta.remove();
+  }
+}
+function shareLink(q) { return `${location.origin}${location.pathname}#/q/${encodeURIComponent(q.slug)}`; }
+function svgIcon(name) {
+  const p = {
+    timer:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    link:'<path d="M10 13a5 5 0 0 0 7 .4l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7-.4l-2 2a5 5 0 0 0 7 7l1-1"/>',
+    review:'<path d="M9 11l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/>',
+    chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    check:'<path d="M5 12l4 4L19 6"/>'
+  }[name] || '';
+  return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+}
+
+/* ==================================================================
+   FIREBASE / DEMO ADAPTER
+   In demo mode everything is stored in localStorage with the same
+   shape, so every feature can be tried before pasting real config.
+   ================================================================== */
+let fb = null;
+let demoAuthCb = null;
+const state = { user:null, profile:null, settings:null, draft:[], quizTimer:null, adminTab:'payments', pendingScroll:null };
+function notifyDemoAuth() {
+  const u = dcurrent();
+  if (demoAuthCb) demoAuthCb(u ? { uid:u.uid, email:u.email } : null);
+}
+
+async function initFirebase() {
+  if (isDemo()) {
+    $('#demoBanner').classList.remove('hide');
+    return;
+  }
+  const [appM, authM, fsM] = await Promise.all([
+    import(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-app.js`),
+    import(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-auth.js`),
+    import(`https://www.gstatic.com/firebasejs/${FB_VER}/firebase-firestore.js`)
+  ]);
+  const app = appM.initializeApp(FIREBASE_CONFIG);
+  fb = {
+    authM, fsM,
+    auth: authM.getAuth(app),
+    db: fsM.getFirestore(app)
+  };
+}
+
+/* ---- demo storage ---- */
+function dget(coll) { try { return JSON.parse(localStorage.getItem('cq_' + coll) || '{}'); } catch (_) { return {}; } }
+function dset(coll, obj) { localStorage.setItem('cq_' + coll, JSON.stringify(obj)); }
+function dsession(uid) { if (uid) localStorage.setItem('cq_session', uid); else localStorage.removeItem('cq_session'); }
+function dcurrent() { const uid = localStorage.getItem('cq_session'); return uid ? dget('auth')[uid] || null : null; }
+
+const api = {
+  onAuth(cb) {
+    if (fb) {
+      fb.authM.onAuthStateChanged(fb.auth, async u => {
+        cb(u ? { uid:u.uid, email:u.email } : null);
+      });
+    } else {
+      demoAuthCb = cb;
+      cb(dcurrent() ? { uid:dcurrent().uid, email:dcurrent().email } : null);
+      window.addEventListener('storage', notifyDemoAuth);
+    }
+  },
+  async signUp(email, pass, profile) {
+    if (!fb) {
+      const users = dget('auth');
+      if (Object.values(users).some(u => u.email.toLowerCase() === email.toLowerCase())) throw new Error('Firebase: Error (auth/email-already-in-use).');
+      if (pass.length < 6) throw new Error('Firebase: Error (auth/weak-password). Password should be at least 6 characters.');
+      const uid = 'demo_' + rand(10);
+      users[uid] = { uid, email, pass, ...profile };
+      dset('auth', users); dsession(uid); notifyDemoAuth();
+      return { uid, email };
+    }
+    const cred = await fb.authM.createUserWithEmailAndPassword(fb.auth, email, pass);
+    return { uid:cred.user.uid, email:cred.user.email };
+  },
+  async signIn(email, pass) {
+    if (!fb) {
+      const user = Object.values(dget('auth')).find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (!user) throw new Error('Firebase: Error (auth/user-not-found).');
+      if (user.pass !== pass) throw new Error('Firebase: Error (auth/wrong-password).');
+      dsession(user.uid); notifyDemoAuth();
+      return { uid:user.uid, email:user.email };
+    }
+    const cred = await fb.authM.signInWithEmailAndPassword(fb.auth, email, pass);
+    return { uid:cred.user.uid, email:cred.user.email };
+  },
+  async signOut() {
+    if (fb) return fb.authM.signOut(fb.auth);
+    dsession(null); notifyDemoAuth();
+  },
+  async get(coll, id) {
+    if (!fb) return dget(coll)[id] ? { id, ...dget(coll)[id] } : null;
+    const snap = await fb.fsM.getDoc(fb.fsM.doc(fb.db, coll, id));
+    return snap.exists() ? { id:snap.id, ...snap.data() } : null;
+  },
+  async set(coll, id, data, merge = false) {
+    if (!fb) { const all = dget(coll); all[id] = merge ? { ...(all[id]||{}), ...data } : data; dset(coll, all); return; }
+    await fb.fsM.setDoc(fb.fsM.doc(fb.db, coll, id), data, { merge });
+  },
+  async add(coll, data) {
+    if (!fb) { const id = rand(16); const all = dget(coll); all[id] = data; dset(coll, all); return id; }
+    const ref = await fb.fsM.addDoc(fb.fsM.collection(fb.db, coll), data);
+    return ref.id;
+  },
+  async all(coll) {
+    if (!fb) return Object.entries(dget(coll)).map(([id,v]) => ({ id, ...v }));
+    const snap = await fb.fsM.getDocs(fb.fsM.collection(fb.db, coll));
+    return snap.docs.map(d => ({ id:d.id, ...d.data() }));
+  },
+  async where(coll, field, val) {
+    if (!fb) return Object.entries(dget(coll)).filter(([,v]) => v[field] === val).map(([id,v]) => ({ id, ...v }));
+    const snap = await fb.fsM.getDocs(fb.fsM.query(fb.fsM.collection(fb.db, coll), fb.fsM.where(field, '==', val)));
+    return snap.docs.map(d => ({ id:d.id, ...d.data() }));
+  },
+  async where2(coll, f1, v1, f2, v2) {
+    if (!fb) return Object.entries(dget(coll)).filter(([,v]) => v[f1] === v1 && v[f2] === v2).map(([id,v]) => ({ id, ...v }));
+    const snap = await fb.fsM.getDocs(fb.fsM.query(fb.fsM.collection(fb.db, coll), fb.fsM.where(f1,'==',v1), fb.fsM.where(f2,'==',v2)));
+    return snap.docs.map(d => ({ id:d.id, ...d.data() }));
+  },
+  async del(coll, id) {
+    if (!fb) { const all = dget(coll); delete all[id]; dset(coll, all); return; }
+    await fb.fsM.deleteDoc(fb.fsM.doc(fb.db, coll, id));
+  },
+  watchSettings(cb) {
+    if (fb) return fb.fsM.onSnapshot(fb.fsM.doc(fb.db, 'settings', 'app'), snap => {
+      if (snap.exists()) { state.settings = { ...DEFAULT_SETTINGS, ...snap.data() }; cb(); }
+    });
+    cb();
+  }
+};
+/* ==================================================================
+   IMAGE RESIZE + PDF + QUESTION PARSER
+   ================================================================== */
+async function resizeImage(file, maxSide = 900, startQuality = .78) {
+  if (!file || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res(i);
+      i.onerror = () => rej(new Error('That image could not be opened.'));
+      i.src = url;
+    });
+    const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.max(1, Math.round(img.naturalWidth * scale));
+    const h = Math.max(1, Math.round(img.naturalHeight * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    let q = startQuality, side = maxSide, out = canvas.toDataURL('image/jpeg', q);
+    // Firestore documents are capped at 1 MiB; keep screenshots well below it.
+    while (out.length > 620000 && (q > .45 || side > 480)) {
+      q = Math.max(.45, q - .12);
+      side = Math.max(480, side - 120);
+      const s2 = Math.min(1, side / Math.max(img.naturalWidth, img.naturalHeight));
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * s2));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * s2));
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      out = canvas.toDataURL('image/jpeg', q);
+    }
+    if (out.length > 900000) throw new Error('This image is still too large. Please choose a smaller screenshot.');
+    return out;
+  } finally { URL.revokeObjectURL(url); }
+}
+
+async function pdfToText(file) {
+  if (!window.pdfjsLib) throw new Error('The PDF reader did not load. Check your connection and try again.');
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VER}/pdf.worker.min.js`;
+  const pdf = await window.pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+  let output = '';
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+    const lines = [];
+    let current = '', lastY = null;
+    content.items.forEach(item => {
+      const y = Math.round(item.transform[5]);
+      if (lastY !== null && Math.abs(y - lastY) > 3) { if (current.trim()) lines.push(current.trim()); current = ''; }
+      current += (current ? ' ' : '') + item.str;
+      lastY = y;
+    });
+    if (current.trim()) lines.push(current.trim());
+    output += lines.join('\n') + '\n\n';
+  }
+  return output;
+}
+
+function parseQuestions(text) {
+  const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+  const result = [];
+  let cur = null;
+  const push = () => { if (cur && cur.q && cur.o.length >= 2) result.push({
+    q: cur.q, o: cur.o.slice(0, 5),
+    a: (cur.a !== null && cur.a < cur.o.length) ? cur.a : null
+  }); };
+  for (const line of lines) {
+    if (/^(?:answer|ans)\s*[:.\-]\s*\?/i.test(line)) continue;      // unknown answer -> manual
+    const ans = line.match(/^(?:answer|ans)\s*[:.\-]?\s*([A-Ea-e])\b/i);
+    if (ans) { if (cur) cur.a = ans[1].toUpperCase().charCodeAt(0) - 65; continue; }
+    const opt = line.match(/^([A-Ea-e])\s*[\).\:\-]\s*(.+)$/);
+    if (opt) { if (!cur) cur = { q:'', o:[], a:null }; cur.o.push(opt[2].trim()); continue; }
+    const q = line.match(/^(?:q\s*\d*\s*[:.\-]?\s*|\d{1,3}\s*[\).\:]\s*)(.+)$/i);
+    if (q && q[1].trim()) { push(); cur = { q:q[1].trim(), o:[], a:null }; continue; }
+    if (cur) {
+      if (cur.o.length) cur.o[cur.o.length - 1] += ' ' + line;
+      else cur.q = (cur.q ? cur.q + ' ' : '') + line;
+    } else cur = { q:line, o:[], a:null };
+  }
+  push();
+  return result;
+}
+
+const AI_PROMPT = `Convert my scanned past exam questions into plain text using EXACTLY the format below. Return only the questions, separated by a blank line, with no introduction, explanation, numbering changes or commentary.
+
+Q: Question text
+A) Option one
+B) Option two
+C) Option three
+D) Option four
+Answer: B
+
+Rules:
+1. Start every question with "Q:" and every option with A), B), C), D) or E).
+2. Use between two and five options per question.
+3. Write the correct option letter after "Answer:" (for example Answer: C).
+4. If the correct answer is not visible in my scan, write "Answer: ?" and I will tick it myself.
+5. Keep the exact wording, spelling and numbers from the scan. Do not solve or rewrite anything.
+6. Preserve the order of the questions.`;
+
+/* ==================================================================
+   NAVIGATION + SHELL
+   ================================================================== */
+function renderNav() {
+  const loggedIn = !!state.user;
+  $('#navLogin').classList.toggle('hide', loggedIn);
+  $('#navDash').classList.toggle('hide', !loggedIn);
+  $('#navPlans').classList.toggle('hide', !loggedIn);
+  $('#navOut').classList.toggle('hide', !loggedIn);
+  $('#navAdmin').classList.toggle('hide', !isAdmin());
+  $('#footContact').textContent = state.settings?.phone ? `Questions? Call or WhatsApp ${state.settings.phone}` : '';
+}
+
+function goSection(id) {
+  if (parseRoute().name !== 'home') { state.pendingScroll = id; location.hash = '#/'; return; }
+  const target = document.getElementById(id);
+  if (target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+function parseRoute() {
+  const raw = (location.hash || '#/').replace(/^#\/?/, '');
+  const seg = raw.split('?')[0].split('/').filter(Boolean);
+  return { name:seg[0] || 'home', arg:seg[1] || '' };
+}
+function clearQuizTimer() {
+  if (state.quizTimer) { clearInterval(state.quizTimer); state.quizTimer = null; }
+}
+async function route() {
+  clearQuizTimer();
+  $('#modalRoot').innerHTML = '';
+  $('#navLinks').classList.remove('open');
+  $('#burger').setAttribute('aria-expanded', 'false');
+  const r = parseRoute();
+  renderNav();
+  try {
+    switch (r.name) {
+      case 'signup': pageAuth('signup'); break;
+      case 'login': pageAuth('login'); break;
+      case 'dashboard': await pageDashboard(); break;
+      case 'new': await pageNewQuiz(); break;
+      case 'results': await pageResults(r.arg); break;
+      case 'plans': await pagePlans(); break;
+      case 'q': await pagePublicQuiz(r.arg); break;
+      case 'admin': await pageAdmin(); break;
+      default: pageHome();
+    }
+  } catch (err) {
+    console.error(err);
+    $('#app').innerHTML = `<div class="wrap page">${empty('Something went wrong', err?.message || 'Please try again.',
+      '<a href="#/" class="btn">Back to home</a>')}</div>`;
+  }
+  if (r.name === 'home' && state.pendingScroll) {
+    const id = state.pendingScroll; state.pendingScroll = null;
+    setTimeout(() => goSection(id), 80);
+  }
+}
+function requireUser() {
+  if (!state.user) { toast('Please log in to continue', 'info'); location.hash = '#/login'; return false; }
+  return true;
+}
+
+/* ==================================================================
+   HOME PAGE
+   ================================================================== */
+function priceCards() {
+  const s = state.settings || DEFAULT_SETTINGS;
+  const cur = esc(s.cur || 'GH₵');
+  const free = `<article class="price featured">
+      <span class="tag">START HERE</span>
+      <h3>Free trial</h3>
+      <div class="amount">${cur}0 <small>/ forever</small></div>
+      <ul>
+        <li>${svgIcon('check')}<span>${esc(s.free ?? 2)} quizzes to try</span></li>
+        <li>${svgIcon('check')}<span>Up to ${esc(s.max ?? 50)} questions each</span></li>
+        <li>${svgIcon('check')}<span>Flyer, links &amp; answer review</span></li>
+      </ul>
+      <a href="${state.user?'#/new':'#/signup'}" class="btn btn-gold">Create your first quiz free</a>
+    </article>`;
+  const plans = (s.plans || []).filter(p => p && p.n).map(p => `<article class="price">
+      <h3>${esc(p.n)}</h3>
+      <div class="amount">${cur}${esc(p.p)} <small>/ ${esc(p.d)} days</small></div>
+      <ul>
+        <li>${svgIcon('check')}<span>Unlimited quizzes</span></li>
+        <li>${svgIcon('check')}<span>Up to 200 questions each</span></li>
+        <li>${svgIcon('check')}<span>Keep your plan active for ${esc(p.d)} days</span></li>
+      </ul>
+      <a href="${state.user?'#/plans':'#/signup'}" class="btn btn-outline">${state.user?'Choose plan':'Get started'}</a>
+    </article>`).join('');
+  return free + plans;
+}
+function pageHome() {
+  const s = state.settings || DEFAULT_SETTINGS;
+  $('#app').innerHTML = `
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> Built for campus campaigns</span>
+        <h1>Turn past questions into a quiz <em>every student shares.</em></h1>
+        <p class="lead">Upload your past questions, add your campaign flyer and share one link. Every student who takes your quiz sees your name, your number and your message — while you see how they performed.</p>
+        <div class="hero-cta">
+          <a href="#/signup" class="btn btn-gold btn-lg">Create your first quiz free →</a>
+          <a href="#/" data-scroll="how" class="btn btn-outline btn-lg">See how it works</a>
+        </div>
+        <div class="hero-proof">
+          <div><b>4 steps</b>from PDF to live link</div>
+          <div><b>No app</b>students just tap a link</div>
+          <div><b>Live charts</b>see every answer</div>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="float-badge a"><span class="ic">${svgIcon('check')}</span> Answer locked in</div>
+        <div class="float-badge b"><span class="ic">${svgIcon('timer')}</span> Time almost up!</div>
+        <div class="qcard">
+          <div class="qcard-top"><span class="chip">BIO 101 · MID-SEM</span><span class="timer-pill"><span class="blink"></span> <span id="heroTimer">09:42</span></span></div>
+          <div class="qcard-q">Which organelle produces most of the energy in a cell?</div>
+          <div class="qcard-opts">
+            <div class="qcard-opt"><span class="letter">A</span> Nucleus</div>
+            <div class="qcard-opt picked"><span class="letter">B</span> Mitochondria <span style="margin-left:auto;color:#0F7B50">✓</span></div>
+            <div class="qcard-opt"><span class="letter">C</span> Ribosome</div>
+            <div class="qcard-opt"><span class="letter">D</span> Golgi apparatus</div>
+          </div>
+          <div class="qcard-foot"><span>Question 7 of 10</span><span class="stamp">✓ TICKED</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow"><span class="dot"></span> How it works</span>
+        <h2>From a stack of past questions to a campaign link in minutes.</h2>
+        <p class="lead" style="margin:0 auto">No design skills, no website and no backend. Just your questions and your story.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-n">01</div><h3>Add your questions</h3><p>Upload a text-based PDF or paste your questions. A built-in parser turns them into an editable quiz.</p></div>
+        <div class="step"><div class="step-n">02</div><h3>Pick the answers</h3><p>Tick the correct option for each question. Add your flyer, phone number and a time limit.</p></div>
+        <div class="step"><div class="step-n">03</div><h3>Share one link</h3><p>Send your link to class groups and WhatsApp. Students see your flyer before they start.</p></div>
+        <div class="step"><div class="step-n">04</div><h3>Read the results</h3><p>See scores, the hardest questions and every respondent. Follow up with students who engaged.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span> Why aspirants use it</span>
+        <h2>Everything you need to campaign with substance.</h2>
+      </div>
+      <div class="features">
+        <div class="feature"><div class="ic">${svgIcon('timer')}</div><h3>Timed quizzes</h3><p>Set the minutes. A sticky countdown keeps students focused and gives your quiz real exam energy.</p></div>
+        <div class="feature"><div class="ic">${svgIcon('link')}</div><h3>Shareable links</h3><p>One clean link carries your course title, your campaign flyer and a tap-to-call phone number.</p></div>
+        <div class="feature"><div class="ic">${svgIcon('review')}</div><h3>Answer review</h3><p>Students instantly see what they got right and wrong. Goodwill that lasts long after election day.</p></div>
+        <div class="feature"><div class="ic">${svgIcon('chart')}</div><h3>Performance charts</h3><p>Spot the questions everyone misses and see how your audience is performing at a glance.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-wrap" id="pricing">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow"><span class="dot"></span> Simple pricing</span>
+        <h2>Start free. Upgrade when your campaign grows.</h2>
+        <p class="lead" style="margin:0 auto">Pay by Mobile Money. Plans stack, so extending early never wastes a day.</p>
+      </div>
+      <div class="price-grid">${priceCards()}</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap faq-grid">
+      <div class="section-head" style="margin-bottom:0">
+        <span class="eyebrow"><span class="dot"></span> Good to know</span>
+        <h2>Frequently asked questions.</h2>
+        <p class="lead">Still stuck? Call the number in the footer and we will walk you through it.</p>
+      </div>
+      <div class="faq">
+        <details open><summary>Do students need an account?</summary><p>No. They open your link, enter their name and start. That is the whole flow.</p></details>
+        <details><summary>What if my past questions are scanned images?</summary><p>Use the “Scanned PDF?” box on the quiz page. Copy the AI prompt, paste it into any AI tool with your scan, then paste the result back into CampusQuiz.</p></details>
+        <details><summary>Can I change my flyer later?</summary><p>Yes. Upload a new image from your dashboard any time. Every quiz link immediately shows the new flyer.</p></details>
+        <details><summary>How does payment work?</summary><p>Pay by Mobile Money, submit the transaction ID and a screenshot, and the admin confirms manually. Your plan starts the moment it is approved.</p></details>
+        <details><summary>What happens when my plan ends?</summary><p>Your quizzes stay live. You can choose a new plan from the Plans page to create more quizzes.</p></details>
+      </div>
+    </div>
+  </section>`;
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let t = 582;
+    state.quizTimer = setInterval(() => {
+      t = t > 0 ? t - 1 : 9 * 60 + 59;
+      const el = $('#heroTimer'); if (el) el.textContent = mmss(t);
+    }, 1000);
+  }
+}
+/* ==================================================================
+   AUTH PAGES
+   ================================================================== */
+function pageAuth(mode) {
+  const signup = mode === 'signup';
+  $('#app').innerHTML = `<div class="page wrap auth-card card">
+    <img class="auth-logo" src="${LOGO}" alt="CampusQuiz logo">
+    <h1>${signup ? 'Create your free account' : 'Welcome back'}</h1>
+    <p class="sub">${signup ? 'Two free quizzes to see how CampusQuiz works.' : 'Log in to manage your quizzes and plans.'}</p>
+    <div id="authErr" class="error-box hide" role="alert"></div>
+    <form id="authForm" novalidate>
+      ${signup ? `
+      <div class="field"><label for="fname">Full name</label><input id="fname" autocomplete="name" required placeholder="Kofi Mensah"></div>
+      <div class="field"><label for="fphone">Phone number</label><input id="fphone" type="tel" autocomplete="tel" required placeholder="024 000 0000"></div>` : ''}
+      <div class="field"><label for="femail">Email address</label><input id="femail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+      <div class="field"><label for="fpass">Password</label><input id="fpass" type="password" autocomplete="${signup?'new-password':'current-password'}" required placeholder="At least 6 characters"></div>
+      <button class="btn btn-gold btn-lg" style="width:100%" type="submit">${signup?'Create account':'Log in'}</button>
+    </form>
+    <div class="divider">or</div>
+    <p class="center tiny">${signup ? 'Already have an account? <a href="#/login">Log in</a>' : 'New here? <a href="#/signup">Create a free account</a>'}</p>
+    <p class="center tiny" style="margin-top:1.2rem"><a href="#/">← Back to home</a></p>
+  </div>`;
+  $('#authForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const errBox = $('#authErr');
+    errBox.classList.add('hide');
+    const email = $('#femail').value.trim();
+    const pass = $('#fpass').value;
+    const btn = $('button[type=submit]', e.target);
+    btn.disabled = true; btn.textContent = 'Please wait…';
+    try {
+      if (signup) {
+        const name = $('#fname').value.trim(), phone = $('#fphone').value.trim();
+        if (!name || !phone || !email || !pass) throw new Error('Please fill in every field.');
+        const u = await api.signUp(email, pass, {});
+        const profile = { name, phone, email:u.email.toLowerCase(), flyer:'', until:0, used:0, at:Date.now() };
+        await api.set('users', u.uid, profile);
+        state.user = u; state.profile = { id:u.uid, ...profile };
+        toast('Account created — welcome to CampusQuiz!', 'ok');
+      } else {
+        if (!email || !pass) throw new Error('Please enter your email and password.');
+        await api.signIn(email, pass);
+        toast('Logged in successfully', 'ok');
+      }
+      location.hash = '#/dashboard';
+    } catch (err) {
+      // Show the real Firebase error message exactly as received.
+      errBox.textContent = err?.message || 'Something went wrong. Please try again.';
+      errBox.classList.remove('hide');
+      toast(err?.message || 'Could not continue', 'err');
+      btn.disabled = false; btn.textContent = signup ? 'Create account' : 'Log in';
+    }
+  });
+}
+
+/* ==================================================================
+   DASHBOARD
+   ================================================================== */
+async function pageDashboard() {
+  if (!requireUser()) return;
+  loading('Loading your dashboard…');
+  const uid = state.user.uid;
+  const [profile, quizzes] = await Promise.all([api.get('users', uid), api.where('quizzes','owner',uid)]);
+  state.profile = profile;
+  quizzes.sort((a,b) => (b.at||0)-(a.at||0));
+  const s = state.settings || DEFAULT_SETTINGS;
+  const used = profile?.used || 0;
+  const limit = s.free ?? 2;
+  const maxQ = (paidNow() ? 200 : (s.max ?? 50));
+  const planText = paidNow()
+    ? `Plan active until <strong>${fmtDate(profile.until)}</strong>`
+    : `Free trial: <strong>${used} of ${limit}</strong> quizzes used`;
+
+  $('#app').innerHTML = `<div class="page wrap">
+    <div class="page-head">
+      <div><span class="eyebrow"><span class="dot"></span> Your campaign hub</span><h1>Hi ${esc((profile?.name||state.user.email||'there').split(' ')[0])}, ready to reach more students?</h1></div>
+      <a href="#/new" class="btn btn-gold btn-lg">+ Create a quiz</a>
+    </div>
+
+    <div class="grid-2" style="align-items:start;margin-bottom:1.4rem">
+      <div class="card">
+        <h3>Your profile card</h3>
+        <p class="muted tiny">This flyer appears on every quiz link you share.</p>
+        ${profile?.flyer
+          ? `<img class="profile-flyer" src="${profile.flyer}" alt="Campaign flyer for ${esc(profile.name)}">`
+          : `<div class="profile-flyer" style="display:grid;place-items:center;text-align:center;padding:1rem;color:var(--muted);font-weight:700">No flyer yet — upload one below</div>`}
+        <div class="field" style="margin-top:1rem"><label for="flyerInput">${profile?.flyer?'Replace campaign flyer':'Upload campaign flyer'}</label>
+          <input id="flyerInput" type="file" accept="image/*"></div>
+        <div class="field"><label for="phoneEdit">Phone number students can call</label>
+          <div class="row"><input id="phoneEdit" value="${esc(profile?.phone||'')}" style="flex:1;min-width:180px">
+          <button class="btn btn-outline" id="savePhone">Save</button></div></div>
+        <p class="tiny muted" style="margin:0">Name: <strong>${esc(profile?.name||'—')}</strong></p>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="spread"><h3 style="margin:0">Plan status</h3>
+            <span class="plan-pill ${paidNow()?'live':'off'}">${paidNow()?'ACTIVE':'FREE TRIAL'}</span></div>
+          <p style="margin:.8rem 0">${planText}</p>
+          <p class="tiny muted">Maximum ${maxQ} questions per quiz on your current plan.</p>
+          <a href="#/plans" class="btn ${paidNow()?'btn-outline':'btn-gold'}">${paidNow()?'Extend or change plan':'Choose a plan'}</a>
+        </div>
+        <div class="grid-2" style="gap:.8rem">
+          <div class="stat"><b>${quizzes.length}</b><span>Quizzes created</span></div>
+          <div class="stat"><b>${quizzes.filter(q=>q.live).length}</b><span>Live right now</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-head" style="margin-bottom:1rem"><h2 style="font-size:1.5rem;margin:0">Your quizzes</h2>
+      <span class="muted tiny">Copy a link and share it anywhere.</span></div>
+    <div class="stack" id="quizList"></div>
+  </div>`;
+
+  $('#quizList').innerHTML = quizzes.length ? quizzes.map(q => `
+    <article class="quiz-item">
+      <div>
+        <h3>${esc(q.title)}</h3>
+        <div class="meta">
+          <span>${(q.qs||[]).length} questions</span><span>${esc(q.min)} minutes</span>
+          <span class="plan-pill ${q.live?'live':'off'}">${q.live?'● Live':'○ Hidden'}</span>
+        </div>
+        <p class="tiny muted" style="margin:.5rem 0 0">/#/q/${esc(q.slug)}</p>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn btn-sm btn-outline" data-copy="${q.id}">Copy link</button>
+        <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
+        <button class="btn btn-sm btn-outline" data-toggle="${q.id}">${q.live?'Hide':'Publish'}</button>
+        <button class="btn btn-sm btn-danger" data-del="${q.id}">Delete</button>
+      </div>
+    </article>`).join('') : empty('No quizzes yet',
+      'Add your past questions, tick the correct answers and share your first link.',
+      '<a href="#/new" class="btn btn-gold">Create your first quiz</a>');
+
+  $('#savePhone').addEventListener('click', async () => {
+    const phone = $('#phoneEdit').value.trim();
+    if (!phone) return toast('Please enter a phone number', 'err');
+    try { await api.set('users', uid, { phone }, true); state.profile.phone = phone; toast('Phone number updated', 'ok'); }
+    catch (err) { toast(err.message, 'err'); }
+  });
+  $('#flyerInput').addEventListener('change', async e => {
+    const file = e.target.files?.[0]; if (!file) return;
+    toast('Resizing your flyer…', 'info');
+    try {
+      const data = await resizeImage(file, 900, .8);
+      await api.set('users', uid, { flyer:data }, true);
+      state.profile.flyer = data;
+      toast('Flyer updated on all your quizzes', 'ok');
+      pageDashboard();
+    } catch (err) { toast(err.message, 'err'); }
+  });
+  $('#quizList').addEventListener('click', async e => {
+    const copy = e.target.closest('[data-copy]'), toggle = e.target.closest('[data-toggle]'), del = e.target.closest('[data-del]');
+    if (copy) { const q = quizzes.find(x=>x.id===copy.dataset.copy); if (q) copyText(shareLink(q)); }
+    if (toggle) {
+      const q = quizzes.find(x=>x.id===toggle.dataset.toggle);
+      try { await api.set('quizzes', q.id, { live:!q.live }, true); toast(q.live?'Quiz hidden':'Quiz published', 'ok'); pageDashboard(); }
+      catch (err) { toast(err.message, 'err'); }
+    }
+    if (del) {
+      const q = quizzes.find(x=>x.id===del.dataset.del);
+      if (!await ask('Delete this quiz?', `“${q.title}” and all of its responses will be removed. This cannot be undone.`)) return;
+      try {
+        const responses = await api.where('responses','quizId',q.id);
+        await Promise.all(responses.map(r => api.del('responses', r.id)));
+        await api.del('quizzes', q.id);
+        toast('Quiz and responses deleted', 'ok'); pageDashboard();
+      } catch (err) { toast(err.message, 'err'); }
+    }
+  });
+}
+/* ==================================================================
+   NEW QUIZ — paste/PDF -> parse -> edit -> publish
+   ================================================================== */
+function renderEditor() {
+  const box = $('#editor'); if (!box) return;
+  const letters = 'ABCDE';
+  box.innerHTML = state.draft.length ? state.draft.map((q, i) => `
+    <div class="qedit">
+      <div class="qedit-head"><h4>Question ${i+1}</h4>
+        <button type="button" class="linklike danger" data-remove="${i}">Remove question</button></div>
+      <div class="field"><label for="qtext${i}">Question text</label>
+        <textarea id="qtext${i}" data-qtext="${i}" placeholder="Type the question">${esc(q.q)}</textarea></div>
+      <label style="margin-bottom:.3rem">Options <span class="tiny muted" style="font-weight:600">(tick the correct one)</span></label>
+      ${q.o.map((o, j) => `<div class="optrow ${q.a===j?'correct':''}">
+        <input type="radio" name="ans${i}" data-ans="${i}" value="${j}" ${q.a===j?'checked':''} aria-label="Mark option ${letters[j]} as correct">
+        <span class="olt">${letters[j]}</span>
+        <input type="text" data-otext="${i}" data-oi="${j}" value="${esc(o)}" placeholder="Option ${letters[j]}">
+        ${q.o.length>2?`<button type="button" class="linklike danger" data-rmopt="${i}" data-oj="${j}" aria-label="Remove option ${letters[j]}">×</button>`:''}
+      </div>`).join('')}
+      ${q.o.length<5?`<button type="button" class="linklike" data-addopt="${i}" style="margin-top:.4rem">+ Add option</button>`:''}
+    </div>`).join('') : empty('No questions parsed yet', 'Paste your past questions or upload a PDF, then press “Parse questions”.');
+  $('#qcount').textContent = `${state.draft.length} question${state.draft.length===1?'':'s'} ready`;
+  const missing = state.draft.filter(q => q.a === null).length;
+  $('#missingNote').textContent = missing ? `${missing} question${missing===1?' needs':'s still need'} a correct answer.` : 'Every question has a correct answer. You are ready to publish.';
+  $('#missingNote').className = missing ? 'notice tiny' : 'notice info tiny';
+}
+
+async function pageNewQuiz() {
+  if (!requireUser()) return;
+  loading('Preparing the quiz editor…');
+  state.profile = await api.get('users', state.user.uid);
+  const s = state.settings || DEFAULT_SETTINGS;
+  state.draft = [];
+  $('#app').innerHTML = `<div class="page wrap">
+    <div class="page-head">
+      <div><span class="eyebrow"><span class="dot"></span> New quiz</span><h1>Build your quiz</h1></div>
+      <a href="#/dashboard" class="btn btn-outline">← Back to dashboard</a>
+    </div>
+    <div id="formErr" class="error-box hide" role="alert"></div>
+
+    <div class="card" style="margin-bottom:1.2rem">
+      <h3>1. Quiz details</h3>
+      <div class="grid-2">
+        <div class="field"><label for="course">Course title</label><input id="course" placeholder="BIO 101 — Mid-semester" maxlength="120"></div>
+        <div class="field"><label for="minutes">Time limit (minutes)</label><input id="minutes" type="number" min="1" max="600" value="15"></div>
+      </div>
+      <p class="tiny muted" style="margin:0">Your share link will look like <strong>/#/q/kofi-bio-101-mid-semester-x4f</strong>.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:1.2rem">
+      <h3>2. Add your past questions</h3>
+      <div class="grid-2">
+        <div class="field"><label for="pdfInput">Upload a text-based PDF</label><input id="pdfInput" type="file" accept="application/pdf,.pdf">
+          <span class="hint">We read the PDF in your browser. Nothing is uploaded to a server.</span></div>
+        <div class="field"><label for="pasteBox">Or paste questions here</label>
+          <textarea id="pasteBox" rows="7" placeholder="Q: Which organelle produces most energy?&#10;A) Nucleus&#10;B) Mitochondria&#10;C) Ribosome&#10;D) Golgi apparatus&#10;Answer: B"></textarea></div>
+      </div>
+
+      <div class="format-box" style="margin-bottom:1rem">
+        <strong>Required format</strong>
+<pre>Q: Question text
+A) Option one
+B) Option two
+C) Option three
+D) Option four
+Answer: B</pre>
+        <span class="tiny">Also accepts 1. or 1) numbering, options A to E, and a missing Answer line (you can tick it later).</span>
+      </div>
+
+      <div class="scan-box">
+        <strong>Scanned PDF? Start here 👆</strong>
+        <p class="tiny" style="margin:.4rem 0 .6rem">If your PDF is a picture, copy this prompt, paste it into any AI tool with your scan, then paste the AI's answer into the box above.</p>
+        <pre id="aiPrompt">${esc(AI_PROMPT)}</pre>
+        <button class="btn btn-sm btn-outline" id="copyPrompt">Copy AI prompt</button>
+      </div>
+
+      <div class="row" style="margin-top:1.2rem">
+        <button class="btn btn-gold" id="parseBtn">Parse questions →</button>
+        <span id="qcount" class="muted" style="font-weight:800"></span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.2rem">
+      <div class="spread"><div><h3 style="margin:0">3. Edit &amp; tick answers</h3>
+        <p id="missingNote" class="notice info tiny" style="margin:.5rem 0 0">Paste or upload questions to begin.</p></div>
+        <button class="btn btn-sm btn-outline" id="addQ">+ Add question manually</button></div>
+      <div id="editor" style="margin-top:1.1rem"></div>
+    </div>
+
+    <div class="card row" style="justify-content:space-between">
+      <p class="muted tiny" style="margin:0">${paidNow()?'Paid plan: unlimited quizzes, up to 200 questions.':`Free trial: ${state.profile?.used||0} of ${s.free??2} used, up to ${s.max??50} questions.`}</p>
+      <div class="row"><button class="btn btn-outline" id="saveHidden">Save hidden</button>
+        <button class="btn btn-gold" id="publishBtn">Publish quiz</button></div>
+    </div>
+  </div>`;
+
+  renderEditor();
+  $('#copyPrompt').addEventListener('click', () => copyText(AI_PROMPT));
+  $('#parseBtn').addEventListener('click', () => {
+    const text = $('#pasteBox').value;
+    if (!text.trim()) return toast('Paste some questions or upload a PDF first', 'err');
+    const parsed = parseQuestions(text);
+    if (!parsed.length) return toast('No questions found — check the required format above', 'err');
+    state.draft = parsed;
+    renderEditor();
+    toast(`${parsed.length} question${parsed.length===1?'':'s'} parsed. Tick the correct answers.`, 'ok');
+    $('#editor').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+  $('#pdfInput').addEventListener('change', async e => {
+    const file = e.target.files?.[0]; if (!file) return;
+    toast('Reading PDF…', 'info');
+    try {
+      const text = await pdfToText(file);
+      $('#pasteBox').value = text;
+      const parsed = parseQuestions(text);
+      if (parsed.length) { state.draft = parsed; renderEditor(); toast(`${parsed.length} questions found — review them below.`, 'ok'); }
+      else toast('Text read, but no questions matched. Paste the AI prompt output instead.', 'info');
+    } catch (err) { toast(err.message, 'err'); }
+  });
+  $('#addQ').addEventListener('click', () => { state.draft.push({ q:'', o:['','','',''], a:null }); renderEditor(); });
+
+  $('#editor').addEventListener('input', e => {
+    const t = e.target;
+    if (t.dataset.qtext !== undefined) state.draft[+t.dataset.qtext].q = t.value;
+    if (t.dataset.otext !== undefined) state.draft[+t.dataset.otext].o[+t.dataset.oi] = t.value;
+  });
+  $('#editor').addEventListener('change', e => {
+    if (e.target.dataset.ans !== undefined) {
+      state.draft[+e.target.dataset.ans].a = +e.target.value;
+      renderEditor();
+    }
+  });
+  $('#editor').addEventListener('click', e => {
+    const rm = e.target.closest('[data-remove]'), ao = e.target.closest('[data-addopt]'),
+          ro = e.target.closest('[data-rmopt]');
+    if (rm) { state.draft.splice(+rm.dataset.remove, 1); renderEditor(); }
+    if (ao) { const q = state.draft[+ao.dataset.addopt]; if (q.o.length < 5) { q.o.push(''); renderEditor(); } }
+    if (ro) {
+      const q = state.draft[+ro.dataset.rmopt], j = +ro.dataset.oj;
+      q.o.splice(j, 1);
+      if (q.a === j) q.a = null; else if (q.a > j) q.a--;
+      renderEditor();
+    }
+  });
+
+  async function create(live) {
+    const errBox = $('#formErr'); errBox.classList.add('hide');
+    const title = $('#course').value.trim();
+    const min = Number($('#minutes').value);
+    const problems = [];
+    if (!title) problems.push('Enter a course title.');
+    if (!Number.isFinite(min) || min < 1 || min > 600) problems.push('Time limit must be between 1 and 600 minutes.');
+    if (!state.draft.length) problems.push('Add at least one question.');
+    const cap = paidNow() ? 200 : (s.max ?? 50);
+    if (state.draft.length > cap) problems.push(`Your plan allows ${cap} questions per quiz.`);
+    state.draft.forEach((q, i) => {
+      if (!q.q.trim()) problems.push(`Question ${i+1} has no text.`);
+      if (q.o.filter(o => o.trim()).length < 2) problems.push(`Question ${i+1} needs at least two options.`);
+      if (q.a === null || q.a === undefined || q.a >= q.o.length) problems.push(`Question ${i+1} has no correct answer ticked.`);
+    });
+    if (problems.length) {
+      errBox.innerHTML = `<strong>Please fix:</strong><br>${problems.map(p=>'• '+esc(p)).join('<br>')}`;
+      errBox.classList.remove('hide');
+      errBox.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    if (live) {
+      const missing = state.draft.some(q => q.a === null);
+      if (missing) return toast('Tick a correct answer for every question before publishing', 'err');
+    }
+    const profile = await api.get('users', state.user.uid);
+    if (!paidNow() && (profile?.used||0) >= (s.free ?? 2)) {
+      toast('Your free quizzes are used up — choose a plan to keep creating', 'info');
+      location.hash = '#/plans'; return;
+    }
+    const btn = live ? $('#publishBtn') : $('#saveHidden');
+    btn.disabled = true;
+    try {
+      const first = String(profile?.name || 'student').trim().split(/\s+/)[0] || 'student';
+      const slug = `${slugify(first)}-${slugify(title)}-${rand(4)}`;
+      const qs = state.draft.map(q => ({ q:q.q.trim(), o:q.o.map(o=>o.trim()), a:q.a }));
+      await api.add('quizzes', {
+        owner:state.user.uid, name:profile?.name||'', phone:profile?.phone||'', flyer:profile?.flyer||'',
+        title, min, slug, qs, live, at:Date.now()
+      });
+      if (!paidNow()) await api.set('users', state.user.uid, { used:(profile?.used||0)+1 }, true);
+      state.profile = await api.get('users', state.user.uid);
+      toast(live?'Quiz published — your link is ready!':'Quiz saved as hidden', 'ok');
+      location.hash = '#/dashboard';
+    } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
+  }
+  $('#publishBtn').addEventListener('click', () => create(true));
+  $('#saveHidden').addEventListener('click', () => create(false));
+}
+/* ==================================================================
+   RESULTS (aspirant view)
+   ================================================================== */
+async function pageResults(id) {
+  if (!requireUser()) return;
+  loading('Crunching the results…');
+  const quiz = await api.get('quizzes', id);
+  if (!quiz || (quiz.owner !== state.user.uid && !isAdmin())) {
+    $('#app').innerHTML = `<div class="page wrap">${empty('Quiz not found', 'This quiz does not exist or you do not have access to it.',
+      '<a href="#/dashboard" class="btn">Back to dashboard</a>')}</div>`;
+    return;
+  }
+  const responses = (await api.where('responses','quizId',id)).sort((a,b)=>(b.at||0)-(a.at||0));
+  const qs = quiz.qs || [];
+  const pctOf = r => Math.round((r.sc / Math.max(1, r.tot || qs.length)) * 100);
+  const sum = responses.reduce((a,r) => a + pctOf(r), 0);
+  const avg = responses.length ? Math.round(sum/responses.length) : 0;
+  const best = responses.length ? Math.max(...responses.map(pctOf)) : 0;
+  const bands = [
+    { label:'0–19%', test:p=>p<20 }, { label:'20–39%', test:p=>p>=20&&p<40 },
+    { label:'40–59%', test:p=>p>=40&&p<60 }, { label:'60–79%', test:p=>p>=60&&p<80 },
+    { label:'80–100%', test:p=>p>=80 }
+  ].map(b => ({ ...b, n:responses.filter(r => b.test(pctOf(r))).length }));
+  const qStats = qs.map((q, i) => ({
+    i, q:q.q, correct:responses.filter(r => (r.a||[])[i] === q.a).length
+  }));
+
+  $('#app').innerHTML = `<div class="page wrap" id="resultsRoot">
+    <div class="page-head">
+      <div><span class="eyebrow"><span class="dot"></span> Quiz results</span><h1>${esc(quiz.title)}</h1>
+        <p class="muted tiny" style="margin:0">${qs.length} questions · ${esc(quiz.min)} minutes · ${responses.length} attempt${responses.length===1?'':'s'}</p></div>
+      <div class="row"><button class="btn btn-outline" data-copy> Copy link</button>
+        <a href="#/dashboard" class="btn btn-outline">← Dashboard</a></div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:1.2rem">
+      <div class="stat"><b>${responses.length}</b><span>Total attempts</span></div>
+      <div class="stat"><b>${avg}%</b><span>Average score</span></div>
+      <div class="stat"><b>${best}%</b><span>Highest score</span></div>
+    </div>
+
+    <div class="grid-2" style="align-items:start;margin-bottom:1.2rem">
+      <div class="card"><h3>Score spread</h3>
+        ${responses.length ? `<div class="chart">${bands.map(b => {
+          const pct = Math.round(b.n / responses.length * 100);
+          return `<div class="barrow"><span>${b.label}</span><div class="bartrack"><div class="barfill" style="width:${pct}%"></div></div><span>${b.n}</span></div>`;
+        }).join('')}</div>` : '<p class="muted">No attempts yet. Share your link to get the first one.</p>'}
+      </div>
+      <div class="card"><h3>Question difficulty</h3>
+        ${responses.length && qStats.length ? `<div class="chart">${qStats.map(s => {
+          const pct = Math.round(s.correct / responses.length * 100);
+          return `<div class="barrow"><span title="${esc(s.q)}">Q${s.i+1}</span><div class="bartrack"><div class="barfill alt" style="width:${pct}%"></div></div><span>${pct}%</span></div>`;
+        }).join('')}</div><p class="tiny muted" style="margin:.9rem 0 0">Lower bars = harder questions. Hover a question number to read it.</p>`
+        : '<p class="muted">Question-by-question data appears after the first attempt.</p>'}
+      </div>
+    </div>
+
+    <div class="card"><h3>Every respondent</h3>
+      ${responses.length ? `<div class="table-scroll"><table>
+        <thead><tr><th>Name</th><th>Score</th><th>Percentage</th><th>Date</th><th></th></tr></thead>
+        <tbody>${responses.map(r => `<tr>
+          <td><strong>${esc(r.name)}</strong></td><td>${esc(r.sc)} / ${esc(r.tot)}</td>
+          <td>${pctOf(r)}%</td><td>${fmtDT(r.at)}</td>
+          <td><button class="btn btn-sm btn-outline" data-review="${r.id}">Review</button></td>
+        </tr>`).join('')}</tbody></table></div>`
+      : empty('No responses yet', 'Students who take your quiz will appear here with a full answer review.')}
+    </div>
+  </div>`;
+
+  $('[data-copy]').addEventListener('click', () => copyText(shareLink(quiz)));
+  $('#resultsRoot').addEventListener('click', e => {
+    const b = e.target.closest('[data-review]'); if (!b) return;
+    const r = responses.find(x => x.id === b.dataset.review); if (!r) return;
+    const answers = r.a || [];
+    const rows = qs.map((q, i) => {
+      const chosen = answers[i], right = q.a;
+      const good = chosen === right;
+      return `<div class="review-row ${good?'good':'bad'}">
+        <strong>Q${i+1}. ${esc(q.q)}</strong>
+        <div class="ans"><span class="${good?'good-txt':'bad-txt'}">Their answer: ${chosen==null?'—':esc(q.o[chosen]||'—')}</span>
+        <span class="good-txt">Correct: ${esc(q.o[right]||'—')}</span></div></div>`;
+    }).join('');
+    modal(`<h3>${esc(r.name)} — ${pctOf(r)}%</h3>
+      <p class="muted tiny">${fmtDT(r.at)} · ${r.sc} of ${r.tot} correct</p>
+      <div style="max-height:55vh;overflow:auto">${rows}</div>
+      <div class="modal-foot"><button class="btn btn-outline" data-close>Close</button></div>`);
+  });
+}
+
+/* ==================================================================
+   PUBLIC QUIZ (student view, no account needed)
+   ================================================================== */
+async function pagePublicQuiz(slug) {
+  loading('Finding your quiz…');
+  let code; try { code = decodeURIComponent(slug); } catch (_) { code = slug; }
+  const found = await api.where2('quizzes','slug',code,'live',true);
+  const quiz = found[0];
+  if (!quiz) {
+    $('#app').innerHTML = `<div class="page wrap">${empty('This quiz is not available',
+      'The link may be wrong, or the aspirant has hidden the quiz. Ask for a fresh link and try again.',
+      '<a href="#/" class="btn">Go to home</a>')}</div>`;
+    return;
+  }
+  const qs = quiz.qs || [];
+
+  function intro() {
+    $('#app').innerHTML = `<div class="page wrap quiz-shell">
+      <div class="card aspirant-card">
+        ${quiz.flyer ? `<img class="flyer" src="${quiz.flyer}" alt="Campaign flyer for ${esc(quiz.name)}">`
+          : `<div class="flyer" style="display:grid;place-items:center;background:var(--mint);text-align:center;padding:1rem;font-weight:800;color:var(--blue-deep)">Campaign flyer</div>`}
+        <div>
+          <span class="eyebrow"><span class="dot"></span> You are invited to take a quiz</span>
+          <h1>${esc(quiz.title)}</h1>
+          <p class="muted" style="margin-bottom:.7rem">Presented by <strong>${esc(quiz.name)}</strong></p>
+          ${quiz.phone ? `<a class="tel" href="tel:${esc(String(quiz.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(quiz.phone)}</a>` : ''}
+          <div class="quiz-meta"><span>${qs.length} questions</span><span>${esc(quiz.min)} minutes</span><span>Multiple choice</span></div>
+          <p class="tiny muted">Your answers and name are shared with the aspirant so they can review results.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1.2rem">
+        <div class="field"><label for="studentName">Your full name</label>
+          <input id="studentName" autocomplete="name" maxlength="90" placeholder="Enter your name to start"></div>
+        <button class="btn btn-gold btn-lg" id="startBtn" style="width:100%">Start quiz →</button>
+      </div>
+    </div>`;
+    $('#startBtn').addEventListener('click', () => {
+      const name = $('#studentName').value.trim();
+      if (!name) return toast('Please enter your name first', 'err');
+      take(name);
+    });
+  }
+
+  function take(name) {
+    let idx = 0, left = Math.max(1, Number(quiz.min) || 1) * 60, done = false;
+    const answers = new Array(qs.length).fill(null);
+
+    function questionView() {
+      const q = qs[idx];
+      $('#app').innerHTML = `<div class="page wrap quiz-shell">
+        <div class="take-bar">
+          <span class="prog">Question ${idx+1} of ${qs.length}</span>
+          <span class="timer-pill ${left<=30?'low':''}"><span class="blink"></span> ${mmss(left)}</span>
+          <button class="btn btn-sm btn-outline" id="submitMid">Submit now</button>
+        </div>
+        <div class="qbox">
+          <fieldset><legend>${esc(q.q)}</legend>
+            ${q.o.map((o, j) => `<label class="opt-big ${answers[idx]===j?'sel':''}">
+              <input type="radio" name="answer" value="${j}" ${answers[idx]===j?'checked':''} style="position:absolute;opacity:0;width:1px;height:1px">
+              <span class="olt">${'ABCDE'[j]}</span><span>${esc(o)}</span></label>`).join('')}
+          </fieldset>
+          <div class="take-nav">
+            <button class="btn btn-outline" id="prevBtn" ${idx===0?'disabled':''}>← Previous</button>
+            <button class="btn btn-gold" id="nextBtn">${idx===qs.length-1?'Submit quiz ✓':'Next →'}</button>
+          </div>
+        </div>
+        <p class="tiny muted center" style="margin-top:1rem">The quiz submits automatically when the timer reaches zero.</p>
+      </div>`;
+      $$('input[name=answer]').forEach(r => r.addEventListener('change', () => { answers[idx] = +r.value; questionView(); }));
+      $('#prevBtn').addEventListener('click', () => { if (idx>0) { idx--; questionView(); } });
+      $('#nextBtn').addEventListener('click', () => { if (idx<qs.length-1) { idx++; questionView(); } else submit(false); });
+      $('#submitMid').addEventListener('click', () => {
+        if (answers.filter(a => a !== null).length < qs.length && !confirm('Some questions are unanswered. Submit anyway?')) return;
+        submit(false);
+      });
+    }
+
+    async function submit(auto) {
+      if (done) return; done = true; clearQuizTimer();
+      const sc = qs.reduce((n, q, i) => n + (answers[i] === q.a ? 1 : 0), 0);
+      const tot = qs.length;
+      toast(auto ? 'Time up — submitting your answers…' : 'Submitting your answers…', 'info');
+      try {
+        await api.add('responses', { quizId:quiz.id, name, a:answers, sc, tot, at:Date.now() });
+        const pct = Math.round(sc / Math.max(1,tot) * 100);
+        $('#app').innerHTML = `<div class="page wrap quiz-shell">
+          <div class="card center">
+            <div class="score-ring" style="--p:${pct}%"><b>${pct}%</b></div>
+            <h1 style="font-size:1.9rem">Well done, ${esc(name.split(' ')[0])}!</h1>
+            <p class="muted">You scored <strong>${sc} out of ${tot}</strong> on ${esc(quiz.title)}.</p>
+            <div class="row" style="justify-content:center">
+              ${quiz.phone?`<a class="tel" href="tel:${esc(String(quiz.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(quiz.name)}</a>`:''}
+              <button class="btn btn-outline" id="againBtn">Take it again</button>
+            </div>
+          </div>
+          <h2 style="font-size:1.4rem;margin:1.6rem 0 .8rem">Your answer review</h2>
+          ${qs.map((q, i) => {
+            const good = answers[i] === q.a;
+            return `<div class="review-row ${good?'good':'bad'}">
+              <strong>Q${i+1}. ${esc(q.q)}</strong>
+              <div class="ans"><span class="${good?'good-txt':'bad-txt'}">You: ${answers[i]==null?'No answer':esc(q.o[answers[i]]||'—')}</span>
+              <span class="good-txt">Correct: ${esc(q.o[q.a]||'—')}</span></div></div>`;
+          }).join('')}
+          <p class="center tiny muted" style="margin-top:1.4rem"><a href="#/">Back to CampusQuiz</a></p>
+        </div>`;
+        $('#againBtn').addEventListener('click', intro);
+        window.scrollTo({ top:0, behavior:'smooth' });
+      } catch (err) {
+        done = false;
+        toast(err.message, 'err');
+      }
+    }
+
+    questionView();
+    state.quizTimer = setInterval(() => {
+      left--;
+      const pill = $('.take-bar .timer-pill');
+      if (pill) { pill.innerHTML = `<span class="blink"></span> ${mmss(Math.max(0,left))}`; pill.classList.toggle('low', left<=30); }
+      if (left <= 0) submit(true);
+    }, 1000);
+  }
+  intro();
+}
+/* ==================================================================
+   ADMIN
+   ================================================================== */
+async function pageAdmin() {
+  if (!isAdmin()) {
+    $('#app').innerHTML = `<div class="page wrap">${empty('Admin access only',
+      'This page is reserved for the site owner. If this is your account, check that you are signed in with the admin email.',
+      '<a href="#/" class="btn">Back to home</a>')}</div>`;
+    return;
+  }
+  loading('Opening admin controls…');
+  const [payments, users, quizzes] = await Promise.all([api.all('payments'), api.all('users'), api.all('quizzes')]);
+  const s = state.settings || DEFAULT_SETTINGS;
+  const sortedPayments = payments.sort((a,b) =>
+    (a.status==='pending'?0:1)-(b.status==='pending'?0:1) || (b.at||0)-(a.at||0));
+  users.sort((a,b)=>(b.at||0)-(a.at||0));
+  quizzes.sort((a,b)=>(b.at||0)-(a.at||0));
+
+  const tabs = [['payments','Payments'],['prices','Prices & contact'],['users','Users'],['quizzes','Quizzes']];
+  $('#app').innerHTML = `<div class="page wrap" id="adminRoot">
+    <div class="page-head">
+      <div><span class="eyebrow"><span class="dot"></span> Site owner</span><h1>Admin</h1></div>
+      <span class="plan-pill live">${esc(state.user.email)}</span>
+    </div>
+    <div class="row" style="border-bottom:2px solid var(--line);padding-bottom:.5rem;margin-bottom:1.4rem">
+      ${tabs.map(([k,label]) => `<button class="btn btn-sm ${state.adminTab===k?'':'btn-outline'}" data-tab="${k}">${label}</button>`).join('')}
+    </div>
+    <div id="adminBody"></div>
+  </div>`;
+
+  const body = $('#adminBody');
+  function payView() {
+    body.innerHTML = `<div class="card">
+      <div class="spread"><h3 style="margin:0">Payment submissions</h3><span class="muted tiny">${sortedPayments.filter(p=>p.status==='pending').length} pending</span></div>
+      ${sortedPayments.length ? `<div class="table-scroll"><table>
+        <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Price</th><th>Transaction ID</th><th>Date</th><th>Screenshot</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${sortedPayments.map(p => `<tr>
+          <td><strong>${esc(p.name||'—')}</strong></td><td>${esc(p.email||'—')}</td>
+          <td>${esc(p.plan||'—')}<br><span class="tiny muted">${esc(p.days||'—')} days</span></td>
+          <td>${esc(s.cur||'')}${esc(p.price||'—')}</td><td>${esc(p.txn||'—')}</td><td>${fmtDate(p.at)}</td>
+          <td>${p.shot?`<img class="thumb" src="${p.shot}" alt="Payment screenshot for ${esc(p.name)}" data-shot="${p.id}">`:'—'}</td>
+          <td><span class="plan-pill ${p.status==='approved'?'live':p.status==='rejected'?'off':''}">${esc(p.status)}</span></td>
+          <td>${p.status==='pending'?`<div class="row" style="flex-wrap:nowrap">
+            <button class="btn btn-sm" data-approve="${p.id}">Approve</button>
+            <button class="btn btn-sm btn-danger" data-reject="${p.id}">Reject</button></div>`:'—'}</td>
+        </tr>`).join('')}</tbody></table></div>`
+      : empty('No payments yet', 'Submissions from aspirants will show up here, with pending ones first.')}
+    </div>`;
+    body.onclick = async e => {
+      const shot = e.target.closest('[data-shot]');
+      if (shot) { const p = sortedPayments.find(x=>x.id===shot.dataset.shot);
+        modal(`<h3>Payment screenshot</h3><img class="modal-img" src="${p.shot}" alt="Enlarged payment screenshot from ${esc(p.name)}">
+          <p class="tiny muted" style="margin-top:.6rem">${esc(p.name)} · ${esc(p.txn)}</p>
+          <div class="modal-foot"><button class="btn btn-outline" data-close>Close</button></div>`); return; }
+      const ap = e.target.closest('[data-approve]');
+      if (ap) {
+        const p = sortedPayments.find(x=>x.id===ap.dataset.approve);
+        const days = Number(p.days) || (s.plans||[]).find(x=>x.n===p.plan)?.d || 0;
+        if (!days) return toast('Plan duration missing — check settings', 'err');
+        if (!await ask('Approve this payment?', `Add ${days} days to ${p.name}'s subscription and mark the payment approved.`)) return;
+        try {
+          const u = await api.get('users', p.uid);
+          const base = Math.max(Date.now(), u?.until || 0);
+          await api.set('users', p.uid, { until:base + days*DAY, used:0 }, true);
+          await api.set('payments', p.id, { status:'approved' }, true);
+          toast(`Approved. Plan now runs until ${fmtDate(base+days*DAY)}`, 'ok');
+          pageAdmin();
+        } catch (err) { toast(err.message, 'err'); }
+      }
+      const rj = e.target.closest('[data-reject]');
+      if (rj) {
+        const p = sortedPayments.find(x=>x.id===rj.dataset.reject);
+        if (!await ask('Reject this payment?', 'The aspirant will see it as rejected and can submit a new transaction ID.')) return;
+        try { await api.set('payments', p.id, { status:'rejected' }, true); toast('Payment rejected', 'ok'); pageAdmin(); }
+        catch (err) { toast(err.message, 'err'); }
+      }
+    };
+  }
+
+  function priceView() {
+    const rows = [0,1,2,3].map(i => {
+      const p = (s.plans||[])[i] || { n:'',p:'',d:'' };
+      return `<div class="grid-3" style="margin-bottom:.6rem">
+        <div class="field" style="margin:0"><label>Plan name ${i+1}</label><input data-pn="${i}" value="${esc(p.n)}" placeholder="e.g. 30 Day Campaign"></div>
+        <div class="field" style="margin:0"><label>Price</label><input data-pp="${i}" type="number" min="0" value="${esc(p.p)}" placeholder="60"></div>
+        <div class="field" style="margin:0"><label>Days</label><input data-pd="${i}" type="number" min="1" value="${esc(p.d)}" placeholder="30"></div>
+      </div>`;
+    }).join('');
+    body.innerHTML = `<div class="card">
+      <h3>Prices &amp; contact</h3>
+      <p class="muted tiny">Changes here update the home page pricing cards and the payment page immediately.</p>
+      <div class="grid-3">
+        <div class="field"><label for="curSet">Currency symbol</label><input id="curSet" value="${esc(s.cur||'')}" placeholder="GH₵"></div>
+        <div class="field"><label for="phoneSet">Admin phone number</label><input id="phoneSet" value="${esc(s.phone||'')}" placeholder="0240000000"></div>
+        <div class="field"><label for="freeSet">Free-trial quiz limit</label><input id="freeSet" type="number" min="0" value="${esc(s.free??2)}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label for="maxSet">Max questions per free quiz</label><input id="maxSet" type="number" min="1" value="${esc(s.max??50)}"></div>
+        <div class="field"><label for="noteSet">Payment instructions</label><textarea id="noteSet" rows="4">${esc(s.note||'')}</textarea></div>
+      </div>
+      <h4 style="margin-top:1rem">Plans <span class="tiny muted" style="font-weight:600">(up to 4; leave a name blank to remove)</span></h4>
+      ${rows}
+      <button class="btn btn-gold" id="saveSettings" style="margin-top:1rem">Save settings</button>
+    </div>`;
+    $('#saveSettings').addEventListener('click', async () => {
+      const plans = [];
+      for (let i=0;i<4;i++) {
+        const n = $(`[data-pn="${i}"]`).value.trim();
+        if (!n) continue;
+        plans.push({ n, p:Number($(`[data-pp="${i}"]`).value)||0, d:Number($(`[data-pd="${i}"]`).value)||1 });
+      }
+      const next = {
+        plans, cur:$('#curSet').value.trim()||'GH₵', phone:$('#phoneSet').value.trim(),
+        note:$('#noteSet').value.trim(), free:Math.max(0,Number($('#freeSet').value)||0),
+        max:Math.max(1,Number($('#maxSet').value)||50)
+      };
+      try {
+        await api.set('settings','app',next,true);
+        state.settings = { ...DEFAULT_SETTINGS, ...next };
+        renderNav();
+        toast('Settings saved — pricing updated', 'ok');
+      } catch (err) { toast(err.message, 'err'); }
+    });
+  }
+
+  function usersView() {
+    body.innerHTML = `<div class="card"><h3>All users</h3>
+      ${users.length ? `<div class="table-scroll"><table>
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Plan status</th><th>Joined</th><th></th></tr></thead>
+        <tbody>${users.map(u => `<tr>
+          <td><strong>${esc(u.name||'—')}</strong></td><td>${esc(u.email||'—')}</td><td>${esc(u.phone||'—')}</td>
+          <td>${(u.until||0)>Date.now()?`<span class="plan-pill live">Active to ${fmtDate(u.until)}</span>`:'<span class="plan-pill off">Free trial</span>'}</td>
+          <td>${fmtDate(u.at)}</td>
+          <td><button class="btn btn-sm btn-danger" data-deluser="${u.id}">Delete</button></td>
+        </tr>`).join('')}</tbody></table></div>`
+      : empty('No users yet', 'Sign-ups will appear here.')}
+      <p class="tiny muted" style="margin-top:.9rem">Deleting removes the user's profile, quizzes, responses and payment history. To block their login too, disable the account in the Firebase Console (Authentication → Users).</p>
+    </div>`;
+    body.onclick = async e => {
+      const b = e.target.closest('[data-deluser]'); if (!b) return;
+      const u = users.find(x=>x.id===b.dataset.deluser);
+      if (!await ask('Delete this user?', `This removes ${u.name||u.email}, their quizzes and all responses. This cannot be undone.`)) return;
+      try {
+        const qs = await api.where('quizzes','owner',u.id);
+        for (const q of qs) {
+          const rs = await api.where('responses','quizId',q.id);
+          await Promise.all(rs.map(r => api.del('responses',r.id)));
+          await api.del('quizzes',q.id);
+        }
+        const ps = await api.where('payments','uid',u.id);
+        await Promise.all(ps.map(p => api.del('payments',p.id)));
+        if (isDemo()) { const au = dget('auth'); delete au[u.id]; dset('auth',au); }
+        await api.del('users',u.id);
+        toast('User and their quizzes deleted', 'ok'); pageAdmin();
+      } catch (err) { toast(err.message, 'err'); }
+    };
+  }
+
+  function quizzesView() {
+    body.innerHTML = `<div class="card"><h3>All quizzes</h3>
+      ${quizzes.length ? `<div class="table-scroll"><table>
+        <thead><tr><th>Title</th><th>Aspirant</th><th>Questions</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>${quizzes.map(q => `<tr>
+          <td><strong>${esc(q.title)}</strong><br><span class="tiny muted">/#/q/${esc(q.slug)}</span></td>
+          <td>${esc(q.name||'—')}</td><td>${(q.qs||[]).length}</td>
+          <td><span class="plan-pill ${q.live?'live':'off'}">${q.live?'Live':'Hidden'}</span></td>
+          <td>${fmtDate(q.at)}</td>
+          <td><div class="row" style="flex-wrap:nowrap">
+            <button class="btn btn-sm btn-outline" data-copyq="${q.id}">Copy link</button>
+            <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
+            <button class="btn btn-sm btn-outline" data-toggleq="${q.id}">${q.live?'Hide':'Show'}</button>
+            <button class="btn btn-sm btn-danger" data-delq="${q.id}">Delete</button>
+          </div></td>
+        </tr>`).join('')}</tbody></table></div>`
+      : empty('No quizzes yet', 'Quizzes created by aspirants will appear here.')}
+    </div>`;
+    body.onclick = async e => {
+      const c = e.target.closest('[data-copyq]'), t = e.target.closest('[data-toggleq]'), d = e.target.closest('[data-delq]');
+      if (c) { const q = quizzes.find(x=>x.id===c.dataset.copyq); if (q) copyText(shareLink(q)); }
+      if (t) { const q = quizzes.find(x=>x.id===t.dataset.toggleq);
+        try { await api.set('quizzes',q.id,{live:!q.live},true); toast(q.live?'Quiz hidden':'Quiz shown', 'ok'); pageAdmin(); }
+        catch (err) { toast(err.message,'err'); } }
+      if (d) { const q = quizzes.find(x=>x.id===d.dataset.delq);
+        if (!await ask('Delete this quiz?', `“${q.title}” and all its responses will be removed.`)) return;
+        try {
+          const rs = await api.where('responses','quizId',q.id);
+          await Promise.all(rs.map(r => api.del('responses',r.id)));
+          await api.del('quizzes',q.id);
+          toast('Quiz deleted', 'ok'); pageAdmin();
+        } catch (err) { toast(err.message,'err'); } }
+    };
+  }
+
+  ({ payments:payView, prices:priceView, users:usersView, quizzes:quizzesView }[state.adminTab] || payView)();
+  $('#adminRoot').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (!t) return;
+    state.adminTab = t.dataset.tab; pageAdmin();
+  });
+}
+
+/* ==================================================================
+   BOOT
+   ================================================================== */
+(async function boot() {
+  $('#year').textContent = new Date().getFullYear();
+  $('#burger').addEventListener('click', () => {
+    const open = $('#navLinks').classList.toggle('open');
+    $('#burger').setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', e => {
+    const s = e.target.closest('[data-scroll]');
+    if (s) { e.preventDefault(); goSection(s.dataset.scroll); }
+    if (e.target.closest('[data-home]')) state.pendingScroll = null;
+  });
+  window.addEventListener('hashchange', route);
+
+  await initFirebase();
+  const saved = await api.get('settings','app');
+  state.settings = { ...DEFAULT_SETTINGS, ...(saved || {}) };
+  api.watchSettings(() => {
+    renderNav();
+    if (['home','plans'].includes(parseRoute().name)) route();
+  });
+  api.onAuth(async u => {
+    const previous = state.user?.uid;
+    state.user = u;
+    state.profile = u ? await api.get('users', u.uid) : null;
+    renderNav();
+    if (u && !previous && ['login','signup'].includes(parseRoute().name)) location.hash = '#/dashboard';
+    else route();
+  });
+  route();
+})();
+/* ==================================================================
+   PLANS & MANUAL PAYMENT
+   ================================================================== */
+async function pagePlans() {
+  if (!requireUser()) return;
+  loading('Loading plans…');
+  const s = state.settings || DEFAULT_SETTINGS;
+  state.profile = await api.get('users', state.user.uid);
+  const mine = (await api.where('payments','uid',state.user.uid)).sort((a,b)=>(b.at||0)-(a.at||0));
+  const cur = esc(s.cur || 'GH₵');
+
+  $('#app').innerHTML = `<div class="page wrap">
+    <div class="page-head">
+      <div><span class="eyebrow"><span class="dot"></span> Plans &amp; payment</span><h1>Grow your campaign</h1></div>
+      <a href="#/dashboard" class="btn btn-outline">← Dashboard</a>
+    </div>
+
+    <div class="card" style="margin-bottom:1.3rem">
+      <div class="spread"><div>
+        <h3 style="margin:0">Your current plan</h3>
+        <p style="margin:.5rem 0 0">${paidNow()
+          ? `Active until <strong>${fmtDate(state.profile?.until)}</strong>. Unlimited quizzes, up to 200 questions each.`
+          : `Free trial: <strong>${state.profile?.used||0} of ${s.free??2}</strong> quizzes used, up to ${s.max??50} questions each.`}</p>
+      </div><span class="plan-pill ${paidNow()?'live':'off'}">${paidNow()?'ACTIVE':'FREE TRIAL'}</span></div>
+    </div>
+
+    <h2 style="font-size:1.5rem">Choose a plan</h2>
+    <div class="price-grid" style="margin-bottom:1.4rem">
+      ${(s.plans||[]).filter(p=>p&&p.n).map(p => `<article class="price">
+        <h3>${esc(p.n)}</h3>
+        <div class="amount">${cur}${esc(p.p)} <small>/ ${esc(p.d)} days</small></div>
+        <ul><li>${svgIcon('check')}<span>Unlimited quizzes</span></li>
+        <li>${svgIcon('check')}<span>Up to 200 questions each</span></li>
+        <li>${svgIcon('check')}<span>${esc(p.d)} days of access</span></li></ul>
+        <button class="btn btn-gold choosePlan" data-plan="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}">Choose this plan</button>
+      </article>`).join('') || '<p class="muted">No plans are configured yet. Please call the admin.</p>'}
+    </div>
+
+    <div class="grid-2" style="align-items:start">
+      <div class="card">
+        <h3>Submit your payment</h3>
+        <p class="muted" style="font-size:.92rem">${esc(s.note||'')}</p>
+        ${s.phone ? `<a class="tel" href="tel:${esc(String(s.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(s.phone)} for faster confirmation</a>` : ''}
+        <div id="payErr" class="error-box hide" role="alert" style="margin-top:1rem"></div>
+        <form id="payForm" style="margin-top:1rem">
+          <div class="field"><label for="planSel">Plan</label><select id="planSel" required>
+            <option value="">Select a plan…</option>
+            ${(s.plans||[]).filter(p=>p&&p.n).map(p=>`<option value="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}">${esc(p.n)} — ${cur}${esc(p.p)} / ${esc(p.d)} days</option>`).join('')}
+          </select></div>
+          <div class="field"><label for="txn">Mobile Money transaction ID</label><input id="txn" required maxlength="60" placeholder="e.g. TXN-4829103"></div>
+          <div class="field"><label for="shot">Payment screenshot</label><input id="shot" type="file" accept="image/*" required>
+            <span class="hint">We resize this in your browser before saving it.</span></div>
+          <button class="btn btn-gold btn-lg" style="width:100%" type="submit">Submit payment for confirmation</button>
+        </form>
+      </div>
+      <div class="card"><h3>Your submissions</h3>
+        ${mine.length ? `<div class="table-scroll"><table>
+          <thead><tr><th>Plan</th><th>Transaction</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>${mine.map(p => `<tr><td>${esc(p.plan)}</td><td>${esc(p.txn)}</td>
+            <td>${fmtDate(p.at)}</td>
+            <td><span class="plan-pill ${p.status==='approved'?'live':p.status==='rejected'?'off':''}">${esc(p.status)}</span></td></tr>`).join('')}
+          </tbody></table></div>` : empty('No submissions yet', 'After you pay, your submissions and their status appear here.')}
+      </div>
+    </div>
+  </div>`;
+
+  $$('.choosePlan').forEach(b => b.addEventListener('click', () => {
+    $('#planSel').value = b.dataset.plan;
+    $('#planSel').scrollIntoView({ behavior:'smooth', block:'center' });
+    toast(`${b.dataset.plan} selected — now pay and submit your details`, 'info');
+  }));
+
+  $('#payForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const errBox = $('#payErr'); errBox.classList.add('hide');
+    const plan = $('#planSel').value, txn = $('#txn').value.trim(), file = $('#shot').files?.[0];
+    if (!plan || !txn || !file) return toast('Fill in the plan, transaction ID and screenshot', 'err');
+    const opt = $('#planSel').selectedOptions[0];
+    const btn = $('button[type=submit]', e.target); btn.disabled = true; btn.textContent = 'Please wait…';
+    try {
+      toast('Resizing your screenshot…', 'info');
+      const shot = await resizeImage(file, 900, .76);
+      await api.add('payments', {
+        uid:state.user.uid, email:state.user.email, name:state.profile?.name||'',
+        plan, price:Number(opt.dataset.price)||0, days:Number(opt.dataset.days)||0,
+        txn, shot, status:'pending', at:Date.now()
+      });
+      toast('Payment submitted. You will see the status here.', 'ok');
+      pagePlans();
+    } catch (err) {
+      errBox.textContent = err?.message || 'Could not submit your payment.';
+      errBox.classList.remove('hide');
+      toast(err.message, 'err'); btn.disabled = false; btn.textContent = 'Submit payment for confirmation';
+    }
+  });
+}
+</script>
+</body>
+</html>
