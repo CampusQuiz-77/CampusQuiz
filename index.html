@@ -233,6 +233,7 @@
     .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.5rem;box-shadow:var(--shadow-sm)}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
     .field{display:grid;gap:.35rem;margin-bottom:1rem}
     .field .hint{font-size:.8rem;color:var(--muted)}
     input,select,textarea{width:100%;min-height:48px;border:2px solid var(--line);border-radius:11px;
@@ -253,7 +254,9 @@
     .stat{background:var(--mint);border-radius:14px;padding:1rem;text-align:center}
     .stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.8rem;color:var(--blue-deep);line-height:1.1}
     .stat span{font-size:.78rem;color:var(--muted);font-weight:700}
-    .profile-flyer{width:100%;aspect-ratio:8/5;object-fit:cover;border-radius:14px;background:var(--mint)}
+    /* Flyers keep their real shape: nothing is cropped or zoomed. */
+    .profile-flyer{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;
+      border-radius:14px;background:var(--mint)}
     .plan-pill{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.3rem .75rem;
       font-size:.78rem;font-weight:800;background:var(--gold-soft);color:#6B5200}
     .plan-pill.live{background:var(--ok-soft);color:var(--ok)}
@@ -288,7 +291,16 @@
     .optrow.correct{border-color:var(--ok);background:var(--ok-soft)}
     .optrow .olt{font-family:'Bricolage Grotesque',sans-serif;width:24px;color:var(--blue-deep)}
     .optrow input[type=text]{border:0;background:transparent;box-shadow:none;min-height:40px;padding:.3rem;font-weight:600}
-    .optrow input[type=radio]{width:22px;height:22px;flex-shrink:0}
+    .optrow input[type=radio],.optrow input[type=checkbox]{width:22px;height:22px;flex-shrink:0}
+    .type-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.1rem 0 .8rem}
+    .type-row select{min-width:0;width:auto;margin:0}
+    .type-row .tiny{color:var(--muted)}
+    .answer-box{margin-top:.6rem}
+    .answer-box textarea{min-height:90px}
+    .countdown{font-variant-numeric:tabular-nums;font-weight:800;color:var(--blue-deep);white-space:nowrap}
+    .countdown.soon{color:#B34A00}
+    .countdown.done{color:var(--muted)}
+    .notice.danger{background:#FFF0ED;border-color:#F3C0B7;color:#8A2B1B}
 
     /* ---------- Tables ---------- */
     .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
@@ -302,7 +314,8 @@
     /* ---------- Quiz taking ---------- */
     .quiz-shell{max-width:760px;margin:0 auto}
     .aspirant-card{display:grid;grid-template-columns:190px 1fr;gap:1.4rem;align-items:center}
-    .aspirant-card img.flyer{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+    .aspirant-card img.flyer{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;
+      border-radius:14px;border:1px solid var(--line);background:var(--mint)}
     .aspirant-card h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:.4rem 0}
     .tel{display:inline-flex;align-items:center;gap:.5rem;background:var(--ok-soft);color:var(--ok);
       font-weight:800;padding:.55rem .9rem;border-radius:10px;font-size:.95rem}
@@ -421,7 +434,7 @@
       .nav-links a,.nav-links button{padding:.8rem;text-align:left;font-size:1rem}
       .burger{display:flex}
       .grid-2,.grid-3,.aspirant-card{grid-template-columns:1fr}
-      .aspirant-card img.flyer{max-height:240px}
+      .aspirant-card img.flyer{max-height:none}
       .steps,.features{grid-template-columns:1fr}
       .feature.wide{grid-column:span 1}
       .foot-grid{grid-template-columns:1fr}
@@ -514,12 +527,13 @@ const FIREBASE_CONFIG = {
   apiKey:            'AIzaSyAQZC3JhilzX71B7oN-i0g8reFekFlnVR0',
   authDomain:        'campusquiz-3564e.firebaseapp.com',
   projectId:         'campusquiz-3564e',
+  storageBucket:     'campusquiz-3564e.firebasestorage.app',
   appId:             '1:654591758114:web:11c1610afa8c5a50e09f7b',
   messagingSenderId: '654591758114',
   measurementId:     'G-S9N5Z2RFPD'
 };
 const ADMIN_EMAIL = 'mollyeen77@gmail.com'; // <-- the ONLY account that can open #/admin
-const CONTACT_EMAIL = 'muhadeenmohammed7@gmail.com';
+const CONTACT_EMAIL = 'muhadeenmohammed7@gmail.com'; // support/contact address (different from admin login)
 const FLYER_LIMIT = 800000; // base64 characters (~600 KB image) — safely inside Firestore's 1 MiB document limit
 
 /* Logo reused on auth pages (same embedded asset as navbar/footer/favicon). */
@@ -529,9 +543,9 @@ const PDFJS_VER = '3.11.174';
 const DAY = 86400000;
 const DEFAULT_SETTINGS = {
   plans: [
-    { n: '7 Day Sprint',  p: 20,  d: 7 },
-    { n: '30 Day Campaign', p: 60, d: 30 },
-    { n: '90 Day Reach',  p: 150, d: 90 }
+    { n: '7 Day Sprint',  p: 20,  d: 7,  sets: 10 },
+    { n: '30 Day Campaign', p: 60, d: 30, sets: 40 },
+    { n: '90 Day Reach',  p: 150, d: 90, sets: 120 }
   ],
   cur: 'GH₵',
   phone: '0547779727',
@@ -540,6 +554,18 @@ const DEFAULT_SETTINGS = {
   free: 2,
   max: 50
 };
+
+/* Older saved settings do not have `sets` yet — fill them in so pricing and
+   payments always show the correct number of question sets. */
+function normalizeSettings(raw) {
+  const base = { ...DEFAULT_SETTINGS, ...(raw || {}) };
+  const defaults = DEFAULT_SETTINGS.plans || [];
+  base.plans = (Array.isArray(base.plans) ? base.plans : defaults).map((p, i) => ({
+    ...(p || {}),
+    sets: Number.isFinite(Number(p?.sets)) ? Number(p.sets) : (defaults[i]?.sets ?? 0)
+  }));
+  return base;
+}
 
 /* ==================================================================
    SMALL HELPERS
@@ -622,6 +648,144 @@ function contactLinks(phone, email, short) {
   if (e) parts.push(`<a href="mailto:${esc(e)}">${short ? esc(e) : '✉ Email ' + esc(e)}</a>`);
   return parts.join(' · ');
 }
+
+/* ---------- Question types + answer checking ---------- */
+const Q_TYPES = { multiple:'Multiple choice', checkbox:'Checkboxes (select all)', short:'Short answer', paragraph:'Paragraph' };
+function normalizeType(v) {
+  const s = String(v || '').toLowerCase().replace(/[\s_-]/g, '');
+  if (/^(multiple|mcq|choice|multiplechoice)$/.test(s)) return 'multiple';
+  if (/^(checkbox|checkboxes|check|multi|multipleselect|selectall)$/.test(s)) return 'checkbox';
+  if (/^(short|shortanswer|text|oneword)$/.test(s)) return 'short';
+  if (/^(paragraph|long|essay|longanswer)$/.test(s)) return 'paragraph';
+  return 'multiple';
+}
+function qType(q) { const t = normalizeType(q?.t); return Q_TYPES[t] ? t : 'multiple'; }
+function normText(s) { return String(s ?? '').trim().replace(/\s+/g, ' ').toLocaleLowerCase(); }
+function lettersToIndices(v) {
+  const out = [];
+  String(v || '').toUpperCase().replace(/[^A-E]/g, '').split('').forEach(c => {
+    const i = c.charCodeAt(0) - 65; if (!out.includes(i)) out.push(i);
+  });
+  return out.sort((a,b) => a-b);
+}
+/* The correct answer in a form that is easy to compare. */
+function answerKey(q) {
+  const t = qType(q);
+  if (t === 'checkbox') {
+    const raw = Array.isArray(q.a) ? q.a : (typeof q.a === 'string' ? lettersToIndices(q.a) : []);
+    return raw.map(Number).filter(n => Number.isInteger(n) && n >= 0).sort((a,b) => a-b);
+  }
+  if (t === 'short' || t === 'paragraph' || typeof q.a === 'string') return normText(q.a);
+  return q.a;
+}
+/* Case-insensitive, whitespace-tolerant checking for text answers. */
+function isCorrectAnswer(q, given) {
+  const t = qType(q), key = answerKey(q);
+  if (t === 'checkbox') {
+    const g = Array.isArray(given) ? given.map(Number).filter(n => Number.isInteger(n) && n >= 0).sort((a,b)=>a-b) : [];
+    return g.length > 0 && g.length === key.length && g.every((v,i) => v === key[i]);
+  }
+  if (t === 'short' || t === 'paragraph' || typeof key === 'string') {
+    const g = normText(given);
+    return g.length > 0 && key.length > 0 && g === key;
+  }
+  return given !== null && given !== undefined && given === key;
+}
+function isAnswered(v) {
+  if (v === null || v === undefined) return false;
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === 'string') return v.trim().length > 0;
+  return true;
+}
+function answerReady(q) {
+  const t = qType(q), a = q.a;
+  if (t === 'short' || t === 'paragraph') return !!normText(a);
+  if (Array.isArray(a)) return a.length > 0;
+  return Number.isInteger(a);
+}
+function displayAnswer(q, v) {
+  if (!isAnswered(v)) return 'No answer';
+  const t = qType(q);
+  if (Array.isArray(v)) return v.map(i => q.o?.[i] ?? '—').join(', ');
+  if (t === 'short' || t === 'paragraph') return String(v);
+  if (typeof v === 'number') return q.o?.[v] ?? '—';
+  return String(v);
+}
+function correctAnswerText(q) {
+  const t = qType(q), key = answerKey(q);
+  if (t === 'checkbox') return key.length ? key.map(i => q.o?.[i] ?? '—').join(', ') : '—';
+  if (t === 'short' || t === 'paragraph') return String(q.a || '—');
+  return q.o?.[key] ?? '—';
+}
+function countdownText(until) {
+  const left = Number(until || 0) - Date.now();
+  if (left <= 0) return 'Expired';
+  const d = Math.floor(left/DAY), h = Math.floor(left%DAY/3600000),
+        m = Math.floor(left%3600000/60000), s = Math.floor(left%60000/1000);
+  return `${d ? `${d}d ` : ''}${h}h ${m}m ${String(s).padStart(2,'0')}s`;
+}
+function clearAdminClock() { if (state.adminTimer) { clearInterval(state.adminTimer); state.adminTimer = null; } }
+/* Admin-only: plans whose time is up are removed straight away. */
+async function expirePlans(users) {
+  const expired = users.filter(u => (u.until||0) > 0 && u.until <= Date.now());
+  if (!expired.length) return 0;
+  for (const u of expired) {
+    try {
+      await api.set('users', u.id, { until:0, planSets:0, planStart:0,
+        planNotice:'Your plan time has ended. Choose a plan to carry on creating quizzes.',
+        noticeAt:Date.now() }, true);
+      const ps = await api.where('payments','uid',u.id);
+      for (const p of ps.filter(p => p.status === 'approved'))
+        await api.set('payments', p.id, { status:'expired', expiredAt:Date.now() }, true);
+    } catch (err) { console.warn(err); }
+  }
+  return expired.length;
+}
+function startAdminClock(users) {
+  clearAdminClock();
+  state.adminTimer = setInterval(async () => {
+    const n = await expirePlans(users);
+    if (n) { toast(`${n} plan${n>1?'s':''} expired and removed`, 'info'); pageAdmin(); return; }
+    $$('[data-cd]').forEach(el => {
+      const u = users.find(x => x.id === el.dataset.cd); if (!u) return;
+      const left = (u.until||0) - Date.now();
+      el.textContent = countdownText(u.until);
+      el.classList.toggle('soon', left > 0 && left <= 3*DAY);
+      el.classList.toggle('done', left <= 0);
+    });
+  }, 1000);
+}
+/* A ready-to-send renewal reminder (opened in the admin's mail app). */
+function reminderDetails(u) {
+  const days = Math.max(1, Math.ceil(((u.until||0) - Date.now()) / DAY));
+  const subject = `Reminder: your CampusQuiz plan ends in ${days} day${days===1?'':'s'}`;
+  const body = `Hi ${u.name || 'there'},\n\n` +
+    `This is a friendly reminder that your CampusQuiz plan ends on ${fmtDate(u.until)} — about ${days} day(s) from now.\n\n` +
+    `You can keep creating and sharing quiz links until then. To continue afterwards, choose another plan from your dashboard:\n` +
+    `${location.origin}${location.pathname}#/plans\n\n` +
+    `If you have already renewed, please ignore this message.\n\nThank you,\nThe CampusQuiz team`;
+  const href = `mailto:${encodeURIComponent(u.email||'')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return { subject, body, href };
+}
+function openReminder(u) {
+  const d = reminderDetails(u);
+  modal(`<h3>Plan reminder template</h3>
+    <p class="muted tiny">Ready for ${esc(u.name||'—')} · ${esc(u.email||'—')}. Edit the wording if you like, then open your email app to send it.</p>
+    <div class="field"><label for="remSubject">Subject</label><input id="remSubject" value="${esc(d.subject)}"></div>
+    <div class="field"><label for="remBody">Message</label><textarea id="remBody" rows="10">${esc(d.body)}</textarea></div>
+    <p class="tiny muted">CampusQuiz does not send email for you — this opens your mail app with everything filled in.</p>
+    <div class="modal-foot"><button class="btn btn-outline" data-close>Close</button>
+      <button class="btn btn-outline" id="copyRem">Copy text</button>
+      <a class="btn btn-gold" id="sendRem" href="${esc(d.href)}">Open email app</a></div>`);
+  const sync = () => {
+    const subject = $('#remSubject')?.value || d.subject, body = $('#remBody')?.value || d.body;
+    const a = $('#sendRem');
+    if (a) a.href = `mailto:${encodeURIComponent(u.email||'')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+  $('#remSubject')?.addEventListener('input', sync);
+  $('#remBody')?.addEventListener('input', sync);
+  $('#copyRem')?.addEventListener('click', () => copyText(`${$('#remSubject').value}\n\n${$('#remBody').value}`));
+}
 function svgIcon(name) {
   const p = {
     timer:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
@@ -641,7 +805,8 @@ function svgIcon(name) {
 let fb = null;
 let demoAuthCb = null;
 let suppressAuthRoute = false; // prevents auth-state changes from wiping the signup/verification screen
-const state = { user:null, profile:null, settings:null, draft:[], quizTimer:null, adminTab:'payments', pendingScroll:null };
+const state = { user:null, profile:null, settings:null, draft:[], quizTimer:null,
+  adminTab:'payments', pendingScroll:null, editingQuiz:null, adminTimer:null };
 function notifyDemoAuth() {
   const u = dcurrent();
   if (demoAuthCb) demoAuthCb(u ? { uid:u.uid, email:u.email } : null);
@@ -751,7 +916,7 @@ const api = {
   },
   watchSettings(cb) {
     if (fb) return fb.fsM.onSnapshot(fb.fsM.doc(fb.db, 'settings', 'app'), snap => {
-      if (snap.exists()) { state.settings = { ...DEFAULT_SETTINGS, ...snap.data() }; cb(); }
+      if (snap.exists()) { state.settings = normalizeSettings(snap.data()); cb(); }
     });
     cb();
   }
@@ -892,22 +1057,47 @@ function parseQuestions(text) {
   const lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
   const result = [];
   let cur = null;
-  const push = () => { if (cur && cur.q && cur.o.length >= 2) result.push({
-    q: cur.q, o: cur.o.slice(0, 5),
-    a: (cur.a !== null && cur.a < cur.o.length) ? cur.a : null
-  }); };
+  const blank = () => ({ q:'', o:[], a:null, t:'multiple' });
+  const normalizeAnswer = c => {
+    const t = qType(c), raw = c.a;
+    if (t === 'checkbox') return Array.isArray(raw) ? raw.map(Number) : lettersToIndices(raw);
+    if (t === 'short' || t === 'paragraph') return String(raw ?? '').trim();
+    if (raw === null || raw === undefined) return null;
+    if (typeof raw === 'number') return raw;
+    const letters = lettersToIndices(raw);
+    return letters.length ? letters[0] : (String(raw).trim() || null);
+  };
+  const push = () => {
+    if (!cur || !cur.q) return;
+    const t = qType(cur), a = normalizeAnswer(cur);
+    const opts = (cur.o || []).map(o => String(o).trim()).filter(Boolean).slice(0, 5);
+    const ok = (t === 'short' || t === 'paragraph')
+      ? !!normText(a)
+      : opts.length >= 2 && a !== null && a !== undefined &&
+        (!Array.isArray(a) || a.length > 0);
+    if (ok) result.push({ q:cur.q, t, o:opts, a });
+  };
   for (const line of lines) {
-    if (/^(?:answer|ans)\s*[:.\-]\s*\?/i.test(line)) continue;      // unknown answer -> manual
-    const ans = line.match(/^(?:answer|ans)\s*[:.\-]?\s*([A-Ea-e])\b/i);
-    if (ans) { if (cur) cur.a = ans[1].toUpperCase().charCodeAt(0) - 65; continue; }
+    if (/^(?:answer|ans)\s*[:.\-]\s*\?\s*$/i.test(line)) continue;        // unknown -> tick manually
+    const ty = line.match(/^(?:type|question\s*type)\s*[:.\-]\s*(.+)$/i);
+    if (ty) { if (!cur) cur = blank(); cur.t = normalizeType(ty[1]); continue; }
+    const ans = line.match(/^(?:answer|ans)\s*[:.\-]?\s*(.+)$/i);
+    if (ans) { if (!cur) cur = blank(); cur.a = ans[1].trim(); continue; }
     const opt = line.match(/^([A-Ea-e])\s*[\).\:\-]\s*(.+)$/);
-    if (opt) { if (!cur) cur = { q:'', o:[], a:null }; cur.o.push(opt[2].trim()); continue; }
+    if (opt) { if (!cur) cur = blank(); cur.o.push(opt[2].trim()); continue; }
     const q = line.match(/^(?:q\s*\d*\s*[:.\-]?\s*|\d{1,3}\s*[\).\:]\s*)(.+)$/i);
-    if (q && q[1].trim()) { push(); cur = { q:q[1].trim(), o:[], a:null }; continue; }
+    if (q && q[1].trim()) {
+      const carried = cur && !cur.q ? { t:cur.t } : null; // Type: before Q:
+      push();
+      cur = { ...blank(), ...(carried || {}), q:q[1].trim() };
+      continue;
+    }
     if (cur) {
-      if (cur.o.length) cur.o[cur.o.length - 1] += ' ' + line;
+      // Continuation lines can belong to a written answer, an option or the question.
+      if (cur.a !== null && cur.a !== undefined && typeof cur.a === 'string') cur.a += ' ' + line;
+      else if (cur.o.length) cur.o[cur.o.length - 1] += ' ' + line;
       else cur.q = (cur.q ? cur.q + ' ' : '') + line;
-    } else cur = { q:line, o:[], a:null };
+    } else cur = { ...blank(), q:line };
   }
   push();
   return result;
@@ -916,19 +1106,37 @@ function parseQuestions(text) {
 const AI_PROMPT = `Convert my scanned past exam questions into plain text using EXACTLY the format below. Return only the questions, separated by a blank line, with no introduction, explanation, numbering changes or commentary.
 
 Q: Question text
+Type: multiple
 A) Option one
 B) Option two
 C) Option three
 D) Option four
 Answer: B
 
+Q: Who led Ghana to independence?
+Type: short
+Answer: Kwame Nkrumah
+
+Q: Select all the organs that are part of the digestive system
+Type: checkbox
+A) Stomach
+B) Lungs
+C) Small intestine
+D) Heart
+Answer: A, C
+
+Q: Explain the main cause of the conflict in one paragraph
+Type: paragraph
+Answer: The main cause was ...
+
 Rules:
-1. Start every question with "Q:" and every option with A), B), C), D) or E).
-2. Use between two and five options per question.
-3. Write the correct option letter after "Answer:" (for example Answer: C).
-4. If the correct answer is not visible in my scan, write "Answer: ?" and I will tick it myself.
-5. Keep the exact wording, spelling and numbers from the scan. Do not solve or rewrite anything.
-6. Preserve the order of the questions.`;
+1. Start every question with "Q:" and add a "Type:" line using exactly one of: multiple, checkbox, short, paragraph.
+2. multiple = one correct option; checkbox = two or more correct options; short = a word or phrase; paragraph = a sentence or more.
+3. For multiple and checkbox, write options as A), B), C), D) or E) and put the correct letter(s) after "Answer:" (e.g. Answer: B or Answer: A, C).
+4. For short and paragraph, write the full correct answer after "Answer:" — do not add options.
+5. If the correct answer is not visible in my scan, write "Answer: ?" and I will fill it myself.
+6. Keep the exact wording, spelling and numbers from the scan. Do not solve or rewrite anything.
+7. Preserve the order of the questions.`;
 
 /* ---------- Performance trend charts ---------- */
 function trendPoints(responses, pctOf) {
@@ -997,6 +1205,7 @@ function clearQuizTimer() {
 }
 async function route() {
   clearQuizTimer();
+  clearAdminClock();
   $('#modalRoot').innerHTML = '';
   $('#navLinks').classList.remove('open');
   $('#burger').setAttribute('aria-expanded', 'false');
@@ -1011,6 +1220,7 @@ async function route() {
       case 'privacy': pagePrivacy(); break;
       case 'dashboard': await pageDashboard(); break;
       case 'new': await pageNewQuiz(); break;
+      case 'edit': await pageNewQuiz(r.arg); break;
       case 'results': await pageResults(r.arg); break;
       case 'plans': await pagePlans(); break;
       case 'q': await pagePublicQuiz(r.arg); break;
@@ -1053,7 +1263,7 @@ function priceCards() {
       <h3>${esc(p.n)}</h3>
       <div class="amount">${cur}${esc(p.p)} <small>/ ${esc(p.d)} days</small></div>
       <ul>
-        <li>${svgIcon('check')}<span>Unlimited quizzes</span></li>
+        <li>${svgIcon('check')}<span>${p.sets?`${esc(p.sets)} sets of questions`:'Unlimited quizzes'}</span></li>
         <li>${svgIcon('check')}<span>Up to 200 questions each</span></li>
         <li>${svgIcon('check')}<span>Keep your plan active for ${esc(p.d)} days</span></li>
       </ul>
@@ -1217,7 +1427,7 @@ function pagePrivacy() {
 
     <h2>What we collect</h2>
     <ul>
-      <li><strong>When you create an account:</strong> your name, phone number, email address and a password (we never see your raw password).</li>
+      <li><strong>When you create an account:</strong> your name, phone number, email address and a password (stored securely by Firebase Authentication — we never see your raw password).</li>
       <li><strong>When you build a quiz:</strong> your campaign flyer (stored exactly as you upload it), your introduction, the questions and answers you write, and the quiz title and time limit.</li>
       <li><strong>When students take a quiz:</strong> the name they enter, their answers, score and the time they submitted. Students do not need an account.</li>
       <li><strong>Messages:</strong> feedback students send to an aspirant, and messages aspirants send to us.</li>
@@ -1416,6 +1626,9 @@ async function pageDashboard() {
   const planText = paidNow()
     ? `Plan active until <strong>${fmtDate(profile.until)}</strong>`
     : `Free trial: <strong>${used} of ${limit}</strong> quizzes used`;
+  const remainingSets = paidNow() && profile?.planSets
+    ? Math.max(0, Number(profile.planSets) - quizzes.filter(q => (q.at||0) >= (profile.planStart||0)).length)
+    : null;
 
   $('#app').innerHTML = `<div class="page wrap">
     <div class="page-head">
@@ -1423,6 +1636,10 @@ async function pageDashboard() {
       <div class="row"><a href="#/new" class="btn btn-gold btn-lg">+ Create a quiz</a>
         ${isAdmin() ? '<a href="#/admin" class="btn btn-outline">Admin</a>' : ''}</div>
     </div>
+
+    ${profile?.planNotice ? `<div class="notice info" style="margin-bottom:1.3rem">
+      <strong>Plan update${profile.noticeAt?' · '+esc(fmtDT(profile.noticeAt)):''}</strong><br>${esc(profile.planNotice)}
+    </div>` : ''}
 
     <div class="grid-2" style="align-items:start;margin-bottom:1.4rem">
       <div class="card">
@@ -1452,6 +1669,7 @@ async function pageDashboard() {
           <div class="spread"><h3 style="margin:0">Plan status</h3>
             <span class="plan-pill ${paidNow()?'live':'off'}">${paidNow()?'ACTIVE':'FREE TRIAL'}</span></div>
           <p style="margin:.8rem 0">${planText}</p>
+          ${remainingSets !== null ? `<p class="tiny muted" style="margin:.2rem 0">You can create <strong>${remainingSets} more set${remainingSets===1?'':'s'}</strong> of questions on this plan (${esc(profile.planSets)} total).</p>` : ''}
           <p class="tiny muted">Maximum ${maxQ} questions per quiz on your current plan.</p>
           <a href="#/plans" class="btn ${paidNow()?'btn-outline':'btn-gold'}">${paidNow()?'Extend or change plan':'Choose a plan'}</a>
         </div>
@@ -1497,6 +1715,7 @@ async function pageDashboard() {
         <p class="tiny muted" style="margin:.5rem 0 0">/#/q/${esc(q.slug)}</p>
       </div>
       <div class="quiz-actions">
+        <a class="btn btn-sm btn-outline" href="#/edit/${q.id}">Edit questions</a>
         <button class="btn btn-sm btn-outline" data-copy="${q.id}">Copy link</button>
         <button class="btn btn-sm btn-outline" data-qr="${q.id}">QR code</button>
         <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
@@ -1572,47 +1791,83 @@ async function pageDashboard() {
 function renderEditor() {
   const box = $('#editor'); if (!box) return;
   const letters = 'ABCDE';
-  box.innerHTML = state.draft.length ? state.draft.map((q, i) => `
-    <div class="qedit">
+  box.innerHTML = state.draft.length ? state.draft.map((q, i) => {
+    const t = qType(q);
+    const isMulti = t === 'multiple', isWritten = t === 'short' || t === 'paragraph';
+    const typeRow = `<div class="type-row">
+      <label for="qtype${i}" style="margin:0;font-weight:800">Question type</label>
+      <select id="qtype${i}" data-qtype="${i}" aria-label="Question type for question ${i+1}">
+        ${Object.entries(Q_TYPES).map(([k,label]) => `<option value="${k}" ${t===k?'selected':''}>${label}</option>`).join('')}
+      </select>
+      <span class="tiny">How students answer this question.</span></div>`;
+    let answerUI;
+    if (isWritten) {
+      const val = typeof q.a === 'string' ? q.a : '';
+      answerUI = `<div class="answer-box field"><label for="qans${i}">Correct answer</label>
+        ${t === 'short'
+          ? `<input id="qans${i}" data-atext="${i}" value="${esc(val)}" placeholder="Type the exact correct answer">`
+          : `<textarea id="qans${i}" data-atext="${i}" rows="3" placeholder="Type the correct answer">${esc(val)}</textarea>`}
+        <span class="hint">Student answers are checked ignoring case and extra spaces.</span></div>`;
+    } else {
+      const checked = j => isMulti ? q.a === j : (Array.isArray(q.a) && q.a.includes(j));
+      answerUI = `<label style="margin-bottom:.3rem">Options <span class="tiny muted" style="font-weight:600">(${isMulti?'tick the correct one':'tick every correct answer'})</span></label>
+        ${q.o.map((o, j) => `<div class="optrow ${checked(j)?'correct':''}">
+          <input type="${isMulti?'radio':'checkbox'}" name="${isMulti?'ans':'chk'}${i}"
+            data-${isMulti?'ans':'chk'}="${i}" value="${j}" ${checked(j)?'checked':''}
+            aria-label="Mark option ${letters[j]} as correct">
+          <span class="olt">${letters[j]}</span>
+          <input type="text" data-otext="${i}" data-oi="${j}" value="${esc(o)}" placeholder="Option ${letters[j]}">
+          ${q.o.length>2?`<button type="button" class="linklike danger" data-rmopt="${i}" data-oj="${j}" aria-label="Remove option ${letters[j]}">×</button>`:''}
+        </div>`).join('')}
+        ${q.o.length<5?`<button type="button" class="linklike" data-addopt="${i}" style="margin-top:.4rem">+ Add option</button>`:''}`;
+    }
+    return `<div class="qedit">
       <div class="qedit-head"><h4>Question ${i+1}</h4>
         <button type="button" class="linklike danger" data-remove="${i}">Remove question</button></div>
       <div class="field"><label for="qtext${i}">Question text</label>
         <textarea id="qtext${i}" data-qtext="${i}" placeholder="Type the question">${esc(q.q)}</textarea></div>
-      <label style="margin-bottom:.3rem">Options <span class="tiny muted" style="font-weight:600">(tick the correct one)</span></label>
-      ${q.o.map((o, j) => `<div class="optrow ${q.a===j?'correct':''}">
-        <input type="radio" name="ans${i}" data-ans="${i}" value="${j}" ${q.a===j?'checked':''} aria-label="Mark option ${letters[j]} as correct">
-        <span class="olt">${letters[j]}</span>
-        <input type="text" data-otext="${i}" data-oi="${j}" value="${esc(o)}" placeholder="Option ${letters[j]}">
-        ${q.o.length>2?`<button type="button" class="linklike danger" data-rmopt="${i}" data-oj="${j}" aria-label="Remove option ${letters[j]}">×</button>`:''}
-      </div>`).join('')}
-      ${q.o.length<5?`<button type="button" class="linklike" data-addopt="${i}" style="margin-top:.4rem">+ Add option</button>`:''}
-    </div>`).join('') : empty('No questions parsed yet', 'Paste your past questions or upload a PDF, then press “Parse questions”.');
+      ${typeRow}${answerUI}
+    </div>`;
+  }).join('') : empty('No questions parsed yet', 'Paste your past questions or upload a PDF, then press “Parse questions”.');
   $('#qcount').textContent = `${state.draft.length} question${state.draft.length===1?'':'s'} ready`;
-  const missing = state.draft.filter(q => q.a === null).length;
+  const missing = state.draft.filter(q => !answerReady(q)).length;
   $('#missingNote').textContent = missing ? `${missing} question${missing===1?' needs':'s still need'} a correct answer.` : 'Every question has a correct answer. You are ready to publish.';
   $('#missingNote').className = missing ? 'notice tiny' : 'notice info tiny';
 }
 
-async function pageNewQuiz() {
+async function pageNewQuiz(id) {
   if (!requireUser()) return;
   loading('Preparing the quiz editor…');
   state.profile = await api.get('users', state.user.uid);
   const s = state.settings || DEFAULT_SETTINGS;
-  state.draft = [];
+  state.editingQuiz = null;
+  let existing = null;
+  if (id) {
+    existing = await api.get('quizzes', id);
+    if (!existing || (existing.owner !== state.user.uid && !isAdmin())) {
+      toast('You do not have access to edit this quiz', 'err');
+      location.hash = '#/dashboard'; return;
+    }
+    state.editingQuiz = existing;
+  }
+  state.draft = existing ? (existing.qs || []).map(q => ({ ...q, t:qType(q) })) : [];
   $('#app').innerHTML = `<div class="page wrap">
     <div class="page-head">
-      <div><span class="eyebrow"><span class="dot"></span> New quiz</span><h1>Build your quiz</h1></div>
+      <div><span class="eyebrow"><span class="dot"></span> ${existing?'Edit quiz':'New quiz'}</span><h1>${existing?'Edit your quiz':'Build your quiz'}</h1></div>
       <a href="#/dashboard" class="btn btn-outline">← Back to dashboard</a>
     </div>
     <div id="formErr" class="error-box hide" role="alert"></div>
+    ${existing ? `<div class="notice info" style="margin-bottom:1.2rem"><strong>Editing a published quiz.</strong> The share link, QR code and every answer already collected stay the same. Fix a flag, then publish the update.</div>` : ''}
 
     <div class="card" style="margin-bottom:1.2rem">
       <h3>1. Quiz details</h3>
       <div class="grid-2">
-        <div class="field"><label for="course">Course title</label><input id="course" placeholder="BIO 101 — Mid-semester" maxlength="120"></div>
-        <div class="field"><label for="minutes">Time limit (minutes)</label><input id="minutes" type="number" min="1" max="600" value="15"></div>
+        <div class="field"><label for="course">Course title</label><input id="course" placeholder="BIO 101 — Mid-semester" maxlength="120" value="${esc(existing?.title||'')}"></div>
+        <div class="field"><label for="minutes">Time limit (minutes)</label><input id="minutes" type="number" min="1" max="600" value="${esc(existing?.min||15)}"></div>
       </div>
-      <p class="tiny muted" style="margin:0">Your share link will look like <strong>/#/q/kofi-bio-101-mid-semester-x4f</strong>.</p>
+      <p class="tiny muted" style="margin:0">${existing
+        ? `This quiz keeps its link <strong>/#/q/${esc(existing.slug)}</strong>.`
+        : 'Your share link will look like <strong>/#/q/kofi-bio-101-mid-semester-x4f</strong>.'}</p>
     </div>
 
     <div class="card" style="margin-bottom:1.2rem">
@@ -1621,18 +1876,32 @@ async function pageNewQuiz() {
         <div class="field"><label for="pdfInput">Upload a text-based PDF</label><input id="pdfInput" type="file" accept="application/pdf,.pdf">
           <span class="hint">We read the PDF in your browser. Nothing is uploaded to a server.</span></div>
         <div class="field"><label for="pasteBox">Or paste questions here</label>
-          <textarea id="pasteBox" rows="7" placeholder="Q: Which organelle produces most energy?&#10;A) Nucleus&#10;B) Mitochondria&#10;C) Ribosome&#10;D) Golgi apparatus&#10;Answer: B"></textarea></div>
+          <textarea id="pasteBox" rows="7" placeholder="Q: Which organelle produces most energy?&#10;Type: multiple&#10;A) Nucleus&#10;B) Mitochondria&#10;C) Ribosome&#10;Answer: B"></textarea></div>
       </div>
 
       <div class="format-box" style="margin-bottom:1rem">
-        <strong>Required format</strong>
-<pre>Q: Question text
-A) Option one
-B) Option two
-C) Option three
-D) Option four
-Answer: B</pre>
-        <span class="tiny">Also accepts 1. or 1) numbering, options A to E, and a missing Answer line (you can tick it later).</span>
+        <strong>Supported formats — set the type on the “Type:” line</strong>
+<pre>Q: Which organelle produces energy?
+Type: multiple
+A) Nucleus
+B) Mitochondria
+Answer: B
+
+Q: Who led Ghana to independence?
+Type: short
+Answer: Kwame Nkrumah
+
+Q: Select all digestive organs
+Type: checkbox
+A) Stomach
+B) Lungs
+C) Small intestine
+Answer: A, C
+
+Q: Explain the main cause in one paragraph
+Type: paragraph
+Answer: The main cause was ...</pre>
+        <span class="tiny">Also accepts 1. or 1) numbering, options A to E, and a missing Answer line (you can tick it later). Every type can also be changed per question in the editor below.</span>
       </div>
 
       <div class="scan-box">
@@ -1658,9 +1927,11 @@ Answer: B</pre>
     </div>
 
     <div class="card row" style="justify-content:space-between">
-      <p class="muted tiny" style="margin:0">${paidNow()?'Paid plan: unlimited quizzes, up to 200 questions.':`Free trial: ${state.profile?.used||0} of ${s.free??2} used, up to ${s.max??50} questions.`}</p>
-      <div class="row"><button class="btn btn-outline" id="saveHidden">Save hidden</button>
-        <button class="btn btn-gold" id="publishBtn">Publish quiz</button></div>
+      <p class="muted tiny" style="margin:0">${paidNow()
+        ? `Paid plan: ${state.profile?.planSets?`${state.profile.planSets} sets of questions,`:'unlimited quizzes,'} up to 200 questions each.`
+        : `Free trial: ${state.profile?.used||0} of ${s.free??2} used, up to ${s.max??50} questions.`}</p>
+      <div class="row"><button class="btn btn-outline" id="saveHidden">${existing?'Save as hidden':'Save hidden'}</button>
+        <button class="btn btn-gold" id="publishBtn">${existing?'Publish changes':'Publish quiz'}</button></div>
     </div>
   </div>`;
 
@@ -1681,7 +1952,7 @@ Answer: B</pre>
     if (!text.trim()) return toast('Paste the next batch of questions above first', 'err');
     const parsed = parseQuestions(text);
     if (!parsed.length) return toast('No questions found — check the required format above', 'err');
-    const cap = paidNow() ? 200 : (s.max ?? 50);
+    const cap = existing ? 200 : (paidNow() ? 200 : (s.max ?? 50));
     if (state.draft.length + parsed.length > cap) {
       return toast(`Your plan allows ${cap} questions per quiz. Remove some before adding more.`, 'err');
     }
@@ -1702,16 +1973,31 @@ Answer: B</pre>
       else toast('Text read, but no questions matched. Paste the AI prompt output instead.', 'info');
     } catch (err) { toast(err.message, 'err'); }
   });
-  $('#addQ').addEventListener('click', () => { state.draft.push({ q:'', o:['','','',''], a:null }); renderEditor(); });
+  $('#addQ').addEventListener('click', () => { state.draft.push({ q:'', t:'multiple', o:['','','',''], a:null }); renderEditor(); });
 
   $('#editor').addEventListener('input', e => {
     const t = e.target;
     if (t.dataset.qtext !== undefined) state.draft[+t.dataset.qtext].q = t.value;
     if (t.dataset.otext !== undefined) state.draft[+t.dataset.otext].o[+t.dataset.oi] = t.value;
+    if (t.dataset.atext !== undefined) state.draft[+t.dataset.atext].a = t.value;
   });
   $('#editor').addEventListener('change', e => {
-    if (e.target.dataset.ans !== undefined) {
-      state.draft[+e.target.dataset.ans].a = +e.target.value;
+    const t = e.target;
+    if (t.dataset.qtype !== undefined) {
+      const q = state.draft[+t.dataset.qtype], nt = normalizeType(t.value);
+      q.t = nt;
+      if (nt === 'checkbox') q.a = Array.isArray(q.a) ? q.a : (Number.isInteger(q.a) ? [q.a] : lettersToIndices(q.a));
+      else if (nt === 'multiple') q.a = Array.isArray(q.a) ? (q.a[0] ?? null) : (typeof q.a === 'string' ? (lettersToIndices(q.a)[0] ?? null) : q.a);
+      else q.a = typeof q.a === 'string' ? q.a : '';
+      renderEditor();
+    }
+    if (t.dataset.ans !== undefined) {
+      state.draft[+t.dataset.ans].a = +t.value;
+      renderEditor();
+    }
+    if (t.dataset.chk !== undefined) {
+      const i = +t.dataset.chk;
+      state.draft[i].a = $$(`input[data-chk="${i}"]:checked`).map(x => +x.value).sort((a,b)=>a-b);
       renderEditor();
     }
   });
@@ -1723,7 +2009,8 @@ Answer: B</pre>
     if (ro) {
       const q = state.draft[+ro.dataset.rmopt], j = +ro.dataset.oj;
       q.o.splice(j, 1);
-      if (q.a === j) q.a = null; else if (q.a > j) q.a--;
+      if (Array.isArray(q.a)) q.a = q.a.filter(v => v !== j).map(v => v > j ? v-1 : v);
+      else if (q.a === j) q.a = null; else if (q.a > j) q.a--;
       renderEditor();
     }
   });
@@ -1736,12 +2023,14 @@ Answer: B</pre>
     if (!title) problems.push('Enter a course title.');
     if (!Number.isFinite(min) || min < 1 || min > 600) problems.push('Time limit must be between 1 and 600 minutes.');
     if (!state.draft.length) problems.push('Add at least one question.');
-    const cap = paidNow() ? 200 : (s.max ?? 50);
+    const cap = existing ? 200 : (paidNow() ? 200 : (s.max ?? 50));
     if (state.draft.length > cap) problems.push(`Your plan allows ${cap} questions per quiz.`);
     state.draft.forEach((q, i) => {
+      const t = qType(q);
       if (!q.q.trim()) problems.push(`Question ${i+1} has no text.`);
-      if (q.o.filter(o => o.trim()).length < 2) problems.push(`Question ${i+1} needs at least two options.`);
-      if (q.a === null || q.a === undefined || q.a >= q.o.length) problems.push(`Question ${i+1} has no correct answer ticked.`);
+      if ((t === 'multiple' || t === 'checkbox') && q.o.filter(o => o.trim()).length < 2)
+        problems.push(`Question ${i+1} needs at least two options.`);
+      if (!answerReady(q)) problems.push(`Question ${i+1} has no correct answer.`);
     });
     if (problems.length) {
       errBox.innerHTML = `<strong>Please fix:</strong><br>${problems.map(p=>'• '+esc(p)).join('<br>')}`;
@@ -1749,30 +2038,41 @@ Answer: B</pre>
       errBox.scrollIntoView({ behavior:'smooth', block:'center' });
       return;
     }
-    if (live) {
-      const missing = state.draft.some(q => q.a === null);
-      if (missing) return toast('Tick a correct answer for every question before publishing', 'err');
-    }
     const profile = await api.get('users', state.user.uid);
-    if (!paidNow() && (profile?.used||0) >= (s.free ?? 2)) {
-      toast('Your free quizzes are used up — choose a plan to keep creating', 'info');
-      location.hash = '#/plans'; return;
+    if (!existing) {
+      if (!paidNow() && (profile?.used||0) >= (s.free ?? 2)) {
+        toast('Your free quizzes are used up — choose a plan to keep creating', 'info');
+        location.hash = '#/plans'; return;
+      }
+      if (paidNow() && (profile?.planSets||0) > 0) {
+        const mine = await api.where('quizzes','owner',state.user.uid);
+        const usedSets = mine.filter(q => (q.at||0) >= (profile.planStart||0)).length;
+        if (usedSets >= profile.planSets) {
+          toast(`Your plan allows ${profile.planSets} sets of questions — extend your plan to create more`, 'info');
+          location.hash = '#/plans'; return;
+        }
+      }
     }
     const btn = live ? $('#publishBtn') : $('#saveHidden');
     btn.disabled = true;
     try {
-      const first = String(profile?.name || 'student').trim().split(/\s+/)[0] || 'student';
-      const slug = `${slugify(first)}-${slugify(title)}-${rand(4)}`;
-      const qs = state.draft.map(q => ({ q:q.q.trim(), o:q.o.map(o=>o.trim()), a:q.a }));
-      await api.add('quizzes', {
-        owner:state.user.uid, name:profile?.name||'', phone:profile?.phone||'',
-        email:profile?.email||'', whatsapp:profile?.whatsapp||'',
-        flyer:profile?.flyer||'', bio:profile?.bio||'',
-        title, min, slug, qs, live, at:Date.now()
-      });
-      if (!paidNow()) await api.set('users', state.user.uid, { used:(profile?.used||0)+1 }, true);
+      const qs = state.draft.map(q => ({ q:q.q.trim(), t:qType(q), o:q.o.map(o=>o.trim()), a:q.a }));
+      if (existing) {
+        await api.set('quizzes', existing.id, { title, min, qs, live, editedAt:Date.now() }, true);
+      } else {
+        const first = String(profile?.name || 'student').trim().split(/\s+/)[0] || 'student';
+        const slug = `${slugify(first)}-${slugify(title)}-${rand(4)}`;
+        await api.add('quizzes', {
+          owner:state.user.uid, name:profile?.name||'', phone:profile?.phone||'',
+          email:profile?.email||'', whatsapp:profile?.whatsapp||'',
+          flyer:profile?.flyer||'', bio:profile?.bio||'',
+          title, min, slug, qs, live, at:Date.now()
+        });
+        if (!paidNow()) await api.set('users', state.user.uid, { used:(profile?.used||0)+1 }, true);
+      }
       state.profile = await api.get('users', state.user.uid);
-      toast(live?'Quiz published — your link is ready!':'Quiz saved as hidden', 'ok');
+      toast(existing ? (live?'Quiz updated and published':'Changes saved — quiz is hidden')
+                     : (live?'Quiz published — your link is ready!':'Quiz saved as hidden'), 'ok');
       location.hash = '#/dashboard';
     } catch (err) { toast(err.message, 'err'); btn.disabled = false; }
   }
@@ -1803,7 +2103,7 @@ async function pageResults(id) {
     { label:'80–100%', test:p=>p>=80 }
   ].map(b => ({ ...b, n:responses.filter(r => b.test(pctOf(r))).length }));
   const qStats = qs.map((q, i) => ({
-    i, q:q.q, correct:responses.filter(r => (r.a||[])[i] === q.a).length
+    i, q:q.q, correct:responses.filter(r => isCorrectAnswer(q, (r.a||[])[i])).length
   }));
   const points = trendPoints(responses, pctOf);
 
@@ -1868,12 +2168,11 @@ async function pageResults(id) {
     const r = responses.find(x => x.id === b.dataset.review); if (!r) return;
     const answers = r.a || [];
     const rows = qs.map((q, i) => {
-      const chosen = answers[i], right = q.a;
-      const good = chosen === right;
+      const chosen = answers[i], good = isCorrectAnswer(q, chosen);
       return `<div class="review-row ${good?'good':'bad'}">
-        <strong>Q${i+1}. ${esc(q.q)}</strong>
-        <div class="ans"><span class="${good?'good-txt':'bad-txt'}">Their answer: ${chosen==null?'—':esc(q.o[chosen]||'—')}</span>
-        <span class="good-txt">Correct: ${esc(q.o[right]||'—')}</span></div></div>`;
+        <strong>Q${i+1}. ${esc(q.q)} <span class="tiny muted">(${esc(Q_TYPES[qType(q)])})</span></strong>
+        <div class="ans"><span class="${good?'good-txt':'bad-txt'}">Their answer: ${esc(displayAnswer(q, chosen))}</span>
+        <span class="good-txt">Correct: ${esc(correctAnswerText(q))}</span></div></div>`;
     }).join('');
     modal(`<h3>${esc(r.name)} — ${pctOf(r)}%</h3>
       <p class="muted tiny">${fmtDT(r.at)} · ${r.sc} of ${r.tot} correct</p>
@@ -1909,7 +2208,8 @@ async function pagePublicQuiz(slug) {
           <p class="muted" style="margin-bottom:.7rem">Created by <strong>${esc(quiz.name)}</strong></p>
           ${quiz.bio ? `<div class="bio-box"><strong>A word from ${esc(quiz.name)}</strong><p>${esc(quiz.bio)}</p></div>` : ''}
           ${quiz.phone ? `<a class="tel" href="tel:${esc(String(quiz.phone).replace(/[^\d+]/g,''))}">☎ Call ${esc(quiz.phone)}</a>` : ''}
-          <div class="quiz-meta"><span>${qs.length} questions</span><span>${esc(quiz.min)} minutes</span><span>Multiple choice</span></div>
+          <div class="quiz-meta"><span>${qs.length} questions</span><span>${esc(quiz.min)} minutes</span>
+            <span>${esc([...new Set(qs.map(q => Q_TYPES[qType(q)]))].join(', ') || 'Questions')}</span></div>
           <p class="tiny muted">Your answers and name are shared with the aspirant so they can review results.</p>
         </div>
       </div>
@@ -1931,7 +2231,28 @@ async function pagePublicQuiz(slug) {
     const answers = new Array(qs.length).fill(null);
 
     function questionView() {
-      const q = qs[idx];
+      const q = qs[idx], t = qType(q);
+      let answerUI;
+      if (t === 'multiple' || t === 'checkbox') {
+        const multi = t === 'multiple', name = multi ? 'answer' : 'answerCheck';
+        answerUI = `<fieldset><legend>${esc(q.q)}</legend>
+          ${q.o.map((o, j) => {
+            const on = multi ? answers[idx] === j : (Array.isArray(answers[idx]) && answers[idx].includes(j));
+            return `<label class="opt-big ${on?'sel':''}" data-oi="${j}">
+              <input type="${multi?'radio':'checkbox'}" name="${name}" value="${j}" ${on?'checked':''}
+                style="position:absolute;opacity:0;width:1px;height:1px">
+              <span class="olt">${'ABCDE'[j]}</span><span>${esc(o)}</span></label>`;
+          }).join('')}
+        </fieldset>`;
+      } else {
+        answerUI = `<fieldset><legend>${esc(q.q)}</legend>
+          <div class="field">
+            <label for="givenAnswer">${t === 'short' ? 'Your short answer' : 'Your answer (write as much as you need)'}</label>
+            ${t === 'short'
+              ? `<input id="givenAnswer" class="text-answer" autocomplete="off" placeholder="Type your answer">`
+              : `<textarea id="givenAnswer" class="text-answer" rows="6" placeholder="Type your answer"></textarea>`}
+          </div></fieldset>`;
+      }
       $('#app').innerHTML = `<div class="page wrap quiz-shell">
         <div class="take-bar">
           <span class="prog">Question ${idx+1} of ${qs.length}</span>
@@ -1939,11 +2260,9 @@ async function pagePublicQuiz(slug) {
           <button class="btn btn-sm btn-outline" id="submitMid">Submit now</button>
         </div>
         <div class="qbox">
-          <fieldset><legend>${esc(q.q)}</legend>
-            ${q.o.map((o, j) => `<label class="opt-big ${answers[idx]===j?'sel':''}">
-              <input type="radio" name="answer" value="${j}" ${answers[idx]===j?'checked':''} style="position:absolute;opacity:0;width:1px;height:1px">
-              <span class="olt">${'ABCDE'[j]}</span><span>${esc(o)}</span></label>`).join('')}
-          </fieldset>
+          ${answerUI}
+          <p class="tiny muted" style="margin:.6rem 0 0">${t === 'checkbox' ? 'Select every answer that applies.' :
+            (t === 'short' || t === 'paragraph') ? 'Spelling and capital letters do not matter — write what you know.' : ''}</p>
           <div class="take-nav">
             <button class="btn btn-outline" id="prevBtn" ${idx===0?'disabled':''}>← Previous</button>
             <button class="btn btn-gold" id="nextBtn">${idx===qs.length-1?'Submit quiz ✓':'Next →'}</button>
@@ -1951,18 +2270,31 @@ async function pagePublicQuiz(slug) {
         </div>
         <p class="tiny muted center" style="margin-top:1rem">The quiz submits automatically when the timer reaches zero.</p>
       </div>`;
-      $$('input[name=answer]').forEach(r => r.addEventListener('change', () => { answers[idx] = +r.value; questionView(); }));
+      const val = answers[idx];
+      if (t === 'multiple' || t === 'checkbox') {
+        const multi = t === 'multiple', selector = multi ? 'input[name=answer]' : 'input[name=answerCheck]';
+        $$(selector).forEach(r => r.addEventListener('change', () => {
+          if (multi) { answers[idx] = +r.value; $$('.opt-big').forEach((l,i) => l.classList.toggle('sel', i === +r.value)); }
+          else {
+            answers[idx] = $$(selector + ':checked').map(x => +x.value).sort((a,b)=>a-b);
+            $$('.opt-big').forEach(l => l.classList.toggle('sel', answers[idx].includes(+l.dataset.oi)));
+          }
+        }));
+      } else {
+        const field = $('#givenAnswer');
+        if (field) { if (typeof val === 'string') field.value = val; field.addEventListener('input', () => { answers[idx] = field.value; }); }
+      }
       $('#prevBtn').addEventListener('click', () => { if (idx>0) { idx--; questionView(); } });
       $('#nextBtn').addEventListener('click', () => { if (idx<qs.length-1) { idx++; questionView(); } else submit(false); });
       $('#submitMid').addEventListener('click', () => {
-        if (answers.filter(a => a !== null).length < qs.length && !confirm('Some questions are unanswered. Submit anyway?')) return;
+        if (answers.filter(a => !isAnswered(a)).length && !confirm('Some questions are unanswered. Submit anyway?')) return;
         submit(false);
       });
     }
 
     async function submit(auto) {
       if (done) return; done = true; clearQuizTimer();
-      const sc = qs.reduce((n, q, i) => n + (answers[i] === q.a ? 1 : 0), 0);
+      const sc = qs.reduce((n, q, i) => n + (isCorrectAnswer(q, answers[i]) ? 1 : 0), 0);
       const tot = qs.length;
       toast(auto ? 'Time up — submitting your answers…' : 'Submitting your answers…', 'info');
       try {
@@ -2002,11 +2334,11 @@ async function pagePublicQuiz(slug) {
           </div>
           <h2 style="font-size:1.4rem;margin:1.6rem 0 .8rem">Your answer review</h2>
           ${qs.map((q, i) => {
-            const good = answers[i] === q.a;
+            const good = isCorrectAnswer(q, answers[i]);
             return `<div class="review-row ${good?'good':'bad'}">
-              <strong>Q${i+1}. ${esc(q.q)}</strong>
-              <div class="ans"><span class="${good?'good-txt':'bad-txt'}">You: ${answers[i]==null?'No answer':esc(q.o[answers[i]]||'—')}</span>
-              <span class="good-txt">Correct: ${esc(q.o[q.a]||'—')}</span></div></div>`;
+              <strong>Q${i+1}. ${esc(q.q)} <span class="tiny muted">(${esc(Q_TYPES[qType(q)])})</span></strong>
+              <div class="ans"><span class="${good?'good-txt':'bad-txt'}">You: ${esc(displayAnswer(q, answers[i]))}</span>
+              <span class="good-txt">Correct: ${esc(correctAnswerText(q))}</span></div></div>`;
           }).join('')}
           <div class="card" style="margin-top:1.6rem">
             <h3>Send ${esc(quiz.name)} your feedback</h3>
@@ -2067,6 +2399,7 @@ async function pageAdmin() {
       '<a href="#/" class="btn">Back to home</a>')}</div>`;
     return;
   }
+  clearAdminClock();
   loading('Opening admin controls…');
   const [payments, users, quizzes, messages] = await Promise.all([
     api.all('payments'), api.all('users'), api.all('quizzes'), api.all('messages')
@@ -2091,22 +2424,37 @@ async function pageAdmin() {
   </div>`;
 
   const body = $('#adminBody');
+  startAdminClock(users); // expiry runs on every admin tab, not just Users
   function payView() {
+    const planOf = p => (s.plans||[]).find(x => x.n === p.plan) || {};
     body.innerHTML = `<div class="card">
-      <div class="spread"><h3 style="margin:0">Payment submissions</h3><span class="muted tiny">${sortedPayments.filter(p=>p.status==='pending').length} pending</span></div>
+      <div class="spread"><h3 style="margin:0">Payment submissions</h3>
+        <span class="muted tiny">${sortedPayments.filter(p=>p.status==='pending').length} pending · set Days and Sets before approving</span></div>
       ${sortedPayments.length ? `<div class="table-scroll"><table>
-        <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Price</th><th>Transaction ID</th><th>Date</th><th>Screenshot</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody>${sortedPayments.map(p => `<tr>
-          <td><strong>${esc(p.name||'—')}</strong></td><td>${esc(p.email||'—')}</td>
-          <td>${esc(p.plan||'—')}<br><span class="tiny muted">${esc(p.days||'—')} days</span></td>
-          <td>${esc(s.cur||'')}${esc(p.price||'—')}</td><td>${esc(p.txn||'—')}</td><td>${fmtDate(p.at)}</td>
-          <td>${p.shot?`<img class="thumb" src="${p.shot}" alt="Payment screenshot for ${esc(p.name)}" data-shot="${p.id}">`:'—'}</td>
-          <td><span class="plan-pill ${p.status==='approved'?'live':p.status==='rejected'?'off':''}">${esc(p.status)}</span></td>
-          <td>${p.status==='pending'?`<div class="row" style="flex-wrap:nowrap">
-            <button class="btn btn-sm" data-approve="${p.id}">Approve</button>
-            <button class="btn btn-sm btn-danger" data-reject="${p.id}">Reject</button></div>`:'—'}</td>
-        </tr>`).join('')}</tbody></table></div>`
+        <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Price</th><th>Days</th><th>Sets</th><th>Transaction ID</th><th>Date</th><th>Shot</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${sortedPayments.map(p => {
+          const days = Number(p.days) || Number(planOf(p).d) || 0;
+          const sets = Number(p.sets ?? planOf(p).sets ?? 0);
+          const act = p.status === 'pending'
+            ? `<div class="row" style="flex-wrap:nowrap"><button class="btn btn-sm" data-approve="${p.id}">Approve</button>
+                 <button class="btn btn-sm btn-danger" data-reject="${p.id}">Reject</button></div>`
+            : p.status === 'approved'
+              ? `<button class="btn btn-sm btn-danger" data-revoke="${p.id}">Revoke plan</button>`
+              : `<button class="btn btn-sm" data-approve="${p.id}">Approve</button>`;
+          return `<tr>
+            <td><strong>${esc(p.name||'—')}</strong></td><td>${esc(p.email||'—')}</td>
+            <td>${esc(p.plan||'—')}</td>
+            <td>${esc(s.cur||'')}${esc(p.price||'—')}</td>
+            <td><input type="number" min="1" value="${days}" data-pdays="${p.id}" aria-label="Days for ${esc(p.name)}" style="width:66px;min-height:36px"></td>
+            <td><input type="number" min="0" value="${sets}" data-psets="${p.id}" aria-label="Question sets for ${esc(p.name)}" style="width:60px;min-height:36px"></td>
+            <td>${esc(p.txn||'—')}</td><td>${fmtDate(p.at)}</td>
+            <td>${p.shot?`<img class="thumb" src="${p.shot}" alt="Payment screenshot for ${esc(p.name)}" data-shot="${p.id}">`:'—'}</td>
+            <td><span class="plan-pill ${p.status==='approved'?'live':p.status==='pending'?'':'off'}">${esc(p.status)}</span></td>
+            <td>${act}</td>
+          </tr>`;
+        }).join('')}</tbody></table></div>`
       : empty('No payments yet', 'Submissions from aspirants will show up here, with pending ones first.')}
+      <p class="tiny muted" style="margin-top:.9rem">Approving adds the days and sets above to the aspirant and posts a message on their dashboard. Revoking later removes that time again.</p>
     </div>`;
     body.onclick = async e => {
       const shot = e.target.closest('[data-shot]');
@@ -2117,17 +2465,42 @@ async function pageAdmin() {
       const ap = e.target.closest('[data-approve]');
       if (ap) {
         const p = sortedPayments.find(x=>x.id===ap.dataset.approve);
-        const days = Number(p.days) || (s.plans||[]).find(x=>x.n===p.plan)?.d || 0;
-        if (!days) return toast('Plan duration missing — check settings', 'err');
-        if (!await ask('Approve this payment?', `Add ${days} days to ${p.name}'s subscription and mark the payment approved.`)) return;
+        const days = Math.max(1, Number($(`[data-pdays="${p.id}"]`)?.value) || 0);
+        const sets = Math.max(0, Number($(`[data-psets="${p.id}"]`)?.value) || 0);
+        if (!days) return toast('Enter the number of days first', 'err');
+        const plan = p.plan || 'plan';
+        if (!await ask('Approve this payment?',
+          `Give ${p.name||'this aspirant'} ${days} day(s) and ${sets} set(s) of questions on the ${plan} plan. A message will appear on their dashboard.`)) return;
         try {
           const u = await api.get('users', p.uid);
-          const base = Math.max(Date.now(), u?.until || 0);
-          await api.set('users', p.uid, { until:base + days*DAY, used:0 }, true);
-          await api.set('payments', p.id, { status:'approved' }, true);
-          toast(`Approved. Plan now runs until ${fmtDate(base+days*DAY)}`, 'ok');
+          const base = Math.max(Date.now(), u?.until || 0), until = base + days*DAY;
+          const notice = `Your ${plan} payment was approved. You have ${days} day(s) of access (until ${fmtDate(until)}) and can create ${sets} set${sets===1?'':'s'} of questions. Happy campaigning!`;
+          await api.set('users', p.uid, { until, used:0, planSets:sets, planStart:Date.now(),
+            planNotice:notice, noticeAt:Date.now() }, true);
+          await api.set('payments', p.id, { status:'approved', days, sets,
+            grantedMs:days*DAY, approvedAt:Date.now() }, true);
+          toast(`Approved — ${days} days and ${sets} sets given to ${p.name||'the aspirant'}`, 'ok');
           pageAdmin();
         } catch (err) { toast(err.message, 'err'); }
+        return;
+      }
+      const rv = e.target.closest('[data-revoke]');
+      if (rv) {
+        const p = sortedPayments.find(x=>x.id===rv.dataset.revoke);
+        if (!await ask('Revoke this plan?',
+          `${p.name||'This aspirant'} will lose the time granted by this payment straight away, and the payment will show as revoked.`)) return;
+        try {
+          const u = await api.get('users', p.uid);
+          const granted = Number(p.grantedMs) || (Number(p.days)||0)*DAY;
+          const until = Math.max(0, (u?.until||0) - granted);
+          const patch = { until, noticeAt:Date.now(),
+            planNotice:`The ${p.plan||'plan'} linked to this payment was revoked. Contact support if you think this is a mistake.` };
+          if (until <= Date.now()) { patch.planSets = 0; patch.planStart = 0; }
+          await api.set('users', p.uid, patch, true);
+          await api.set('payments', p.id, { status:'revoked', revokedAt:Date.now() }, true);
+          toast('Plan revoked and its time removed', 'ok'); pageAdmin();
+        } catch (err) { toast(err.message, 'err'); }
+        return;
       }
       const rj = e.target.closest('[data-reject]');
       if (rj) {
@@ -2141,16 +2514,17 @@ async function pageAdmin() {
 
   function priceView() {
     const rows = [0,1,2,3].map(i => {
-      const p = (s.plans||[])[i] || { n:'',p:'',d:'' };
-      return `<div class="grid-3" style="margin-bottom:.6rem">
+      const p = (s.plans||[])[i] || { n:'',p:'',d:'',sets:'' };
+      return `<div class="grid-4" style="margin-bottom:.6rem">
         <div class="field" style="margin:0"><label>Plan name ${i+1}</label><input data-pn="${i}" value="${esc(p.n)}" placeholder="e.g. 30 Day Campaign"></div>
         <div class="field" style="margin:0"><label>Price</label><input data-pp="${i}" type="number" min="0" value="${esc(p.p)}" placeholder="60"></div>
         <div class="field" style="margin:0"><label>Days</label><input data-pd="${i}" type="number" min="1" value="${esc(p.d)}" placeholder="30"></div>
+        <div class="field" style="margin:0"><label>Question sets</label><input data-ps="${i}" type="number" min="0" value="${esc(p.sets)}" placeholder="40"></div>
       </div>`;
     }).join('');
     body.innerHTML = `<div class="card">
       <h3>Prices &amp; contact</h3>
-      <p class="muted tiny">Changes here update the home page pricing cards and the payment page immediately.</p>
+      <p class="muted tiny">Days = how long the plan lasts; question sets = how many quiz sets the person can create. You can still override both for one person under Payments before approving.</p>
       <div class="grid-3">
         <div class="field"><label for="curSet">Currency symbol</label><input id="curSet" value="${esc(s.cur||'')}" placeholder="GH₵"></div>
         <div class="field"><label for="phoneSet">Admin phone number</label><input id="phoneSet" value="${esc(s.phone||'')}" placeholder="0547779727"></div>
@@ -2170,7 +2544,9 @@ async function pageAdmin() {
       for (let i=0;i<4;i++) {
         const n = $(`[data-pn="${i}"]`).value.trim();
         if (!n) continue;
-        plans.push({ n, p:Number($(`[data-pp="${i}"]`).value)||0, d:Number($(`[data-pd="${i}"]`).value)||1 });
+        plans.push({ n, p:Number($(`[data-pp="${i}"]`).value)||0,
+          d:Number($(`[data-pd="${i}"]`).value)||1,
+          sets:Math.max(0, Number($(`[data-ps="${i}"]`).value)||0) });
       }
       const next = {
         plans, cur:$('#curSet').value.trim()||'GH₵', phone:$('#phoneSet').value.trim(),
@@ -2189,20 +2565,29 @@ async function pageAdmin() {
 
   function usersView() {
     body.innerHTML = `<div class="card"><h3>All users</h3>
+      <p class="muted tiny">The countdown is ticking for every active plan. When it reaches zero the plan is removed automatically.</p>
       ${users.length ? `<div class="table-scroll"><table>
-        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Plan status</th><th>Joined</th><th></th></tr></thead>
-        <tbody>${users.map(u => `<tr>
-          <td><strong>${esc(u.name||'—')}</strong></td><td>${esc(u.email||'—')}</td><td>${esc(u.phone||'—')}</td>
-          <td>${(u.until||0)>Date.now()?`<span class="plan-pill live">Active to ${fmtDate(u.until)}</span>`:'<span class="plan-pill off">Free trial</span>'}</td>
-          <td>${fmtDate(u.at)}</td>
-          <td><div class="row" style="flex-wrap:nowrap">
-            <button class="btn btn-sm btn-outline" data-reset="${u.id}">Send reset link</button>
-            <button class="btn btn-sm btn-danger" data-deluser="${u.id}">Delete</button></div></td>
-        </tr>`).join('')}</tbody></table></div>`
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Plan status</th><th>Time left</th><th>Joined</th><th></th></tr></thead>
+        <tbody>${users.map(u => {
+          const left = (u.until||0) - Date.now(), soon = left > 0 && left <= 3*DAY;
+          return `<tr>
+            <td><strong>${esc(u.name||'—')}</strong></td><td>${esc(u.email||'—')}</td><td>${esc(u.phone||'—')}</td>
+            <td>${left>0?`<span class="plan-pill live">Active to ${fmtDate(u.until)}</span>${u.planSets?`<br><span class="tiny muted">${esc(u.planSets)} sets</span>`:''}`:'<span class="plan-pill off">Free trial</span>'}</td>
+            <td><span class="countdown ${soon?'soon':left<=0?'done':''}" data-cd="${u.id}">${countdownText(u.until)}</span>
+              ${soon?`<br><button class="btn btn-sm btn-outline" style="margin-top:.35rem" data-remind="${u.id}">✉ Remind (3 days left)</button>`:''}</td>
+            <td>${fmtDate(u.at)}</td>
+            <td><div class="row" style="flex-wrap:nowrap">
+              <button class="btn btn-sm btn-outline" data-reset="${u.id}">Send reset link</button>
+              <button class="btn btn-sm btn-danger" data-deluser="${u.id}">Delete</button></div></td>
+          </tr>`;
+        }).join('')}</tbody></table></div>`
       : empty('No users yet', 'Sign-ups will appear here.')}
-      <p class="tiny muted" style="margin-top:.9rem">Deleting removes the user's profile, quizzes, responses and payment history. To block their login too, disable the account in the Firebase Console (Authentication → Users).</p>
+      <p class="tiny muted" style="margin-top:.9rem">The reminder button appears once a plan has 3 days or less left and opens a ready-written email in your mail app. Deleting removes the user's profile, quizzes, responses and payment history. To block their login too, disable the account in the Firebase Console (Authentication → Users).</p>
     </div>`;
+    startAdminClock(users);
     body.onclick = async e => {
+      const rem = e.target.closest('[data-remind]');
+      if (rem) { const u = users.find(x=>x.id===rem.dataset.remind); if (u) openReminder(u); return; }
       const rb = e.target.closest('[data-reset]');
       if (rb) {
         const u = users.find(x=>x.id===rb.dataset.reset);
@@ -2244,6 +2629,7 @@ async function pageAdmin() {
           <td>${fmtDate(q.at)}</td>
           <td><div class="row" style="flex-wrap:nowrap">
             <button class="btn btn-sm btn-outline" data-viewq="${q.id}">View questions</button>
+            <a class="btn btn-sm btn-outline" href="#/edit/${esc(q.id)}">Edit questions</a>
             <button class="btn btn-sm btn-outline" data-copyq="${q.id}">Copy link</button>
             <button class="btn btn-sm btn-outline" data-qrq="${q.id}">QR</button>
             <a class="btn btn-sm btn-outline" href="#/results/${q.id}">Results</a>
@@ -2258,10 +2644,18 @@ async function pageAdmin() {
             c = e.target.closest('[data-copyq]'), t = e.target.closest('[data-toggleq]'), d = e.target.closest('[data-delq]');
       if (v) {
         const q = quizzes.find(x=>x.id===v.dataset.viewq); if (!q) return;
-        const rows = (q.qs||[]).map((item,i) => `<div class="review-row good">
-          <strong>Q${i+1}. ${esc(item.q)}</strong>
-          <div class="tiny muted" style="margin-top:.4rem">${(item.o||[]).map((o,j) =>
-            `<div>${'ABCDE'[j]}) ${esc(o)}${item.a===j?' <b style="color:var(--ok)">✓ correct</b>':''}</div>`).join('')}</div></div>`).join('');
+        const rows = (q.qs||[]).map((item,i) => {
+          const t = qType(item), key = answerKey(item);
+          const opts = (item.o||[]).map((o,j) => {
+            const pick = t === 'checkbox' ? Array.isArray(key) && key.includes(j) : key === j;
+            return `<div>${'ABCDE'[j]}) ${esc(o)}${pick?' <b style="color:var(--ok)">✓ correct</b>':''}</div>`;
+          }).join('');
+          return `<div class="review-row good">
+            <strong>Q${i+1}. ${esc(item.q)} <span class="tiny muted">(${esc(Q_TYPES[t])})</span></strong>
+            ${opts ? `<div class="tiny muted" style="margin-top:.4rem">${opts}</div>` : ''}
+            ${(t === 'short' || t === 'paragraph') ? `<div class="tiny muted" style="margin-top:.4rem">Correct answer: <b style="color:var(--ok)">${esc(String(item.a||'—'))}</b></div>` : ''}
+          </div>`;
+        }).join('');
         modal(`<h3>“${esc(q.title)}” — ${(q.qs||[]).length} questions</h3>
           <p class="muted tiny">Set by ${esc(q.name||'—')}. Review for policy violations.</p>
           <div style="max-height:55vh;overflow:auto">${rows || '<p class="muted">No questions.</p>'}</div>
@@ -2345,7 +2739,7 @@ async function pageAdmin() {
 
   await initFirebase();
   const saved = await api.get('settings','app');
-  state.settings = { ...DEFAULT_SETTINGS, ...(saved || {}) };
+  state.settings = normalizeSettings(saved);
   api.watchSettings(() => {
     renderNav();
     if (['home','plans'].includes(parseRoute().name)) route();
@@ -2380,7 +2774,7 @@ async function pagePlans() {
       <div class="spread"><div>
         <h3 style="margin:0">Your current plan</h3>
         <p style="margin:.5rem 0 0">${paidNow()
-          ? `Active until <strong>${fmtDate(state.profile?.until)}</strong>. Unlimited quizzes, up to 200 questions each.`
+          ? `Active until <strong>${fmtDate(state.profile?.until)}</strong>. ${state.profile?.planSets?`${esc(state.profile.planSets)} sets of questions,`:'Unlimited quizzes,'} up to 200 questions each.`
           : `Free trial: <strong>${state.profile?.used||0} of ${s.free??2}</strong> quizzes used, up to ${s.max??50} questions each.`}</p>
       </div><span class="plan-pill ${paidNow()?'live':'off'}">${paidNow()?'ACTIVE':'FREE TRIAL'}</span></div>
     </div>
@@ -2390,10 +2784,10 @@ async function pagePlans() {
       ${(s.plans||[]).filter(p=>p&&p.n).map(p => `<article class="price">
         <h3>${esc(p.n)}</h3>
         <div class="amount">${cur}${esc(p.p)} <small>/ ${esc(p.d)} days</small></div>
-        <ul><li>${svgIcon('check')}<span>Unlimited quizzes</span></li>
+        <ul><li>${svgIcon('check')}<span>${p.sets?`${esc(p.sets)} sets of questions`:'Unlimited quizzes'}</span></li>
         <li>${svgIcon('check')}<span>Up to 200 questions each</span></li>
         <li>${svgIcon('check')}<span>${esc(p.d)} days of access</span></li></ul>
-        <button class="btn btn-gold choosePlan" data-plan="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}">Choose this plan</button>
+        <button class="btn btn-gold choosePlan" data-plan="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}" data-sets="${esc(p.sets||0)}">Choose this plan</button>
       </article>`).join('') || '<p class="muted">No plans are configured yet. Please call the admin.</p>'}
     </div>
 
@@ -2407,7 +2801,7 @@ async function pagePlans() {
         <form id="payForm" style="margin-top:1rem">
           <div class="field"><label for="planSel">Plan</label><select id="planSel" required>
             <option value="">Select a plan…</option>
-            ${(s.plans||[]).filter(p=>p&&p.n).map(p=>`<option value="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}">${esc(p.n)} — ${cur}${esc(p.p)} / ${esc(p.d)} days</option>`).join('')}
+            ${(s.plans||[]).filter(p=>p&&p.n).map(p=>`<option value="${esc(p.n)}" data-days="${esc(p.d)}" data-price="${esc(p.p)}" data-sets="${esc(p.sets||0)}">${esc(p.n)} — ${cur}${esc(p.p)} / ${esc(p.d)} days</option>`).join('')}
           </select></div>
           <div class="field"><label for="txn">Mobile Money transaction ID</label><input id="txn" required maxlength="60" placeholder="e.g. TXN-4829103"></div>
           <div class="field"><label for="shot">Payment screenshot</label><input id="shot" type="file" accept="image/*" required>
@@ -2445,7 +2839,7 @@ async function pagePlans() {
       await api.add('payments', {
         uid:state.user.uid, email:state.user.email, name:state.profile?.name||'',
         plan, price:Number(opt.dataset.price)||0, days:Number(opt.dataset.days)||0,
-        txn, shot, status:'pending', at:Date.now()
+        sets:Number(opt.dataset.sets)||0, txn, shot, status:'pending', at:Date.now()
       });
       toast('Payment submitted. You will see the status here.', 'ok');
       pagePlans();
